@@ -4,6 +4,9 @@ import express from "express";
 import routes from './routes/routes.mjs';
 import dotEnv from 'dotenv';
 import clientDB from '../lib/database.mjs';
+import bodyParser from 'body-parser';
+
+
 dotEnv.config();
 
 var secret = process.env.SECRET;
@@ -15,6 +18,12 @@ const port = 3000;
 async function main(){
   app.use(express.static('dist'));
   let db = await clientDB();
+
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }))
+  // parse application/json
+  app.use(bodyParser.json())
+
   app.get('/', (req, res) => {
     res.send(
       '<script src="/bundle.js"></script>'

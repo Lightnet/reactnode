@@ -17,4 +17,15 @@ router.get('/sign', function (req, res) {
   </html>`)
 })
 
+router.post('/signup', function (req, res) {
+  console.log(req.body); // your JSON
+
+
+
+
+  res.send(req.body); // echo the result back
+  //res.send(`<html lang="en">page</html>`);
+});
+
+
 export default router;

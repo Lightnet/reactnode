@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 
 export function SignInPage() {
-  //const [view, setView] = useState('');
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
   function clickLogin(){
