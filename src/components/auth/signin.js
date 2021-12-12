@@ -14,11 +14,13 @@ import { useAuth } from './auth.js';
 export function SignInPage() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const {setUser,setToken} = useAuth();
   const navigate = useNavigate();
-  const {user,setUser,setToken} = useAuth();
+  const [status, setStatus] = useState('');
+  
 
   async function clickLogin(){
-    console.log("login")
+    //console.log("login")
     let data = await useFetch('/signin',{
       method:'POST',
       body:JSON.stringify({userName,password})
@@ -26,13 +28,22 @@ export function SignInPage() {
     console.log(data)
     if(data.error){
       console.log('Fetch error Login');
+      if(data.error=='PASSWORDFAIL'){
+        setStatus('Password Fail!');
+      }
       return;
     }
     if(data.action){
+
       if(data.action=='LOGIN'){
         setUser(data.user);
         setToken(data.token);
         navigate('/')
+      }
+
+      if(data.action=='NONEXIST'){
+        //navigate('/')
+        setStatus('Non Exist!');
       }
     }
   }
@@ -51,7 +62,7 @@ export function SignInPage() {
   }
 
   return (<>
-    <label>Sign In</label>
+    <label>Login:{status}</label>
     <div>
       <table>
         <tbody>
@@ -78,7 +89,6 @@ export function SignInPage() {
               <input value={password} onChange={typingPassword}></input>
             </td>
           </tr>
-
 
           <tr>
             <td>

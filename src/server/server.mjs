@@ -13,7 +13,7 @@ import clientDB from '../lib/database.mjs';
 import bodyParser from 'body-parser';
 
 import session  from 'express-session';
-
+// load .env var
 dotEnv.config();
 
 var secret = process.env.SECRET;

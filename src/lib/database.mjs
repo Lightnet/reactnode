@@ -16,9 +16,11 @@
 //Import the mongoose module
 import mongoose from 'mongoose';
 import UserSchema from './mongoose/user.mjs';
+//import dotEnv from 'dotenv';
 
 //Set up default mongoose connection
 //var mongoDB = 'mongodb://127.0.0.1/my_database';
+//console.log(process.env.DATABASE_URL)
 var mongoDB = process.env.DATABASE_URL || 'mongodb://127.0.0.1/my_database';
 
 var db;

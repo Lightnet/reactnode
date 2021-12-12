@@ -9,8 +9,12 @@ import {
 export default function Sign(){
 
   const {status} = useAuth();
+  //console.log(status);
+  
+  if(status == 'loading'){
+    return (<label>Loading...</label>)
+  }
 
-  console.log(status);
   if(status == 'unauth'){
     return (<>
       <Link to="/signin">Sign In</Link> <span> | </span>
