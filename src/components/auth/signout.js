@@ -45,7 +45,7 @@ export function SignOutPage() {
   }
 
   return (<>
-    <label>[Are you sure?]</label>
+    <label>[ Are you sure? ]</label><br />
     <button onClick={clickSignOut}>Logout</button><span> | </span>
     <button onClick={clickCancel}>Cancel</button>
   </>);

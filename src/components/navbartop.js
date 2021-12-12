@@ -5,24 +5,14 @@ import { useAuth } from './auth/auth.js';
 import {
   Link
 } from "react-router-dom";
+import Sign from './auth/sign.js';
 
 export default function NavBarTop(){
 
-  const {user} = useAuth();
-
-
-  function renderSign(){
-    if(user == ''){
-      return (<>
-        <Link to="/signin">Sign In</Link> <span> | </span>
-        <Link to="/signup">Sign Up</Link> <span> | </span>
-      </>)
-    }
-    return <Link to="/signout">Sign Out</Link>  
-  }
+  const {status} = useAuth();
 
   function renderAccess(){
-    if(user == ''){
+    if(status == 'unauth'){
       return <></>
     }
     return(<>
@@ -33,7 +23,6 @@ export default function NavBarTop(){
   return (<>
     <Link to="/">Home</Link> <span> | </span>
     {renderAccess()}
-    {renderSign()}
-  
+    <Sign />
   </>)
 }

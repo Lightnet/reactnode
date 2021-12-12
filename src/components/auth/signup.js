@@ -82,7 +82,7 @@ export function SignUpPage() {
           </tr>
           <tr>
             <td>
-              <button onClick={clickRegister}>Register</button>
+              <button onClick={clickRegister}>Submit</button>
               <button onClick={clickCancel}>Cancel</button>
             </td>
           </tr>
