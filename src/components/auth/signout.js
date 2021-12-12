@@ -3,12 +3,19 @@
 */
 
 import React, { useState } from 'react';
+import useFetch from "../hook/useFetch.js";
 
 export function SignOutPage() {
-  //const [view, setView] = useState('');
+  const [token, setToken] = useState('');
 
-  function clickSignOut(){
+  async function clickSignOut(){
     console.log("clickSignOut")
+    console.log("login")
+    let data = await useFetch('/signout',{
+      method:'POST',
+      body:JSON.stringify({token})
+    })
+    console.log(data)
   }
 
   function clickCancel(){

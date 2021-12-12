@@ -12,6 +12,9 @@ import crypto from 'crypto';
 // crypto 
 import jwt from 'jsonwebtoken';
 import { nanoid32, unixTime } from '../helper.mjs';
+import dotEnv from 'dotenv';
+
+dotEnv.config();
 var secret = process.env.SECRET;
 
 //Define a schema

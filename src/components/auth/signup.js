@@ -14,7 +14,7 @@ export function SignUpPage() {
       method:'POST',
       body:JSON.stringify({user,password})
     })
-    console.log("login")
+    console.log(data)
   }
 
   function clickCancel(){

@@ -28,20 +28,20 @@ function NoPage(){
 export function App() {
   //const [view, setView] = useState('index');
 
-  function renderView(){
-    return (<>
-    </>)
-  }
+  //function renderView(){
+    //return (<>
+    //</>)
+  //}
 
   return (<>
     <AuthProvider>
       <Router>
         <div>
-          <Link to="/"> Home </Link>
-          <Link to="/account">Account</Link>
-          <Link to="/signin">Sign In</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/signout">Sign Out</Link>
+          <Link to="/"> Home </Link> <span> | </span>
+          <Link to="/account">Account</Link> <span> | </span>
+          <Link to="/signin">Sign In</Link> <span> | </span>
+          <Link to="/signup">Sign Up</Link> <span> | </span>
+          <Link to="/signout">Sign Out</Link> 
         </div>
         <Routes>
           <Route path="/" element={<IndexPage />} />

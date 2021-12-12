@@ -9,15 +9,18 @@ export function IndexPage() {
   //const [view, setView] = useState('');
   const {user, setUser} = useAuth();
 
-  function setUserName(name){
-    setUser(name);
-  }
+  //function setUserName(name){
+    //setUser(name);
+  //}
 
   return (<>
-    <label>Index</label>
-    <label>User Name:{user}</label>
-    <button onClick={()=>setUserName('test1')}> test1 </button>
-    <button onClick={()=>setUserName('test2')}> test2 </button>
-
+    <div>
+      <label>Index</label><br />
+      <label>User Name:{user}</label> <br />
+    </div>
   </>);
 }
+/*
+  <button onClick={()=>setUserName('test1')}> test1 </button>
+  <button onClick={()=>setUserName('test2')}> test2 </button>
+*/

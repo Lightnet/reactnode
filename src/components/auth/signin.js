@@ -3,23 +3,50 @@
 */
 
 import React, { useState } from 'react';
+import useFetch from "../hook/useFetch.js";
 
 import {
   useNavigate
 } from "react-router-dom";
+import { useAuth } from './auth.js';
 
 export function SignInPage() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {user,setUser,setToken} = useAuth();
 
-  function clickLogin(){
+  async function clickLogin(){
     console.log("login")
+    let data = await useFetch('/signin',{
+      method:'POST',
+      body:JSON.stringify({userName,password})
+    })
+    console.log(data)
+    if(data.error){
+      console.log('Fetch error Login');
+      return;
+    }
+    if(data.action){
+      if(data.action=='LOGIN'){
+        setUser(data.user);
+        setToken(data.token);
+        navigate('/')
+      }
+    }
   }
 
   function clickCancel(){
     console.log("index")
     navigate('/')
+  }
+
+  function typingUser(e){
+    setUserName(e.target.value);
+  }
+
+  function typingPassword(e){
+    setPassword(e.target.value);
   }
 
   return (<>
@@ -35,10 +62,9 @@ export function SignInPage() {
 
           <tr>
             <td>
-              <input></input>
+              <input value={userName} onChange={typingUser}></input>
             </td>
           </tr>
-
 
           <tr>
             <td>
@@ -48,7 +74,7 @@ export function SignInPage() {
 
           <tr>
             <td>
-              <input></input>
+              <input value={password} onChange={typingPassword}></input>
             </td>
           </tr>
 

@@ -2,9 +2,9 @@
 import express from 'express';
 const router = express.Router();
 import test from './test.mjs';
-import sign from './sign.mjs';
+import auth from './auth.mjs';
 
 router.use(test); 
-router.use(sign); 
+router.use(auth); 
 
 export default router;
