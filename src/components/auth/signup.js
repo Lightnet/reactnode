@@ -6,9 +6,17 @@
 import React, { useState } from 'react';
 import useFetch from "../hook/useFetch.js";
 
+import {
+  useNavigate
+} from "react-router-dom";
+
 export function SignUpPage() {
+
+  const [status, setStatus] = useState('');
+
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   async function clickRegister(){
     let data = await useFetch('/signup',{
@@ -16,6 +24,19 @@ export function SignUpPage() {
       body:JSON.stringify({user,password})
     })
     console.log(data)
+    if(data.error){
+      console.log('Fetch error Sign Up');
+      return;
+    }
+    if(data.action){
+      if(data.action=='CREATE'){
+        //navigate('/');
+        setStatus('CREATE')
+      }
+      if(data.action=='EXIST'){
+        setStatus('EXIST')
+      }
+    }
   }
 
   function clickCancel(){
@@ -32,7 +53,9 @@ export function SignUpPage() {
   }
 
   return (<>
-    <label>Sign Up</label>
+    <div>
+      <label>Register:{status}</label>
+    </div>
     <div>
       <table>
         <tbody>

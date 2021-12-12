@@ -6,8 +6,17 @@
 import React, { useState } from 'react';
 import useFetch from "../hook/useFetch.js";
 
+import {
+  useNavigate
+} from "react-router-dom";
+import { useAuth } from './auth.js';
+
 export function SignOutPage() {
-  const [token, setToken] = useState('');
+  //const [token, setToken] = useState('');
+  const {token, setToken,
+    setUser
+  } = useAuth();
+  const navigate = useNavigate();
 
   async function clickSignOut(){
     console.log("clickSignOut")
@@ -17,6 +26,17 @@ export function SignOutPage() {
       body:JSON.stringify({token})
     })
     console.log(data)
+    if(data.error){
+      console.log('Fetch Error Signout');
+      return;
+    }
+    if(data.action){
+      if(data.action=='SIGNOUT'){
+        setToken('');
+        setUser('');
+        navigate('/');
+      }
+    }
   }
 
   function clickCancel(){
@@ -25,8 +45,8 @@ export function SignOutPage() {
   }
 
   return (<>
-    <label>[Sign Out]</label>
-    <button onClick={clickSignOut}>Sign Out</button>
+    <label>[Are you sure?]</label>
+    <button onClick={clickSignOut}>Logout</button><span> | </span>
     <button onClick={clickCancel}>Cancel</button>
   </>);
 }

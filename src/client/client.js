@@ -5,7 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App} from "../components/app.js"
+import App from "../components/app.js"
 
 window.addEventListener('load', (event) => {
   console.log('page is fully loaded');

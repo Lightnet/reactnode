@@ -90,6 +90,7 @@ router.post('/signout',async function (req, res) {
   //}else{
     //return res.send({action:'EXIST'});
   //}
+  return res.send({action:'SIGNOUT'}); // echo the result back
 
   return res.send({error:'ERROR'}); // echo the result back
   //res.send(`<html lang="en">page</html>`);

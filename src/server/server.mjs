@@ -11,7 +11,7 @@ import routes from './routes/routes.mjs';
 import dotEnv from 'dotenv';
 import clientDB from '../lib/database.mjs';
 import bodyParser from 'body-parser';
-//import cookieSession from 'cookie-session';
+
 import session  from 'express-session';
 
 dotEnv.config();
@@ -23,6 +23,11 @@ const app = express();
 const port = 3000;
 
 async function main(){
+  let db = await clientDB();
+
+  //public | dist > folder
+  app.use(express.static('dist'));
+
   app.set('trust proxy', 1) // trust first proxy
   app.use(session({
     secret: 'keyboard cat',
@@ -30,17 +35,6 @@ async function main(){
     saveUninitialized: true,
     cookie: { secure: false }
   }))
-  /*
-  app.use(cookieSession({
-    name: 'session',
-    keys: [ 'secret keys'],
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }))
-  */
-
-  app.use(express.static('dist'));
-  let db = await clientDB();
 
   // parse application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: false }))

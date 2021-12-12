@@ -20,30 +20,22 @@ import { IndexPage } from './index.js';
 import { SignInPage } from './auth/signin.js';
 import { SignOutPage } from './auth/signout.js';
 import { SignUpPage } from './auth/signup.js';
-import { AuthProvider } from './auth/auth.js';
+import { AuthProvider, useAuth } from './auth/auth.js';
 import { AccountPage } from './account.js';
+import NavBarTop from './navbartop.js';
 
 function NoPage(){
   return <div>Error!</div>
 }
 
-export function App() {
+export default function App() {
   //const [view, setView] = useState('index');
-
-  //function renderView(){
-    //return (<>
-    //</>)
-  //}
 
   return (<>
     <AuthProvider>
       <Router>
         <div>
-          <Link to="/"> Home </Link> <span> | </span>
-          <Link to="/account">Account</Link> <span> | </span>
-          <Link to="/signin">Sign In</Link> <span> | </span>
-          <Link to="/signup">Sign Up</Link> <span> | </span>
-          <Link to="/signout">Sign Out</Link> 
+          <NavBarTop />
         </div>
         <Routes>
           <Route path="/" element={<IndexPage />} />
