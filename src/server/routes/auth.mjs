@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 //https://expressjs.com/en/guide/routing.html
 
 import express from 'express';

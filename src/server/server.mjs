@@ -1,3 +1,7 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 // https://www.npmjs.com/package/connect-mongo
 // https://expressjs.com/en/resources/middleware/session.html

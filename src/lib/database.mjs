@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 // https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
 // https://stackoverflow.com/questions/24100119/mongoose-connection-events-with-createconnection
 // https://stackoverflow.com/questions/44191196/mongoose-create-a-user-schema-and-todo-schema

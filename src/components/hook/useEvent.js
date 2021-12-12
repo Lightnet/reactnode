@@ -2,6 +2,7 @@
   LICENSE: MIT
   Created by: Lightnet
 */
+
 // https://www.w3schools.com/jsref/obj_keyboardevent.asp
 // https://www.javascripttutorial.net/javascript-dom/javascript-keyboard-events/
 // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key

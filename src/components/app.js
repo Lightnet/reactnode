@@ -1,6 +1,8 @@
 /*
+  LICENSE: MIT
   Created by: Lightnet
 */
+
 // https://v5.reactrouter.com/web/guides/quick-start
 // https://reacttraining.com/blog/react-router-v6-pre/
 // https://dev.to/salehmubashar/usenavigate-tutorial-react-js-aop

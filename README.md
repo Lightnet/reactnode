@@ -1,7 +1,13 @@
+# React Node
 
+# LICENSE: MIT
+
+# Create by: Lightnet
 
 # Information:
-  React simple blank project for express and webpack setup with babeljs. As well other packages.
+  React simple project for express and webpack setup with babeljs. As well other packages.
+
+  Design for web page reactjs component test build basic on account login, register, access and other things.
 
 
 # setup:

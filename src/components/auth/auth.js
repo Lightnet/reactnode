@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
 import useFetch from "../hook/useFetch.js";
 

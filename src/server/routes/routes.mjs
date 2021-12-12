@@ -1,3 +1,7 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 import express from 'express';
 const router = express.Router();
