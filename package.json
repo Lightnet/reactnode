@@ -2,7 +2,7 @@
   "name": "nanoblockjs",
   "version": "1.0.0",
   "description": "https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework",
-  "main": "index.js",
+  "main": "app.mjs",
   "type": "module",
   "exports": {
     "import": "./dist/mjs/index.js",

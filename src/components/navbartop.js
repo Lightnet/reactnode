@@ -17,6 +17,7 @@ export default function NavBarTop(){
     }
     return(<>
       <Link to="account">Account</Link> <span> | </span>
+      <Link to="game">Game</Link> <span> | </span>
     </>)
   }
 
