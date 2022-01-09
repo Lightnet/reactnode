@@ -47,6 +47,12 @@ async function main(){
       '<script src="/bundle.js"></script>'
     )
   })
+
+  app.get('/game', (req, res) => {
+    res.send(
+      '<script src="/bundle.js"></script>'
+    )
+  })
   //Routes
   app.use(routes); 
   const server = app.listen(port, () => {

@@ -4,7 +4,7 @@
 */
 
 import mongoose from 'mongoose';
-import { nanoid32, unixTime } from '../helper';
+import { nanoid32, unixTime } from '../helper.mjs';
 
 const Schema = mongoose.Schema;
 var BaseOutPostSchema = new mongoose.Schema({
@@ -14,13 +14,12 @@ var BaseOutPostSchema = new mongoose.Schema({
     default: nanoid32
   },
   name: String,
-
   userid: String,
-  username: String,
   isMain: {
     type:Boolean,
     default: false
   },
+  data: Schema.Types.Mixed,
   mapid: {
     type:String,
     default: ''

@@ -39,8 +39,10 @@ export default async function clientDB(){
   console.log("init DB")
   mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
   mongoose.model('User', UserSchema)
-  //require('./mongoose/user');
-  //require('./mongoose/editor');
+  import('./mongoose/baseoutpost.js');
+  import('./mongoose/building.js');
+  import('./mongoose/resource.js');
+  import('./mongoose/character.js');
   //Get the default connection
   db = mongoose.connection;
   //Bind connection to error event (to get notification of connection errors)

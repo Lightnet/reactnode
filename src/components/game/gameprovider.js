@@ -38,11 +38,19 @@ export function GameProvider(props){
   const value = useMemo(()=>({
     token, setToken,
     user, setUser,
-    status, setStatus
+    status, setStatus,
+    baseName, setBaseName,
+    baseID, setBaseID,
+    characterID, setCharacterID,
+    characterName, setCharacterName
   }),[
     token,
     user,
-    status
+    status,
+    baseName,
+    baseID,
+    characterID,
+    characterName
   ])
 
   return <GameContext.Provider value={value} {...props} />

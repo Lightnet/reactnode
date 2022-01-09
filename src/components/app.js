@@ -24,6 +24,7 @@ import { AuthProvider, useAuth } from './auth/auth.js';
 import { AccountPage } from './account.js';
 import NavBarTop from './navbartop.js';
 import { GamePage } from './game/gamesection.js';
+import Message from './message/index.js';
 
 function NoPage(){
   return <div>Error!</div>
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="signup" element={<SignUpPage />} />
           <Route path="signout" element={<SignOutPage />} />
           <Route path="game" element={<GamePage />} />
+          <Route path="message" element={<Message />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </Router>

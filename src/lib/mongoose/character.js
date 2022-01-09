@@ -7,14 +7,15 @@ import mongoose from 'mongoose';
 import { nanoid32, unixTime } from '../helper.mjs';
 
 const Schema = mongoose.Schema;
-var BlankSchema = new mongoose.Schema({
+var CharacterSchema = new mongoose.Schema({
   id: {
     type:String,
     unique:true,
     default: nanoid32
   },
   userid: String,
-  username: String,
+  name:String,
+  data:Schema.Types.Mixed,
   date:{
     type: Number,
     default: unixTime
@@ -22,4 +23,4 @@ var BlankSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 // Compile model from schema
-mongoose.model('Blank', BlankSchema );
+mongoose.model('Character', CharacterSchema );

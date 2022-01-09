@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { GameProvider } from './gameprovider.js';
-import { GameWorld } from './gameworld.js';
+import GameWorld from './gameworld.js';
 
 export function GamePage() {
 
