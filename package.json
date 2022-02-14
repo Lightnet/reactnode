@@ -2,7 +2,7 @@
   "name": "reactnode",
   "version": "1.0.0",
   "description": "node react",
-  "main": "app.mjs",
+  "main": "app.js",
   "type": "module",
   "exports": {
     "import": "./dist/mjs/index.js",

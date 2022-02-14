@@ -29,7 +29,7 @@
 - 
 
 # setup:
-  Need to install mongodb.
+  Need to install mongodb and nodejs.
 
 
 ```
