@@ -1,7 +1,7 @@
 {
-  "name": "nanoblockjs",
+  "name": "reactnode",
   "version": "1.0.0",
-  "description": "https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework",
+  "description": "node react",
   "main": "app.mjs",
   "type": "module",
   "exports": {
@@ -9,36 +9,40 @@
     "require": "./dist/cjs/index.js"
   },
   "scripts": {
-    "dev": "webpack -c webpack.client.cjs && npm-run-all --parallel dev:*",
-    "dev:nodemon": "nodemon app.mjs",
-    "dev:webpack": "webpack -c webpack.client.cjs --watch",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:nodemon": "nodemon app.js",
+    "dev:webpack": "webpack -c webpack.config.cjs --watch",
     "start": "node app.mjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/preset-env": "^7.16.4",
-    "@babel/preset-react": "^7.16.0",
-    "@babel/runtime": "^7.16.3",
-    "babel-loader": "^8.2.3",
     "body-parser": "^1.19.1",
-    "cookie-session": "^1.4.0",
+    "classnames": "^2.3.1",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "css-loader": "^6.6.0",
     "dayjs": "^1.10.7",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.1",
-    "nanoid": "^3.1.30",
+    "mongoose": "^6.2.1",
+    "nanoid": "^3.2.0",
     "nodemon": "^2.0.15",
-    "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^6.1.1",
-    "webpack": "^5.65.0"
+    "react-router-dom": "^6.2.1",
+    "style-loader": "^3.3.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.16.4",
-    "webpack-cli": "^4.9.1"
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.17.2",
+    "babel-loader": "^8.2.3",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
   }
 }

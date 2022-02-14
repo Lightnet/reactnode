@@ -4,7 +4,7 @@
 */
 
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
-import { isEmpty } from "../../lib/helper.mjs";
+import { isEmpty } from "../../lib/helper.js";
 
 export const GameContext = createContext();
 

@@ -11,7 +11,7 @@ import crypto from 'crypto';
 
 // crypto 
 import jwt from 'jsonwebtoken';
-import { nanoid32, unixTime } from '../helper.mjs';
+import { nanoid32, unixTime } from "../helper.js";
 import dotEnv from 'dotenv';
 
 dotEnv.config();

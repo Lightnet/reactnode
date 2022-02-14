@@ -5,14 +5,14 @@
 
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
 import useFetch from "../hook/useFetch.js";
-import { isEmpty } from "../../lib/helper.mjs";
+import { isEmpty } from "../../lib/helper.js";
 
 export const AuthContext = createContext();
 
 export function useAuth(){
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error(`useAuth must be used within a UserContext`)
+    throw new Error(`useAuth must be used within a AuthContext`)
   }
   return context;
 }

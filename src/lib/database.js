@@ -15,7 +15,7 @@
 
 //Import the mongoose module
 import mongoose from 'mongoose';
-import UserSchema from './mongoose/user.mjs';
+import UserSchema from "./mongoose/user.js";
 //import dotEnv from 'dotenv';
 
 //Set up default mongoose connection

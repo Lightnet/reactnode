@@ -4,7 +4,7 @@
 */
 
 import mongoose from 'mongoose';
-import { nanoid32, unixTime } from '../helper.mjs';
+import { nanoid32, unixTime } from '../helper.js';
 
 const Schema = mongoose.Schema;
 var BlankSchema = new mongoose.Schema({

@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { useGame } from '../gameprovider.js';
 import useFetch from '../../hook/useFetch.js';
-import { isEmpty } from '../../../lib/helper.mjs';
+import { isEmpty } from '../../../lib/helper.js';
 
 export default function BaseCreate({ops}) {
 

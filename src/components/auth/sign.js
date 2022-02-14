@@ -18,7 +18,7 @@ export default function Sign(){
   if(status == 'unauth'){
     return (<>
       <Link to="/signin">Sign In</Link> <span> | </span>
-      <Link to="/signup">Sign Up</Link> <span> | </span>
+      <Link to="/signup">Sign Up</Link>
     </>)
   }
   return <Link to="/signout">Sign Out</Link>

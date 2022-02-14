@@ -19,4 +19,13 @@ router.get('/test', function (req, res) {
   res.send('test page')
 })
 
+router.get('/json', function (req, res) {
+  res.json({message:'test page'})
+})
+
+router.get('/exit', function (req, res) {
+  console.log('browser close...')
+  res.send('test page')
+})
+
 export default router;

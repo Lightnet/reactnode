@@ -1,8 +1,14 @@
 import express from 'express';
-import clientDB from '../../../lib/database.mjs';
+import clientDB from "../../../lib/database.js";
 import jwt from 'jsonwebtoken';
-import { isEmpty } from '../../../lib/helper.mjs';
+import { isEmpty } from "../../../lib/helper.js";
 const router = express.Router();
+
+router.get('/game', (req, res) => {
+  res.send(
+    '<script src="/bundle.js"></script>'
+  )
+})
 
 router.get('/api/base',async function (req, res) {
 
@@ -72,9 +78,6 @@ router.post('/api/baseoutpost',async function (req, res) {
       try{
         //need to check if base is create
 
-
-
-
         let newCharacter = new Character({
           userid:userid,
           name:data.charactername
@@ -105,10 +108,7 @@ router.post('/api/baseoutpost',async function (req, res) {
   res.send({error:'fail'});
 });
 
-
-
 router.post('/game',async function (req, res) {
-
   //return res.send({action:'EXIST'});
   res.send({error:'fail'});
 });

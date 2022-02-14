@@ -6,17 +6,14 @@
 //https://expressjs.com/en/guide/routing.html
 
 import express from 'express';
-import clientDB from '../../lib/database.mjs';
+import clientDB from "../../lib/database.js";
 const router = express.Router();
 
 router.post('/signin',async function (req, res) {
-  console.log(req.body); // your JSON
-  
+  //console.log(req.body); // your JSON
   let data = req.body;
   let db = await clientDB();
-
   let User = db.model('User');
-
   let user = await User.findOne({ username: data.userName }).exec();
   //console.log("users");
   //console.log(users);
@@ -25,14 +22,11 @@ router.post('/signin',async function (req, res) {
   }else{
     if(user.validPassword(data.password)){
       //user.toAuthJSON();
-      console.log("[login] password pass!");
-
+      //console.log("[login] password pass!");
       let datasub = user.toAuthJSON()
       req.session.user = datasub.name;
       req.session.token = datasub.token;
-
-      console.log(req.session);
-
+      //console.log(req.session);
       return res.send({action:'LOGIN',user:datasub.name,token:datasub.token});
     }else{
       console.log("[login] password fail!");
@@ -97,7 +91,7 @@ router.post('/signout',async function (req, res) {
 });
 
 router.get('/session',async function (req, res) {
-  console.log(req.session);
+  //console.log(req.session);
   return res.send(req.session);
 })
 

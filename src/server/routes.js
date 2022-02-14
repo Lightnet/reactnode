@@ -5,11 +5,11 @@
 
 import express from 'express';
 const router = express.Router();
-import test from './test.mjs';
-import auth from './auth.mjs';
-import game from './game/game.mjs';
+import route_test from './routes/route_test.js';
+import auth from './routes/auth.js';
+import game from './routes/game/game.js';
 
-router.use(test); 
+router.use(route_test); 
 router.use(auth); 
 router.use(game); 
 

@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import { useAuth } from './auth/auth.js';
+import { useAuth } from '../auth/auth.js';
 
 import {
   Link
 } from "react-router-dom";
-import Sign from './auth/sign.js';
+import Sign from '../auth/sign.js';
+import ThemeLink from '../theme/themelink.js';
 
 export default function NavBarTop(){
 
@@ -25,6 +26,7 @@ export default function NavBarTop(){
   return (<>
     <Link to="/">Home</Link> <span> | </span>
     {renderAccess()}
-    <Sign />
+    <Sign /> <span> | </span>
+    <ThemeLink />
   </>)
 }

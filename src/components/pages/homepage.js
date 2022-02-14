@@ -4,9 +4,10 @@
 */
 
 import React, { useState } from 'react';
-import { useAuth } from './auth/auth.js';
+import { useAuth } from '../auth/auth.js';
+import NotiftyTest from '../notify/notiftytest.js';
 
-export function IndexPage() {
+export function HomePage() {
   //const [view, setView] = useState('');
   const {user, setUser} = useAuth();
 
@@ -22,6 +23,7 @@ export function IndexPage() {
     <div>
       <label>Index</label><br />
       {checkUserName()} <br />
+      <NotiftyTest />
     </div>
   </>);
 }

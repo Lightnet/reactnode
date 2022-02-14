@@ -4,8 +4,8 @@
 */
 
 import React, { useState } from 'react';
-import { useAuth } from './auth/auth.js';
-import useFetch from './hook/useFetch.js';
+import { useAuth } from '../auth/auth.js';
+import useFetch from '../hook/useFetch.js';
 
 export function AccountPage() {
   //const [view, setView] = useState('');

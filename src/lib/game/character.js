@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 export class Character {
 
   constructor(arg){
@@ -14,7 +19,5 @@ export class Character {
     this.magicattack = arg.magicattack || 1;
     this.magicdefense = arg.magicdefense || 1;
 
-    
   }
-
 }
