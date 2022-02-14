@@ -5,7 +5,10 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../auth/auth.js';
+import { Counter } from '../counter/counter.js';
 import NotiftyTest from '../notify/notiftytest.js';
+import { AddPostForm } from '../notifyredux/addnotifyform.js';
+import NotifyList from '../notifyredux/notifylist.js';
 
 export function HomePage() {
   //const [view, setView] = useState('');
@@ -23,7 +26,10 @@ export function HomePage() {
     <div>
       <label>Index</label><br />
       {checkUserName()} <br />
-      <NotiftyTest />
+      <NotiftyTest /> <br />
+      <Counter /> <br />
+      <AddPostForm /> <br />
+      <NotifyList /> <br />
     </div>
   </>);
 }

@@ -5,12 +5,6 @@
 
 // https://stackoverflow.com/questions/36772389/how-can-i-add-multiple-classnames-to-react-component/36772461
 
-//import { ReactPropTypes } from "react";
-//import { ClassicComponentClass } from "react";
-//import { ReactComponent as Times } from "./times.svg";
-//import CreateContainer from "../createcontainer";
-//import { createPortal } from "react-dom";
-
 import React, { useEffect, useState } from "react";
 
 import cn from "classnames";
@@ -66,8 +60,3 @@ export const Color = {
   warning: "warning",
   error: "error",
 };
-
-//Notification.propTypes = {
-  //notificationType: PropTypes.oneOf(Object.keys(Color)),
-  //children: PropTypes.element,
-//};

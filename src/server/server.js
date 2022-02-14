@@ -107,10 +107,10 @@ async function main(){
 
   server.on('listening', function() {
     let localhost = getIPAddress();
-    console.log(`IP address 0 on http://${localhost}:${PORT} <- LOCAL HOST IP`);
-    console.log(`IP address 1 on http://${HOST}:${PORT}`)
-    console.log(`IP address 2 on http://127.0.0.1:${PORT} `);
-    console.log(`IP address 3 on http://localhost:${PORT} <- Default for dev testing...`);
+    console.log(`IP address 0 on http://${localhost}:${PORT} <- Local host IP address machine`);
+    console.log(`IP address 1 on http://localhost:${PORT} <- Default for dev testing...`);
+    //console.log(`IP address 2 on http://${HOST}:${PORT}`)// does not work but if "0.0.0.0" this will aollow outside access
+    //console.log(`IP address 3 on http://127.0.0.1:${PORT}`);//does not work script // Content Security Policy 
     //console.log(`IP address 4 on http://localhost:${PORT}/ip <- IP Test`);
     console.log('Express server started on port %s at %s', server.address().port, server.address().address);
     //console.log("SERVER:: ",server.address())

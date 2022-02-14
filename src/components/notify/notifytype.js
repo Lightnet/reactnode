@@ -22,33 +22,24 @@ export function info(children, autoClose) {
   });
   return;
 }
-
 export function Notifysuccess(children, autoClose) {
-
   const { setNotify } = useNotifty();
-
   return setNotify({
     color: Color.success,
     children,
     autoClose,
   });
 }
-
 export function Notifywarning(children, autoClose) {
-
   const { setNotify } = useNotifty();
-
   return setNotify({
     color: Color.warning,
     children,
     autoClose,
   });
 }
-
 export function Notifyerror(children, autoClose) {
-
   const { setNotify } = useNotifty();
-
   return setNotify({
     color: Color.error,
     children,

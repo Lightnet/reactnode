@@ -13,10 +13,13 @@ import { RoutePage } from './routepage.js';
 import { NottifyProvider } from './notify/notifyprovider.js';
 import { ThemeProvider } from './theme/themeprovider.js';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from "react-redux";
+import store from "./store/store.js";
 
 export default function App() {
 
   return (<>
+  <Provider store={store}>
     <ThemeProvider>
       <NottifyProvider>
         <AuthProvider>
@@ -26,5 +29,6 @@ export default function App() {
         </AuthProvider>
       </NottifyProvider>
     </ThemeProvider>
+  </Provider>
   </>);
 }
