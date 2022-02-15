@@ -6,21 +6,34 @@
 //does not work
 
 import React, { useState } from 'react';
-
-import { useDispatch } from 'react-redux';
-import { notifyAdded } from './notifyslice.js';
+import { useSelector, useDispatch } from 'react-redux'
+import { notifyAdd, notifyClear } from './notifyslice.js';
 import { nanoid } from '@reduxjs/toolkit';
 
+export default function NotifyReduxTest(){
 
-export default function AddNoteTest(){
+  const notifies = useSelector(state => state.notifyredux)
+  console.log(notifies);
 
   const dispatch = useDispatch()
 
-  dispatch(
-    notifyAdded({
-      id: nanoid(),
-      title:"test"+nanoid(),
-      content:"test"+nanoid()
-    })
-  )
+  function clickTest(){
+    dispatch(
+      notifyAdd({
+        id: nanoid(),
+        message:"test"
+      })
+    )
+  }
+
+  function clickClear(){
+    dispatch(
+      notifyClear()
+    )
+  }
+
+  return <>
+    <button onClick={clickTest}> Notify Redux Add </button>
+    <button onClick={clickClear}> Notify Redux Clear </button>
+  </>
 }

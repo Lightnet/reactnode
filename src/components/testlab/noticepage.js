@@ -4,13 +4,19 @@
 */
 import React from "react";
 import NotiftyTestv2 from "../notify/notifytestv2.js";
+import { AddNotifyReduxForm } from "../notifyredux/addnotifyreduxform.js";
+import NotifyReduxList from "../notifyredux/notifyreduxlist.js";
+import NotifyReduxTest from "../notifyredux/notifyreduxtest.js";
 
 export default function NoticePage(){
 
   return (<>
     <div>
-      <label>NoticePage</label>
-      <NotiftyTestv2 />
+      <label>NoticePage</label><br/>
+      <NotiftyTestv2 /><br/>
+      <NotifyReduxTest /><br/>
+      <AddNotifyReduxForm /><br/>
+      <NotifyReduxList /><br/>
     </div>
   </>)
 }

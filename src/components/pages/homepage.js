@@ -40,9 +40,5 @@ export function HomePage() {
   </>);
 }
 /*
-<label> {notifies.length} </label>      
-<NotiftyTestv2 />
-<NotiftyTest /> <br />
-<CookieButton /> <br />
-<SessionButton /> <br />
+
 */

@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 // https://www.valentinog.com/blog/redux/
 //import { createStore } from "redux";
 //import rootReducer from "../reducers/index.js";
@@ -5,10 +10,10 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from "../counter/counterslice.js"
-import notifyReducer from "../notifyredux/notifyslice.js"
+import notifySlice from "../notifyredux/notifyslice.js"
 export default configureStore({
   reducer: {
     counter: counterReducer
-    , notifies: notifyReducer // state varaible
+    , notifyredux: notifySlice // state varaible
   }
 })
