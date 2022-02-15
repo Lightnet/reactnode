@@ -11,8 +11,8 @@ import SessionButton from '../session/sessionbutton.js';
 //import { notifyAdded } from '../notifyredux/notifyslice.js';
 //import { nanoid } from '@reduxjs/toolkit';
 
-import { useNotifty } from '../notifyv2/notify.js';
-import NotiftyTestv2 from '../notifyv2/notifytestv2.js';
+import { useNotifty } from '../notify/notify.js';
+import NotiftyTestv2 from '../notify/notifytestv2.js';
 
 export function HomePage() {
   //const [view, setView] = useState('');
@@ -33,29 +33,10 @@ export function HomePage() {
     }
   }
 
-  function clickTest(){
-    //AddNoteTest(); //does not work
-    console.log(notifies);
-    dispatchNotify({
-      type:'increment'
-    });
-
-    /*
-    dispatch(
-      notifyAdded({
-        id: nanoid(),
-        title:"test"+nanoid(),
-        content:"test"+nanoid()
-      })
-    )
-    */
-  }
-
   return (<>
     <div>
       <label>Index</label><br />
       {checkUserName()} <br />
-      <button onClick={clickTest}> test notify </button> <br />
       <label> {notifies.length} </label>      
       <NotiftyTestv2 />
     </div>

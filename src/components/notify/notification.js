@@ -10,9 +10,9 @@
 // https://stackoverflow.com/questions/36772389/how-can-i-add-multiple-classnames-to-react-component/36772461
 
 import React, { useEffect, useState } from "react";
-
 import cn from "classnames";
 import styles from "./notification.module.css";
+import { Color } from "./notify.js";
 
 let timeToDelete = 300;
 let timeToClose = 1000 * 10;
@@ -23,7 +23,7 @@ export default function Notification({
   onDelete, 
   children 
 }) {
-
+  //console.log(color,autoClose,children)
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
@@ -57,10 +57,3 @@ export default function Notification({
     </div>
   </>);
 }
-
-export const Color = {
-  info: "info",
-  success: "success",
-  warning: "warning",
-  error: "error",
-};

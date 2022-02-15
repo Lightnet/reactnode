@@ -40,6 +40,10 @@ a {
   color: var(--link-color);
 }
 
+label{
+  color: var(--text-color);
+}
+
 a:hover {
   text-decoration: underline;
   filter: brightness(80%);
