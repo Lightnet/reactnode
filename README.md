@@ -38,7 +38,7 @@ By using the the react relate packages. To imporve logic code, layout and other 
   - use session (used)
   - use cookie
 - notify (simple dispatch)
-  - [notify doc ](/blob/main/docs/notify.md)
+  - [notify doc ](/docs/notify.md)
   - context
   - provider
   - useReducer
