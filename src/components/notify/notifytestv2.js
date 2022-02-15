@@ -1,3 +1,7 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 import React from 'react';
 import { nanoid16 } from '../../lib/helper.js';

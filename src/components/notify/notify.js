@@ -14,7 +14,7 @@
       , autoClose: true // optional 
     })
 
-  api:
+  hooks:
     - Context
     - reducer
     - Provider

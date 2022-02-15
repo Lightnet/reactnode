@@ -1,5 +1,7 @@
-
-
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 import { createSlice } from '@reduxjs/toolkit';
 

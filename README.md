@@ -24,6 +24,8 @@
   Design for web page to tests api by using fetch call and api since it bundle into single javascript. By using the react dom router for account access, api logic type call, and other things for testing. Without need to reload the url pages to save bandwidth and keep it simple call from fetch url. Plus it reduce the load on server for new pages.
 
 # Dev Notes:
+  This project is set up as type module in package.json require to used import test from "./test.js" and incorrect from "./test" does not work. It need file name extension. For the server and client script to work.
+
 - dayjs
   
   Used for time stamp for time or date for data store.
@@ -47,7 +49,7 @@ Work in progress testing...
   Using mongodb for easy update data.
 
 # features:
-- account management dummy test
+- account management dummy test (work in progress)
   - use session (used)
   - use cookie
 - notify (simple dispatch)

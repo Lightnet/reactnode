@@ -40,3 +40,9 @@ export function unixTime(){
 export function unixToDate(unix){
   return dayjs.unix(unix).format('DD/MM/YYYY h:m:s a');
 }
+
+// https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+
+export function capitalizeFirstLetter(s) {
+  return s && s[0].toUpperCase() + s.slice(1);
+}

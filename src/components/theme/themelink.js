@@ -25,5 +25,9 @@ export default function ThemeLink(){
     localStorage.setItem('theme', targetTheme);
   }
 
-  return <a style={{cursor: 'pointer'}} onClick={clickTheme}>Theme {theme}</a>
+  function capitalizeFirstLetter(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+  }
+
+  return <a style={{cursor: 'pointer'}} onClick={clickTheme}>Theme {capitalizeFirstLetter(theme)}</a>
 }

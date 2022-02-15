@@ -17,6 +17,7 @@ export default function NavBarTop(){
       return <></>
     }
     return(<>
+      
       <Link to="account">Account</Link> <span> | </span>
       <Link to="game">Game</Link> <span> | </span>
       <Link to="message">Message</Link> <span> | </span>
@@ -27,6 +28,7 @@ export default function NavBarTop(){
     <Link to="/">Home</Link> <span> | </span>
     {renderAccess()}
     <Sign /> <span> | </span>
-    <ThemeLink />
+    <ThemeLink /> <span> | </span>
+    <Link to="/testlab">Test Lab</Link> <span> | </span>
   </>)
 }

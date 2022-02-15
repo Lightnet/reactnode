@@ -20,9 +20,11 @@ import { GamePage } from './game/gamesection.js';
 import Message from './message/index.js';
 import ErrorPage from './pages/errorpage.js';
 import NotifyManager from './notify/notifymanager.js';
+import TestLabPage from './testlab/testlabpage.js';
 //import NotifyManager from './notify/notifymanager.js';
 
 export function RoutePage() {
+
 
   return (
   <>
@@ -37,6 +39,7 @@ export function RoutePage() {
       <Route path="signout" element={<SignOutPage />} />
       <Route path="game" element={<GamePage />} />
       <Route path="message" element={<Message />} />
+      <Route path="testlab/*" element={<TestLabPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     <NotifyManager />
