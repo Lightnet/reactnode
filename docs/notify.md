@@ -1,12 +1,28 @@
 # Notofy
 
 # Information:
-  To keep the notify call by using the context.
+  To kept the code most simple for notify call by using the context, provider and useReducer. By using the useReducer with state and dispatch call to handle the array params. Using the function on dispatch to filter out the message type and config then put into the array. Simple css color and position.
 
 # api:
 
 ```js
-//import { useNotifty } from './notify/notify.js'; // depend where the file dir
+import { useNotifty } from '<path>/notify/notify.js'; // depend where the file dir
+  //...
+
+  const {dispatchNotify} = useNotifty();
+  //...
+
+  dispatchNotify({//array
+    type: 'add' // recommend add to array
+    , color: "info" // info, success, warning, error // recommend type of message
+    , id: nanoid16() // optional, delete event and reactjs key  
+    , children: <label>Hello World</label> || "hello world"  // display message, recommend 
+    , autoClose: true // optional 
+  })
+  
+```
+
+```js
 import { useNotifty } from './notify.js';
 
 export default function BlankNotifyInfo(){
@@ -19,23 +35,10 @@ export default function BlankNotifyInfo(){
       , children: <label>ASDASD</label>
     })
   }
-  /*
-  dispatchNotify({//array
-      type: 'add' // recommend 
-      , color: "info" // info, success, warning, error // recommend 
-      , id: nanoid16() // optional, delete event and reactjs key  
-      , children: <label>Hello World</label> || "hello world"  // display message, recommend 
-      , autoClose: true // optional 
-    })
-  */
 
   return<button onClick={clickInfo1}>info</button>
 }
-
-
 ```
-
-
 # setup:
 
 App.js

@@ -26,9 +26,7 @@ By using the the react relate packages. To imporve logic code, layout and other 
 
 - react
 - react-dom
-
 - react-router-dom
-
 - react-redux
 - @reduxjs/toolkit
 
@@ -37,7 +35,14 @@ By using the the react relate packages. To imporve logic code, layout and other 
 
 # features:
 - account management dummy test
-- notify (work in progress / testing...)
+  - use session (used)
+  - use cookie
+- notify (simple dispatch)
+  - [notify doc ](doc/notify)
+  - context
+  - provider
+  - useReducer
+  
 - theme toggle light and dark
 - route pages
 - 
