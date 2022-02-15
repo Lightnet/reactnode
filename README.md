@@ -17,9 +17,20 @@
 - nanoid
 
 # Information:
-  This is testing project. To develop modular react ui and components.
+  This is testing project. 
+  
+  To develop modular react ui, components and api. Justing the using the webpack, babel, express web server and other packages to keep it simple.
 
-  Design for web page tests components build basic on account login, register, access and other things.
+  Design for web page to tests api by using fetch call and api since it bundle into single javascript. By using the react dom router for account access, api logic type call, and other things for testing. Without need to reload the url pages to save bandwidth and keep it simple call from fetch url. Plus it reduce the load on server for new pages.
+
+# Dev Notes:
+- dayjs
+  
+  Used for time stamp for time or date for data store.
+
+- nanoid
+  
+  Use for random number for react js components.
 
 # React:
 By using the the react relate packages. To imporve logic code, layout and other things. 
@@ -29,6 +40,8 @@ By using the the react relate packages. To imporve logic code, layout and other 
 - react-router-dom
 - react-redux
 - @reduxjs/toolkit
+
+Work in progress testing...
 
 # Database:
   Using mongodb for easy update data.
@@ -49,7 +62,6 @@ By using the the react relate packages. To imporve logic code, layout and other 
 
 # setup:
   Need to install mongodb and nodejs.
-
 
 ```
 npm install
