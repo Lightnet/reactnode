@@ -26,6 +26,8 @@
 # Dev Notes:
   This project is set up as type module in package.json require to used import test from "./test.js" and incorrect from "./test" does not work. It need file name extension. For the server and client script to work.
 
+  Some packages will required some simple like random id as reactjs required key when doing map loop render html.
+
 - dayjs
   
   Used for time stamp for time or date for data store.
@@ -49,18 +51,39 @@ Work in progress testing...
   Using mongodb for easy update data.
 
 # features:
-- account management dummy test (work in progress)
+- Account management dummy test (work in progress)
+  - sign up (added)
+  - logout (added)
+  - forgot password (not added)
+  - verify checks (not added)
+  - api fetch (not added)
   - use session (used)
   - use cookie
-- notify (simple dispatch)
+- Notify (simple dispatch)
   - [notify doc ](/docs/notify.md)
   - context
   - provider
   - useReducer
-  
-- theme toggle light and dark
-- route pages
-- 
+- cookie (added /not work on)
+  - button fetch test
+- session (added / testing )
+  - button fetch test
+- Theme toggle light and dark (added / simple / work in progress)
+  - custom color (not added)
+- route pages (added / work in progress)
+- test lab page (testing features in simple form)
+  - notfity test type meeages with button ( added )
+  - 
+- redux
+  - notify ( testing / work in progress)
+  - counter ( added )
+  - posts ( added /  work in progress)
+
+- Game
+  - moblie base game
+
+  Testing game logic.
+
 
 # setup:
   Need to install mongodb and nodejs.
