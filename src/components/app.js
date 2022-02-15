@@ -10,25 +10,28 @@
 import React from 'react';
 import { AuthProvider } from './auth/auth.js';
 import { RoutePage } from './routepage.js';
-import { NottifyProvider } from './notify/notifyprovider.js';
+//import { NottifyProvider } from './notify/notifyprovider.js';
 import { ThemeProvider } from './theme/themeprovider.js';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from "react-redux";
-import store from "./store/store.js";
+import { NotifyProvider } from './notifyv2/notify.js';
+//import { Provider } from "react-redux";
+//import store from "./store/store.js";
 
 export default function App() {
 
   return (<>
-  <Provider store={store}>
+  
     <ThemeProvider>
-      <NottifyProvider>
+      <NotifyProvider>
         <AuthProvider>
           <BrowserRouter>
             <RoutePage />
           </BrowserRouter>
         </AuthProvider>
-      </NottifyProvider>
+      </NotifyProvider>
     </ThemeProvider>
-  </Provider>
+
   </>);
 }
+
+// <Provider store={store}>

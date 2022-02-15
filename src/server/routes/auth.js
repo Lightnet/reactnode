@@ -35,7 +35,7 @@ router.post('/signin',async function (req, res) {
     //return res.send({action:'EXIST'});
   }
 
-  return res.send(req.body); // echo the result back
+  //return res.send(req.body); // echo the result back
   //res.send(`<html lang="en">page</html>`);
 });
 
@@ -59,7 +59,7 @@ router.post('/signup',async function (req, res) {
     return res.send({action:'EXIST'});
   }
 
-  return res.send(req.body); // echo the result back
+  //return res.send(req.body); // echo the result back
   //res.send(`<html lang="en">page</html>`);
 });
 
@@ -84,15 +84,19 @@ router.post('/signout',async function (req, res) {
   //}else{
     //return res.send({action:'EXIST'});
   //}
-  return res.send({action:'SIGNOUT'}); // echo the result back
-
-  return res.send({error:'ERROR'}); // echo the result back
+  return res.json({action:'SIGNOUT'}); // echo the result back
+  //return res.send({error:'ERROR'}); // echo the result back
   //res.send(`<html lang="en">page</html>`);
 });
 
 router.get('/session',async function (req, res) {
   //console.log(req.session);
-  return res.send(req.session);
+  return res.json(req.session);
+})
+
+router.get('/cookie', function (req, res) {
+  console.log('cookie ...')
+  res.json({cookie:'nocookie'})
 })
 
 export default router;

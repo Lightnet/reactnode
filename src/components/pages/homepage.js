@@ -5,14 +5,25 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../auth/auth.js';
-import { Counter } from '../counter/counter.js';
-import NotiftyTest from '../notify/notiftytest.js';
-import { AddPostForm } from '../notifyredux/addnotifyform.js';
-import NotifyList from '../notifyredux/notifylist.js';
+import CookieButton from '../cookie/cookiebutton.js';
+import SessionButton from '../session/sessionbutton.js';
+
+//import { notifyAdded } from '../notifyredux/notifyslice.js';
+//import { nanoid } from '@reduxjs/toolkit';
+
+import { useNotifty } from '../notifyv2/notify.js';
+import NotiftyTestv2 from '../notifyv2/notifytestv2.js';
 
 export function HomePage() {
   //const [view, setView] = useState('');
+
+  const {
+    notifies,
+    dispatchNotify
+  } = useNotifty();
+
   const {user, setUser} = useAuth();
+  //const dispatch = useDispatch()
 
   function checkUserName(){
     if(user ==''){
@@ -22,14 +33,41 @@ export function HomePage() {
     }
   }
 
+  function clickTest(){
+    //AddNoteTest(); //does not work
+    console.log(notifies);
+    dispatchNotify({
+      type:'increment'
+    });
+
+    /*
+    dispatch(
+      notifyAdded({
+        id: nanoid(),
+        title:"test"+nanoid(),
+        content:"test"+nanoid()
+      })
+    )
+    */
+  }
+
   return (<>
     <div>
       <label>Index</label><br />
       {checkUserName()} <br />
-      <NotiftyTest /> <br />
-      <Counter /> <br />
-      <AddPostForm /> <br />
-      <NotifyList /> <br />
+      <button onClick={clickTest}> test notify </button> <br />
+      <label> {notifies.length} </label>      
+      <NotiftyTestv2 />
     </div>
   </>);
 }
+/*
+
+<NotiftyTest /> <br />
+<Counter /> <br />
+<AddPostForm /> <br />
+<NotifyList /> <br />
+<CookieButton /> <br />
+<SessionButton /> <br />
+<button onClick={clickTest}> Add notify </button>
+*/

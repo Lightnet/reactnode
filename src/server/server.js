@@ -6,6 +6,7 @@
 // https://www.npmjs.com/package/connect-mongo
 // https://expressjs.com/en/resources/middleware/session.html
 // 
+import chalk from 'chalk';
 import http from 'http';
 import express from "express";
 import dotEnv from 'dotenv';
@@ -16,14 +17,16 @@ import cors from "cors";
 //import clientDB from '../lib/database.js';
 import { networkInterfaces } from 'os';
 
+const log = console.log;
+
 // load .env var
 dotEnv.config();
 
 //const SECRET = process.env.SECRET;
 //console.log(SECRET)
 
-var DATABASE_URL = process.env.DATABASE_URL;
-console.log("DATABASE_URL: ",DATABASE_URL)
+//var DATABASE_URL = process.env.DATABASE_URL;
+//console.log("DATABASE_URL: ",DATABASE_URL)
 
 const app = express();
 const PORT =  process.env.PORT || 3000;
@@ -108,7 +111,10 @@ async function main(){
   server.on('listening', function() {
     let localhost = getIPAddress();
     console.log(`IP address 0 on http://${localhost}:${PORT} <- Local host IP address machine`);
-    console.log(`IP address 1 on http://localhost:${PORT} <- Default for dev testing...`);
+    //console.log(`IP address 1 on http://localhost:${PORT} <- Default for dev testing...`);
+
+    log("IP address 1 on "+chalk.green(`http://localhost:${PORT} `) + chalk.red('Default for dev testing.'));
+
     //console.log(`IP address 2 on http://${HOST}:${PORT}`)// does not work but if "0.0.0.0" this will aollow outside access
     //console.log(`IP address 3 on http://127.0.0.1:${PORT}`);//does not work script // Content Security Policy 
     //console.log(`IP address 4 on http://localhost:${PORT}/ip <- IP Test`);

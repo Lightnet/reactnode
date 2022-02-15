@@ -1,6 +1,10 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Information:
+    Display alert need to be added.
+
 */
 
 import React,{ useEffect } from "react";

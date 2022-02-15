@@ -1,6 +1,10 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Information:
+    Display message and timer to auto close
+
 */
 
 // https://stackoverflow.com/questions/36772389/how-can-i-add-multiple-classnames-to-react-component/36772461

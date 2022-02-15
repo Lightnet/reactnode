@@ -21,9 +21,23 @@
 
   Design for web page tests components build basic on account login, register, access and other things.
 
+# React:
+By using the the react relate packages. To imporve logic code, layout and other things. 
+
+- react
+- react-dom
+
+- react-router-dom
+
+- react-redux
+- @reduxjs/toolkit
+
+# Database:
+  Using mongodb for easy update data.
+
 # features:
 - account management dummy test
-- notify
+- notify (work in progress / testing...)
 - theme toggle light and dark
 - route pages
 - 

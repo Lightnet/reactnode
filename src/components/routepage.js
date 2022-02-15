@@ -19,7 +19,8 @@ import NavBarTop from './layout/navbartop.js';
 import { GamePage } from './game/gamesection.js';
 import Message from './message/index.js';
 import ErrorPage from './pages/errorpage.js';
-import NotifyManager from './notify/notifymanager.js';
+import NotifyManager from './notifyv2/notifymanager.js';
+//import NotifyManager from './notify/notifymanager.js';
 
 export function RoutePage() {
 
