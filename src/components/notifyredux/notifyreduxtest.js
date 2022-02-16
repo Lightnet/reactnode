@@ -13,7 +13,7 @@ import { nanoid } from '@reduxjs/toolkit';
 export default function NotifyReduxTest(){
 
   const notifies = useSelector(state => state.notifyredux)
-  console.log(notifies);
+  //console.log(notifies);
 
   const dispatch = useDispatch()
 

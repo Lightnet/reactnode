@@ -95,7 +95,7 @@ function reducerNotify(state, action) {
 
 // need to top layer of app where Providers
 export function NotifyProvider(props){
-
+  //     state     dispatch          useReducer/ function     /init variable
   const [notifies, dispatchNotify] = useReducer(reducerNotify, []);
 
   const value = useMemo(()=>({

@@ -31,7 +31,6 @@ const initialState = []
 const notifySlice = createSlice({
   name: 'notifyredux',
   initialState,
-  //initialState:[],
   reducers: {
     notifyAdd:(state, action)=>{
       let color =  action.payload.color || Color.info; //default to info
@@ -50,7 +49,7 @@ const notifySlice = createSlice({
       ]
     },
     notifyRemove:(state, action)=>{
-      console.log(action.payload.id);
+      //console.log(action.payload.id);
       if(!action.payload.id){
         return state;
       }

@@ -1,11 +1,13 @@
-
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 // https://redux.js.org/tutorials/essentials/part-3-data-flow
 
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
-
+//import { nanoid } from '@reduxjs/toolkit';
 import { notifyAdd } from './notifyslice.js';
 
 export const AddNotifyReduxForm = () => {
@@ -19,7 +21,7 @@ export const AddNotifyReduxForm = () => {
 
   const onSavePostClicked = () => {
     if (message) {
-      console.log("test");
+      //console.log("test");
       dispatch(
         notifyAdd({
           color:colorType
@@ -34,7 +36,7 @@ export const AddNotifyReduxForm = () => {
     <section>
       <h2>Add Notify Redux Alert</h2>
       <form>
-        <label htmlFor="postTitle">Type:</label>
+        <label>Type:</label>
         <select value={colorType} onChange={onColorChanged}>
           <option value="info"> info </option>
           <option value="success"> success </option>

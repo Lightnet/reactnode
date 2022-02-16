@@ -21,6 +21,7 @@ import Message from './message/index.js';
 import ErrorPage from './pages/errorpage.js';
 import NotifyManager from './notify/notifymanager.js';
 import TestLabPage from './testlab/testlabpage.js';
+import NotifyReduxManager from './notifyredux/notifyreduxmanager.js';
 //import NotifyManager from './notify/notifymanager.js';
 
 export function RoutePage() {
@@ -43,5 +44,6 @@ export function RoutePage() {
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     <NotifyManager />
+    <NotifyReduxManager />
   </>)
 }
