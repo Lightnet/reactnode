@@ -75,7 +75,7 @@ Work in progress testing...
   - notfity test type meeages with button ( added )
   - 
 - redux
-  - notify ( testing / work in progress)
+  - notify ( added )
   - counter ( added )
   - posts ( added /  work in progress)
 

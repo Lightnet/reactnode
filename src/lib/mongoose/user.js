@@ -119,6 +119,25 @@ UserSchema.methods.checkToken = function(token){
     return false;
   }
 }
+
+UserSchema.methods.checkTokenLogout = function(token){
+  // invalid token - synchronous
+  try {
+    //var decoded = jwt.verify(token, 'wrong-secret');//check fail
+    var decoded = jwt.verify(token, secret);
+    if(decoded){
+      return true;
+    }else{
+      return false;
+    }
+
+  } catch(err) {
+    // err
+    return false;
+  }
+}
+
+
 export default UserSchema;
 // Compile model from schema
 //mongoose.model('User', UserSchema );

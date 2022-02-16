@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../auth/auth.js';
-import { useNotifty } from '../notify/notify.js';
+import { useNotifty } from '../notify/notifyprovider.js';
 //import CookieButton from '../cookie/cookiebutton.js';
 //import SessionButton from '../session/sessionbutton.js';
 //import { notifyAdded } from '../notifyredux/notifyslice.js';
@@ -34,8 +34,12 @@ export function HomePage() {
 
   return (<>
     <div>
-      <label>Index</label><br />
+      <label>Home</label><br />
       {checkUserName()} <br />
+      <p>
+        Welcome to the test project. I keep it simple to build react components. Test Lab Page is for testing each part of the module design.
+      </p>
+      
     </div>
   </>);
 }

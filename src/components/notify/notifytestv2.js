@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { nanoid16 } from '../../lib/helper.js';
-import { useNotifty } from './notify.js';
+import { useNotifty } from './notifyprovider.js';
 
 export function clickInfo0(){// not correct // not react component
   const {dispatchNotify} = useNotifty();

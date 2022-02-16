@@ -12,7 +12,7 @@
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import styles from "./notification.module.css";
-import { Color } from "./notify.js";
+import { Color } from "./notifyprovider.js";
 
 let timeToDelete = 300;
 let timeToClose = 1000 * 10;

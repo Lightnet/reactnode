@@ -74,11 +74,15 @@ router.post('/signout',async function (req, res) {
   })
   //console.log(req.body); // your JSON
   //let data = req.body;
-  //let db = await clientDB();
-  //let User = db.model('User');
+  let db = await clientDB();
+  let User = db.model('User');
+  // neeed token
+
+
   //let user = await User.findOne({ username: data.user }).exec();
-  //console.log("users");
-  //console.log(users);
+
+
+
   //if(!user){
     //return res.send({action:'NONEXIST'});
   //}else{

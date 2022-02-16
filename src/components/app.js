@@ -12,7 +12,7 @@ import { AuthProvider } from './auth/auth.js';
 import { RoutePage } from './routepage.js';
 import { ThemeProvider } from './theme/themeprovider.js';
 import { BrowserRouter } from 'react-router-dom';
-import { NotifyProvider } from './notify/notify.js';
+import { NotifyProvider } from './notify/notifyprovider.js';
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 

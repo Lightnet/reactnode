@@ -10,7 +10,7 @@
 import React from "react";
 import Notification from "./notification.js";
 import NotifyContainer from "./notifycontainer.js";
-import { useNotifty } from "./notify.js";
+import { useNotifty } from "./notifyprovider.js";
 
 export default function NotifyManager(){
 

@@ -4,12 +4,14 @@
 */
 
 import React from "react";
+import ClockTime from "../utilities/timeclock.js";
 
 export default function TimersPage(){
 
   return (<>
     <div>
-      <label>Timeers</label>
+      <label>Timers</label><br /><br />
+      <ClockTime/><br />
     </div>
   </>)
 }
