@@ -13,12 +13,11 @@ https://usehooks.com/
 
 https://www.freecodecamp.org/news/how-to-create-react-hooks/
 
+https://usehooks-ts.com/react-hook/use-fetch
 
+https://github.com/juliencrn/usehooks-ts
 
+https://morioh.com/p/74097abd01bf
 
-
-
-
-
-
-
+https://www.robinwieruch.de/react-hooks-fetch-data/
+https://morioh.com/p/74097abd01bf
