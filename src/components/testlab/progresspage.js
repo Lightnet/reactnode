@@ -4,6 +4,7 @@
 */
 
 import React from "react";
+import ProgressBarUI from "../progress/progressbarui.js";
 
 export default function ProgressPage(){
 
@@ -11,5 +12,6 @@ export default function ProgressPage(){
     <div>
       <label>ProgressPage</label>
     </div>
+    <ProgressBarUI />
   </>)
 }

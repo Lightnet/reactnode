@@ -9,6 +9,7 @@ import CountersPage from "./counterspage.js";
 import NoticePage from "./noticepage.js";
 import ProgressPage from "./progresspage.js";
 import TimersPage from "./timerspage.js";
+import UIPage from "./uipage.js";
 
 export default function TestLabPage(){
 
@@ -19,6 +20,7 @@ export default function TestLabPage(){
       <Link to="counters"> Counters </Link> <span> | </span>
       <Link to="progress"> Progress </Link> <span> | </span>
       <Link to="notice"> Notice </Link> <span> | </span>
+      <Link to="ui"> UI </Link> <span> | </span>
     </div>
     <div>
     <Routes>
@@ -27,6 +29,7 @@ export default function TestLabPage(){
       <Route path="counters" element={<CountersPage />} />
       <Route path="progress" element={<ProgressPage />} />
       <Route path="notice" element={<NoticePage />} />
+      <Route path="ui" element={<UIPage />} />
     </Routes>
     </div>
   </>)

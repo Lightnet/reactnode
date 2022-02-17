@@ -4,6 +4,7 @@
 */
 
 import React from "react";
+import AddTimerUI from "../timers/addtimer.js";
 import ClockTime from "../utilities/timeclock.js";
 
 export default function TimersPage(){
@@ -12,6 +13,8 @@ export default function TimersPage(){
     <div>
       <label>Timers</label><br /><br />
       <ClockTime/><br />
+
+      <AddTimerUI />
     </div>
   </>)
 }

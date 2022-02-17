@@ -1,0 +1,10 @@
+
+# =====
+setInterval
+clearInterval
+
+# =====
+setTimeout
+clearTimeout
+
+

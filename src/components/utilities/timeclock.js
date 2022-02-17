@@ -7,7 +7,7 @@ import React,{useState, useEffect} from "react";
 
 export default function ClockTime(){
 
-  const [time, setTime] = useState(new Date().toLocaleString());
+  const [time, setTime] = useState();
   const [intervalID, setIntervalID] = useState();
 
   function tick(){
@@ -15,6 +15,7 @@ export default function ClockTime(){
   }
 
   useEffect(()=>{
+    setTime(new Date().toLocaleString())
     let _intervalID=setInterval(
       () => tick(),
       1000
@@ -23,6 +24,7 @@ export default function ClockTime(){
 
     return ()=>{
       clearInterval(intervalID);
+      setTime(null)
     }
   },[])
 
