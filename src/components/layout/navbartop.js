@@ -30,5 +30,7 @@ export default function NavBarTop(){
     <Sign /> <span> | </span>
     <ThemeLink /> <span> | </span>
     <Link to="/testlab">Test Lab</Link> <span> | </span>
+    <Link to="/upload">Upload</Link> <span> | </span>
+    <Link to="/download">Download</Link> <span> | </span>
   </>)
 }

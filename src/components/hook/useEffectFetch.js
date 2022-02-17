@@ -26,7 +26,11 @@ export default function useEffectFetch(url,options){
     setIsLoading(true);
     try{
       if(!url){
-        return console.log("url error");
+        //console.log("url error");
+        setResponse(null);
+        setError("Error! url not set!")
+        setIsLoading(false);
+        return;
       }
       if(!options){
         options={};
@@ -37,14 +41,17 @@ export default function useEffectFetch(url,options){
         //throw new Error(message);
         setResponse(null);
         setError("RESPONSE FETCH ERROR") // check if the server error
-        return setIsLoading(false);
+        setIsLoading(false);
+        return;
       }
       let data = await response.json();
       //return data;
       setResponse(data);
-      setIsLoading(false)
+      setError(null);
+      setIsLoading(false);
     }catch(e){
-      console.log("TRY FETCH ERROR: ", e);
+      //console.log("TRY FETCH ERROR: ", e);
+      setResponse(null);
       setError('TRY FETCH ERROR'); //check for json format error
       setIsLoading(false);
     }

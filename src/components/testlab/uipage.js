@@ -6,6 +6,7 @@
 import React from "react";
 import useEffectFetch from "../hook/useEffectFetch.js";
 import useFetch from "../hook/useFetch.js";
+import useFetchPromise from "../hook/useFetchPromise.js";
 
 export default function UIPage(){
 
@@ -25,11 +26,17 @@ export default function UIPage(){
     fetchcall();
   }
 
+  async function clickFetchPromise(){
+    let data = await useFetchPromise('/json');
+    console.log(data);
+  }
+
   return (<>
     <div>
       <label>UI PAGE</label><br/>
       <button onClick={clickTestFetch}> Fetch Test </button>
       <button onClick={clickFetchCall}> Fetch Call </button>
+      <button onClick={clickFetchPromise}> Fetch Promise </button>
     </div>
   </>)
 }

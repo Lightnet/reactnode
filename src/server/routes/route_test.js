@@ -20,6 +20,12 @@ router.get('/test', function (req, res) {
 })
 
 router.get('/json', function (req, res) {
+  //throw new Error('BROKEN'); //test fetch error
+  res.json({message:'test page'})
+})
+
+router.get('/jsone', function (req, res) {
+  throw new Error('BROKEN'); //test fetch error
   res.json({message:'test page'})
 })
 

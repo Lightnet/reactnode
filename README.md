@@ -78,7 +78,10 @@ Work in progress testing...
   - notify ( added )
   - counter ( added )
   - posts ( added /  work in progress)
-
+- upload ( added / simple )
+  - using the reactjs
+- download ( added / simple )
+  - using the reactjs
 - Game
   - moblie base game
 
@@ -126,7 +129,11 @@ export default function useEffectFetch(url,options){
     setIsLoading(true);
     try{
       if(!url){
-        return console.log("url error");
+        console.log("url error");
+        setResponse(null);
+        setError("RESPONSE FETCH ERROR")
+        setIsLoading(false);
+        return;
       }
       if(!options){
         options={};
@@ -135,13 +142,15 @@ export default function useEffectFetch(url,options){
       if (!response.ok) {
         setResponse(null);
         setError("RESPONSE FETCH ERROR") // check if the server error
-        return setIsLoading(false);
+        setIsLoading(false);
+        return;
       }
       let data = await response.json();
       setResponse(data);
       setIsLoading(false)
     }catch(e){
-      console.log("TRY FETCH ERROR: ", e);
+      //console.log("TRY FETCH ERROR: ", e);
+      setResponse(null);
       setError('TRY FETCH ERROR'); //check for json format error
       setIsLoading(false);
     }

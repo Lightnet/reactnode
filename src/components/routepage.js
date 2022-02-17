@@ -22,10 +22,11 @@ import ErrorPage from './pages/errorpage.js';
 import NotifyManager from './notify/notifymanager.js';
 import TestLabPage from './testlab/testlabpage.js';
 import NotifyReduxManager from './notifyredux/notifyreduxmanager.js';
+import UploadPage from './pages/uploadpage.js';
+import DownloadPage from './pages/downloadpage.js';
 //import NotifyManager from './notify/notifymanager.js';
 
 export function RoutePage() {
-
 
   return (
   <>
@@ -41,6 +42,8 @@ export function RoutePage() {
       <Route path="game" element={<GamePage />} />
       <Route path="message" element={<Message />} />
       <Route path="testlab/*" element={<TestLabPage />} />
+      <Route path="upload" element={<UploadPage />} />
+      <Route path="download" element={<DownloadPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     <NotifyManager />
