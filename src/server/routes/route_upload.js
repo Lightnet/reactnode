@@ -62,6 +62,7 @@ router.post('/upload', function (req, res) {
     console.log(files);
     if (err) {
       console.log("Error parsing the files");
+      console.log(err.message);
       return res.status(400).json({
         status: "Fail",
         message: "There was an error parsing the files",

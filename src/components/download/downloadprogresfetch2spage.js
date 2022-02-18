@@ -9,7 +9,7 @@
 
 import React, { useState } from "react";
 
-export default function DownloadProgressPage(){
+export default function DownloadProgressFetch2Page(){
   const [percent, setPercent] = useState(0);
   //const [receivedLength, setReceivedLength] = useState(0);
 
@@ -71,8 +71,7 @@ export default function DownloadProgressPage(){
   }
 
   return (<>
-    <label> Download progress </label><br />
-    <button onClick={clickDownload}> Download 2</button>
+    <button onClick={clickDownload}> Download Fetch 2</button>
     <progress value={percent} max="100"/>
   </>)
 }

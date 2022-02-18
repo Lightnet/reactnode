@@ -8,11 +8,12 @@
 // https://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
 // https://developpaper.com/nodejs-file-upload-monitoring-upload-progress/
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event
+// 
 // FETCH UPLOAD DOES NOT WORK ATM
 
 import React, { useState } from "react";
 
-export default function UploadPage2(){
+export default function UploadProgressXHRPage(){
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSelectFile, setIsSelectFile] = useState(false);
@@ -60,7 +61,7 @@ export default function UploadPage2(){
   return (<>
     <label> Upload progress test! </label>
     <input type="file" name="file" onChange={changeHandler}/><progress value={percent} max="100"/>
-    <button onClick={clickUpload}> Upload 2 </button>
+    <button onClick={clickUpload}> Upload XHR </button>
     {isSelectFile ? (
 				<div>
 					<p>Filename: {selectedFile.name}</p>

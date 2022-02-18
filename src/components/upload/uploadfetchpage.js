@@ -2,9 +2,18 @@
   LICENSE: MIT
   Created by: Lightnet
 */
+
+// https://stackoverflow.com/questions/35711724/upload-progress-indicators-for-fetch
+// https://usefulangle.com/post/321/javascript-fetch-upload-progress
+// https://jakearchibald.com/2016/streams-ftw/
+// https://dev.to/tqbit/how-to-monitor-the-progress-of-a-javascript-fetch-request-and-cancel-it-on-demand-107f
+// https://serversideup.net/file-uploads-using-fetch-api-and-vuejs/
+// 
+// 
+
 import React, { useState } from "react";
 
-export default function UploadPage(){
+export default function UploadFetchPage(){
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSelectFile, setIsSelectFile] = useState(false);

@@ -4,13 +4,16 @@
 */
 
 // https://stackoverflow.com/questions/39589917/show-a-progress-bar-for-downloading-files-using-xhr2-ajax/39599878
+// https://stackoverflow.com/questions/76976/how-to-get-progress-from-xmlhttprequest
+// https://developpaper.com/a-code-of-downloading-progress-bar-and-playing-progress-bar-in-js/
+// https://usefulangle.com/post/68/javascript-ajax-download-file
+// 
 // delay in popup if big file in browser
 
 import React, { useState } from "react";
 
-export default function DownloadProgress2Page(){
+export default function DownloadProgressXHRPage(){
   const [percent, setPercent] = useState(0);
-  //const [receivedLength, setReceivedLength] = useState(0);
 
   async function clickDownload(){
     setPercent(0);
@@ -47,35 +50,12 @@ export default function DownloadProgress2Page(){
       }
     };
 
-      xhr.open('GET', '/downloadtest', true);
-      xhr.send(); 
-
-
-
-    /*
-        //URL.createObjectURL(blob)
-        const url = window.URL.createObjectURL(
-          new Blob([blob]),
-        );
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute(
-          'download',
-          `test.txt`,//need to file name correctly
-        );
-        // Append to html link element page
-        document.body.appendChild(link);
-        // Start download
-        link.click();
-        // Clean up and remove the link
-        link.parentNode.removeChild(link);
-        console.log("done?")
-      */
+    xhr.open('GET', '/downloadtest', true);
+    xhr.send(); 
   }
 
   return (<>
-    <label> Download progress </label><br />
-    <button onClick={clickDownload}> Download 3</button>
+    <button onClick={clickDownload}> Download XHR</button>
     <progress value={percent} max="100"/>
   </>)
 }
