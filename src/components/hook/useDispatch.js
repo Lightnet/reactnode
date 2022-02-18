@@ -1,6 +1,10 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Informtion:
+    Not for used. Need another method safe access.
+
 */
 
 //import {useEffect } from 'react';

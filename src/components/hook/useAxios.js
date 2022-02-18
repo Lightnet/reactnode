@@ -1,5 +1,16 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 // https://towardsdev.com/what-is-better-for-http-requests-fetch-or-axios-comparison-920ceffc5161
+// https://masteringjs.io/tutorials/axios/response-body
+// https://zetcode.com/javascript/axios/
+// https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
+// 
+
+import axios from "axios";
+
 /*
 axios({
   method: 'post',
@@ -14,22 +25,39 @@ axios({
 .catch(error => console.error('timeout exceeded'))
 */
 
+export default function useAxios(configs){
 
-export default function useAxios(args){
-  axios(args)
-  //axios({
-    //method: 'post',
-    //url: '/login',
-    //timeout: 4000,    // 4 seconds timeout
-    //data: {
-      //firstName: 'Ayush',
-      //lastName: 'Verma'
-    //}
-  ///})
-  //.then(response => { handle the response })
-  .catch(error => {
-    console.log(error)
-    console.error('timeout exceeded')
+  return new Promise((resolve)=>{
+    axios(configs)
+    .then((response)=> {
+      //console.log(response);
+      //console.log("response.status:",response.status);
+      //console.log("response.status:",response.statusText);
+      if((response.status == 200)||(response.statusText == "OK")){
+        resolve(response.data)
+      }else{
+        resolve({error:"status: "+response.status })
+      }
+      
+    })
+    .catch(error => {
+      //console.log(error)
+      //console.log(error.message)
+      resolve({error:error.message})
+    })
   })
-
 }
+
+/*
+async function clickTestAxios(){
+  let data = await useAxios({
+    method: 'get',
+    url: '/json',
+    data: {
+      firstName: 'Finn',
+      lastName: 'Williams'
+    }
+  })
+  console.log(data);
+}
+*/

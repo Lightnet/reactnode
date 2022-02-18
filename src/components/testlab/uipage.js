@@ -7,6 +7,7 @@ import React from "react";
 import useEffectFetch from "../hook/useEffectFetch.js";
 import useFetch from "../hook/useFetch.js";
 import useFetchPromise from "../hook/useFetchPromise.js";
+import BtnUseAxios from "../ui/btnuseaxios.js";
 
 export default function UIPage(){
 
@@ -34,11 +35,11 @@ export default function UIPage(){
   return (<>
     <div>
       <label>UI PAGE</label><br/>
-      <button onClick={clickTestFetch}> Fetch Test </button>
-      <button onClick={clickFetchCall}> Fetch Call </button>
-      <button onClick={clickFetchPromise}> Fetch Promise </button>
-
-
+      <button onClick={clickTestFetch}> Fetch Test </button><br/>
+      <button onClick={clickFetchCall}> Fetch Call </button><br/>
+      <button onClick={clickFetchPromise}> Fetch Promise </button><br/>
+      <br/>
+      <BtnUseAxios /><br/>
       
     </div>
   </>)
