@@ -10,7 +10,7 @@ import express from 'express';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const uploadFolder = path.join(__dirname, "public", "files");
+const uploadFolder = path.join(__dirname, "../../../public", "files");
 
 const router = express.Router();
 
@@ -25,6 +25,7 @@ router.get('/downloadtest', function (req, res) {
 
   console.log(__dirname);
   res.download(path.join(__dirname, './test.txt'), function (err) {
+  //res.download(path.join(uploadFolder, './testbig.zip'), function (err) {
     console.log(err);
   });
   //res.json({message:'download'})

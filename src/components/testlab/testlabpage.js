@@ -8,6 +8,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import CountersPage from "./counterspage.js";
 import NoticePage from "./noticepage.js";
 import ProgressPage from "./progresspage.js";
+import ThemePage from "./themepage.js";
 import TimersPage from "./timerspage.js";
 import UIPage from "./uipage.js";
 
@@ -20,6 +21,7 @@ export default function TestLabPage(){
       <Link to="counters"> Counters </Link> <span> | </span>
       <Link to="progress"> Progress </Link> <span> | </span>
       <Link to="notice"> Notice </Link> <span> | </span>
+      <Link to="theme"> Theme </Link> <span> | </span>
       <Link to="ui"> UI </Link> <span> | </span>
     </div>
     <div>
@@ -29,6 +31,7 @@ export default function TestLabPage(){
       <Route path="counters" element={<CountersPage />} />
       <Route path="progress" element={<ProgressPage />} />
       <Route path="notice" element={<NoticePage />} />
+      <Route path="theme" element={<ThemePage />} />
       <Route path="ui" element={<UIPage />} />
     </Routes>
     </div>

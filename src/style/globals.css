@@ -15,6 +15,18 @@ body{
   --link-color: #543fd7;
 
   --primaryheader: gray;
+
+  --btn-primary:gray; 
+  --btn-secondary:green; 
+  --btn-tertiary:red; 
+
+  --info-color:red;
+  --success-color:green;
+  --alert-color:red;
+  --warn-color:red;
+
+  --test-color:red;
+  --test-color2:red;
 }
 
 html[data-theme='light'] {
@@ -60,4 +72,13 @@ a:hover {
 .headerp{
   background: var(--primaryheader);
   color: var(--text-color)
+}
+
+/*  TEST  */
+.testcolor{
+  color:var(--test-color);
+}
+
+.testcolor2{
+  color:var(--test-color2);
 }

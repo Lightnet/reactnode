@@ -4,6 +4,8 @@
 */
 
 import React from "react";
+import DownloadProgressPage from "../pages/downloadprogresspage.js";
+import UploadPage2 from "../pages/uploadpage2.js";
 import ProgressBarUI from "../progress/progressbarui.js";
 
 export default function ProgressPage(){
@@ -12,6 +14,14 @@ export default function ProgressPage(){
     <div>
       <label>ProgressPage</label>
     </div>
-    <ProgressBarUI />
+    <ProgressBarUI /><br />
+    <br />
+
+    <UploadPage2 /><br />
+    <br />
+
+    <DownloadProgressPage />
+
+
   </>)
 }

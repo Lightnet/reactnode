@@ -32,6 +32,8 @@ const isFileValid = (file) => {
     , "txt"
     , "md"
     , "js"
+    , "zip"
+    , "iso"
   ];
   console.log(validTypes.indexOf(type));
   if (validTypes.indexOf(type) === -1) {
@@ -79,6 +81,7 @@ router.post('/upload', function (req, res) {
       console.log(isValid)
       if (!isValid) {
         // throes error if file isn't valid
+        console.log("The file type is not a valid type")
         return res.status(400).json({
           status: "Fail",
           message: "The file type is not a valid type",
