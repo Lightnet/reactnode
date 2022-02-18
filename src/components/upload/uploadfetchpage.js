@@ -24,8 +24,13 @@ export default function UploadFetchPage(){
 	};
 
   function clickUpload(){
-    const formData = new FormData();
+    
     console.log(selectedFile)
+    if(!selectedFile){
+      console.log("Empty File!")
+      return;
+    }
+    const formData = new FormData();
     formData.append('myfiles', selectedFile);
     fetch('/upload',
 			{

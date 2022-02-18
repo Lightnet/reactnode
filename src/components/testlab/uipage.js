@@ -3,20 +3,32 @@
   Created by: Lightnet
 */
 
-import React from "react";
-import useEffectFetch from "../hook/useEffectFetch.js";
+import React, { useState } from "react";
 import useFetch from "../hook/useFetch.js";
 import useFetchPromise from "../hook/useFetchPromise.js";
+import Modal from "../modal/modal.js";
 import BtnUseAxios from "../ui/btnuseaxios.js";
+import Button from "../ui/button.js";
 
 export default function UIPage(){
 
-  const [response, error,isfetchloading, fetchcall ] = useEffectFetch('/json');
+  const[isOpenModal, setIsOpenModal] = useState(false);
 
-  if(!isfetchloading){
-    console.log(response);
-    console.log(error);
+  
+  const [modalPos, setModalPos] = useState([0,0]);
+
+  function clickOpenModal(){
+    console.log("hello");
+    setIsOpenModal(state=>!state)
+  };
+
+  function closeModal(){
+    setIsOpenModal(false)
   }
+  function updateModelPos(pos){
+    setModalPos(pos);
+  }
+  
   
   async function clickTestFetch(){
     let data = await useFetch('/json');
@@ -41,6 +53,46 @@ export default function UIPage(){
       <br/>
       <BtnUseAxios /><br/>
       
+      <Button color={"pri"}> Primary </Button>
+      <Button color={"sec"}> Secondary </Button>
+      <Button color={"ter"}> Tertiary </Button><br/>
+      <Button color={"pos"}> Postive </Button>
+      <Button color={"neg"}> Negtive </Button><br/>
+
+      <div className="info" style={{
+        width:"100px"
+        ,height:"32px"
+      }}></div>
+
+      <div className="success" style={{
+        width:"100px"
+        ,height:"32px"
+      }}></div>
+
+      <div className="error" style={{
+        width:"100px"
+        ,height:"32px"
+      }}></div>
+
+      <div className="warn" style={{
+        width:"100px"
+        ,height:"32px"
+      }}></div>
+
+      <Button color={"pri"} onClick={clickOpenModal}> Modal </Button>
+
+
+      <Modal
+        isOpen={isOpenModal}
+        title="Modal"
+        pheight="200"
+        pos={modalPos}
+        closeWindow={closeModal}
+        updatePos={updateModelPos}
+      >
+        <label> Hello Modal </label>
+      </Modal>
+
     </div>
   </>)
 }

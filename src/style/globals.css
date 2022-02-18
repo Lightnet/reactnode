@@ -16,21 +16,17 @@ body{
 
   --primaryheader: gray;
 
-  --btn-primary:gray; 
-  --btn-secondary:green; 
-  --btn-tertiary:red; 
+  --btn-primary:#4d4d4d; 
+  --btn-secondary:#737373; 
+  --btn-tertiary:#999999; 
 
-  --info-color:red;
-  --success-color:green;
-  --alert-color:red;
-  --warn-color:red;
+  --info-color:#3399ff;
+  --success-color:#33ff77;
+  --error-color:#ff5c33;
+  --warn-color:#ff5050;
 
   --btn-pos:green;
   --btn-neg:red;
-
-
-
-
 
 
   --test-color:red;
@@ -83,23 +79,68 @@ a:hover {
 }
 /* UI */
 
-.mbtn_pri{
+.info{
+  background-color: var(--info-color);
+}
+
+.success{
+  background-color: var(--success-color);
+}
+
+.error{
+  background-color: var(--error-color);
+}
+
+.warn{
+  background-color: var(--warn-color);
+}
+
+
+
+
+
+.btn_pri
+,.btn_sec
+,.btn_ter
+,.btn_pos
+,.btn_neg {
+  display:inline-block;
+	cursor:pointer;
+  text-decoration:none;
+  border: 0;
+}
+
+.btn_pri:active,
+.btn_sec:active,
+.btn_ter:active,
+.btn_pos:active,
+.btn_neg:active {
+	position:relative;
+	top:1px;
+}
+
+.btn_pri{
   background-color: var(--btn-primary);
 }
-
-.mbtn_sec{
+.btn_pri:hover {
+	background-color:#5cbf2a;
+}
+.btn_sec{
   background-color: var(--btn-secondary);
 }
+.btn_sec:hover {
+	background-color:#5cbf2a;
+}
 
-.mbtn_ter{
+.btn_ter{
   background-color: var(--btn-tertiary);
 }
 
-.mbtn_pos{
+.btn_pos{
   background-color: var(--btn-pos);
 }
 
-.mbtn_neg{
+.btn_neg{
   background-color: var(--btn-neg);
 }
 

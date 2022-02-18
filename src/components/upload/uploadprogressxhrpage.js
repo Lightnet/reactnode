@@ -27,8 +27,12 @@ export default function UploadProgressXHRPage(){
 
   async function clickUpload(){
     setPercent(0)
-    const formData = new FormData();
     console.log(selectedFile)
+    if(!selectedFile){
+      console.log("Empty File!")
+      return;
+    }
+    const formData = new FormData();
     formData.append('myfiles', selectedFile);
     var xhr = new XMLHttpRequest();
     //Monitor file upload progress
