@@ -25,6 +25,14 @@ body{
   --alert-color:red;
   --warn-color:red;
 
+  --btn-pos:green;
+  --btn-neg:red;
+
+
+
+
+
+
   --test-color:red;
   --test-color2:red;
 }
@@ -73,6 +81,28 @@ a:hover {
   background: var(--primaryheader);
   color: var(--text-color)
 }
+/* UI */
+
+.mbtn_pri{
+  background-color: var(--btn-primary);
+}
+
+.mbtn_sec{
+  background-color: var(--btn-secondary);
+}
+
+.mbtn_ter{
+  background-color: var(--btn-tertiary);
+}
+
+.mbtn_pos{
+  background-color: var(--btn-pos);
+}
+
+.mbtn_neg{
+  background-color: var(--btn-neg);
+}
+
 
 /*  TEST  */
 .testcolor{

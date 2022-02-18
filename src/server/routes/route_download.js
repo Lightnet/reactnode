@@ -24,8 +24,10 @@ router.get('/downloadtest', function (req, res) {
   //res.download('path/report.pdf',"report.pdf")
 
   console.log(__dirname);
-  res.download(path.join(__dirname, './test.txt'), function (err) {
-  //res.download(path.join(uploadFolder, './testbig.zip'), function (err) {
+  let _filename = './test.txt';
+  //_filename = "./"
+
+  res.download(path.join(uploadFolder, _filename), function (err) {
     console.log(err);
   });
   //res.json({message:'download'})

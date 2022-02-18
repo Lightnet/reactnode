@@ -37,6 +37,9 @@ export default function UIPage(){
       <button onClick={clickTestFetch}> Fetch Test </button>
       <button onClick={clickFetchCall}> Fetch Call </button>
       <button onClick={clickFetchPromise}> Fetch Promise </button>
+
+
+      
     </div>
   </>)
 }

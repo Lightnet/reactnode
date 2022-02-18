@@ -31,8 +31,6 @@ export default function UploadPage2(){
     formData.append('myfiles', selectedFile);
     var xhr = new XMLHttpRequest();
     //Monitor file upload progress
-    
-    
     function onprogress(e) {
       //console.log("...")
       if (e.lengthComputable) {
