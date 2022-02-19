@@ -3,6 +3,10 @@
   Created by: Lightnet
 */
 
+// https://stackoverflow.com/questions/68801351/how-to-set-the-props-after-a-button-is-clicked-in-react-js
+// https://reactjs.org/docs/components-and-props.html
+
+
 import React, { useEffect, useState } from "react";
 
 export default function Button({color,onClick,children,props}){

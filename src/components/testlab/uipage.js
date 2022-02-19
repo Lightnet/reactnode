@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import useFetch from "../hook/useFetch.js";
 import useFetchPromise from "../hook/useFetchPromise.js";
 import Modal from "../modal/modal.js";
+import TextContent from "../texteditor/textcontent.js";
 import BtnUseAxios from "../ui/btnuseaxios.js";
 import Button from "../ui/button.js";
 
@@ -14,8 +15,18 @@ export default function UIPage(){
 
   const[isOpenModal, setIsOpenModal] = useState(false);
 
-  
   const [modalPos, setModalPos] = useState([0,0]);
+
+  const [editTextContent, setEditTextContent] = useState("testss d");
+
+  function TypyingEditContent(e){
+    //console.log(e)
+    setEditTextContent(e);
+  }
+
+  function clickTextEdit(){
+    console.log(editTextContent)
+  }
 
   function clickOpenModal(){
     console.log("hello");
@@ -28,7 +39,6 @@ export default function UIPage(){
   function updateModelPos(pos){
     setModalPos(pos);
   }
-  
   
   async function clickTestFetch(){
     let data = await useFetch('/json');
@@ -52,7 +62,13 @@ export default function UIPage(){
       <button onClick={clickFetchPromise}> Fetch Promise </button><br/>
       <br/>
       <BtnUseAxios /><br/>
-      
+      <br/>
+      <TextContent
+        value={editTextContent}
+        onChange={TypyingEditContent}
+      /><br/>
+      <button onClick={clickTextEdit}> Check Text Edit </button>
+      <br/>
       <Button color={"pri"}> Primary </Button>
       <Button color={"sec"}> Secondary </Button>
       <Button color={"ter"}> Tertiary </Button><br/>
