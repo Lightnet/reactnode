@@ -8,6 +8,7 @@ import useFetch from "../hook/useFetch.js";
 import useFetchPromise from "../hook/useFetchPromise.js";
 import Modal from "../modal/modal.js";
 import TextContent from "../texteditor/textcontent.js";
+import TextEditorContent from "../texteditor/texteditorcontent.js";
 import BtnUseAxios from "../ui/btnuseaxios.js";
 import Button from "../ui/button.js";
 
@@ -108,6 +109,8 @@ export default function UIPage(){
       >
         <label> Hello Modal </label>
       </Modal>
+
+      <TextEditorContent />
 
     </div>
   </>)

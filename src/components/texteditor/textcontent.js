@@ -21,7 +21,7 @@
 // 
 // 
 // https://codesandbox.io/s/misty-microservice-efouz?file=/src/App.js //works
-// 
+// https://gist.github.com/Schniz/e398a630c81cfd8a3d1e // work to select for current text
 // 
 // 
 import React, { useEffect, useRef, useState } from "react";
@@ -29,7 +29,14 @@ import React, { useEffect, useRef, useState } from "react";
 export default function TextContent(props){
 
   const [initialValue] = useState(props.value);
+  const [IsSelect,setIsSelect] = useState(props.onSelect);
   const contentEditableRef = useRef();
+
+  useEffect(()=>{
+    if(typeof props.onSelect !='undefined'){
+      setIsSelect(props.onSelect)
+    }
+  })
 
   function onInput(event){
     if (props.onChange) {
@@ -75,9 +82,34 @@ export default function TextContent(props){
     sel.addRange(range);
   };
 
-  useEffect(() => {
+  useEffect(()=>{
+    if(typeof IsSelect != 'undefined'){
+      console.log(IsSelect)
+      if(IsSelect){
+        let el = contentEditableRef.current;
+        let text = "";
+        console.log(text);
+        var sel = window.getSelection();
+        var tempRange = sel.getRangeAt(0);
+        sel.removeAllRanges();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        sel.addRange(range);
+        text = sel.toString();
+        console.log(text)
+
+        //text = sel.toString();
+        sel.removeAllRanges();
+        sel.addRange(tempRange);
+        text = sel.toString();
+        console.log(text);
+      }
+    }
+  },[IsSelect])
+
+  //useEffect(() => {
     //moveCaretToEnd();
-  });
+  //});
 
   return (<div
     ref={contentEditableRef}
