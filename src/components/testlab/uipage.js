@@ -3,37 +3,26 @@
   Created by: Lightnet
 */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../hook/useFetch.js";
 import useFetchPromise from "../hook/useFetchPromise.js";
 import Modal from "../modal/modal.js";
-import TextContent from "../texteditor/textcontent.js";
-import TextEditorContent from "../texteditor/texteditorcontent.js";
 import BtnUseAxios from "../ui/btnuseaxios.js";
 import Button from "../ui/button.js";
+import Input from "../ui/input.js";
 
 export default function UIPage(){
 
   const[isOpenModal, setIsOpenModal] = useState(false);
 
+  const[inputValue, setInputValue] = useState("");
+
   const [modalPos, setModalPos] = useState([0,0]);
-
-  const [editTextContent, setEditTextContent] = useState("testss d");
-
-  function TypyingEditContent(e){
-    //console.log(e)
-    setEditTextContent(e);
-  }
-
-  function clickTextEdit(){
-    console.log(editTextContent)
-  }
 
   function clickOpenModal(){
     console.log("hello");
     setIsOpenModal(state=>!state)
   };
-
   function closeModal(){
     setIsOpenModal(false)
   }
@@ -55,6 +44,16 @@ export default function UIPage(){
     console.log(data);
   }
 
+  function typingInput(e){
+    //console.log(e)
+    setInputValue(e.target.value)
+  }
+
+  useEffect(()=>{
+    //console.log(inputValue);
+  },[inputValue])
+
+
   return (<>
     <div>
       <label>UI PAGE</label><br/>
@@ -64,11 +63,10 @@ export default function UIPage(){
       <br/>
       <BtnUseAxios /><br/>
       <br/>
-      <TextContent
-        value={editTextContent}
-        onChange={TypyingEditContent}
-      /><br/>
-      <button onClick={clickTextEdit}> Check Text Edit </button>
+
+      <Input value={inputValue} onChange={typingInput}/>
+
+      <br/>
       <br/>
       <Button color={"pri"}> Primary </Button>
       <Button color={"sec"}> Secondary </Button>
@@ -109,8 +107,6 @@ export default function UIPage(){
       >
         <label> Hello Modal </label>
       </Modal>
-
-      <TextEditorContent />
 
     </div>
   </>)

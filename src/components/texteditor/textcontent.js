@@ -1,9 +1,20 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Information:
+    cursor will move to begin of the when first line when it update it value.
+
 */
 
+
+
 // https://draftjs.org/docs/getting-started
+
+// https://jsfiddle.net/nrx9yvw9/5/   Set cursor position to 25 chars in
+// https://www.geeksforgeeks.org/how-to-set-cursor-position-in-content-editable-element-using-javascript/
+
+
 
 
 // https://clubmate.fi/make-any-html-element-editable
@@ -23,14 +34,31 @@
 // https://codesandbox.io/s/misty-microservice-efouz?file=/src/App.js //works
 // https://gist.github.com/Schniz/e398a630c81cfd8a3d1e // work to select for current text
 // 
+// https://javascript.tutorialink.com/get-contenteditable-caret-index-position/
+// https://quick-adviser.com/how-do-you-get-the-cursor-position-in-the-input-field/
+// https://stackoverflow.com/questions/30242530/dangerouslysetinnerhtml-doesnt-update-during-render/38548616#38548616
 // 
+// https://codepen.io/mlbrgl/pen/QQVMRP?editors=0010
+// https://codepen.io/mlbrgl/pen/PQdLgb?editors=1010
+// 
+
+
 import React, { useEffect, useRef, useState } from "react";
 
 export default function TextContent(props){
 
-  const [initialValue] = useState(props.value);
+  const [initialValue,setValue] = useState(props.value);
+  //const defaultValue = useRef(props.value);
+
   const [IsSelect,setIsSelect] = useState(props.onSelect);
   const contentEditableRef = useRef();
+
+  useEffect(()=>{
+    if(typeof props.value !='undefined'){
+      setValue(props.value)
+      //defaultValue.current = props.value;
+    }
+  },[props.value])
 
   useEffect(()=>{
     if(typeof props.onSelect !='undefined'){
@@ -94,6 +122,7 @@ export default function TextContent(props){
         sel.removeAllRanges();
         var range = document.createRange();
         range.selectNodeContents(el);
+        console.log(range);
         sel.addRange(range);
         text = sel.toString();
         console.log(text)
@@ -117,6 +146,7 @@ export default function TextContent(props){
     //suppressContentEditableWarning={true}
     spellCheck={false}
     dangerouslySetInnerHTML={{ __html: initialValue }}
+    //dangerouslySetInnerHTML={{ __html: defaultValue.current }}
     style={{
       padding:"8px"
       , height:"100px"
@@ -125,7 +155,9 @@ export default function TextContent(props){
       , borderStyle:"solid"
     }}
     //onPaste={onPaste}
-    onInput={onInput}
+    //onInput={onInput}
+    onKeyUp={onInput}
+    //onKeyPress={onInput}
     //onBlur={handleBlur}
   >
   </div>)

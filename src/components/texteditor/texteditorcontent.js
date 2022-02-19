@@ -28,12 +28,18 @@ export default function TextEditorContent(){
     setSelectText(!selectText);
   }
 
+  function clickSetText(){
+    console.log("test?")
+    setEditTextContent("test");
+  }
+
   return (<>
   <div>
     <div>
       <label> Simple Tools </label>
       <button onClick={clickTextEdit}> log text content </button>
       <button onClick={clickTextSelect}> select text? </button>
+      <button onClick={clickSetText}> set text </button>
     </div>
     <div>
       <TextContent

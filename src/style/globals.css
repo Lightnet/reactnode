@@ -1,3 +1,10 @@
+/*
+https://www.csscolorpalettes.com/palettes/1652#palette
+
+
+*/
+
+
 body{
   margin: 0%;
 }
@@ -8,56 +15,69 @@ body{
 }
 
 :root {
-  --background-color: #fff;
-  --primaryColor: #d452f2;
+  --backgroundColor: #fff;
 
-  --text-color: #121416d8;
-  --link-color: #543fd7;
+  --textColor: #121416d8;
+  --linkColor: #543fd7;
 
-  --primaryheader: gray;
+  /* default color */
+  --primary-header: #303841;
+  --primary-content: #eeeeee;
 
-  --btn-primary:#4d4d4d; 
-  --btn-secondary:#737373; 
-  --btn-tertiary:#999999; 
+  --secondary-header: #47555e;
+  --tertiary-header: #7aa5d2;
+  
 
-  --info-color:#3399ff;
-  --success-color:#33ff77;
-  --error-color:#ff5c33;
-  --warn-color:#ff5050;
+  --primaryColor:#52616b;
+  --secondaryColor:#c9d6df; 
+  --tertiaryColor:#f0f5f9; 
 
-  --btn-pos:green;
-  --btn-neg:red;
+  --positiveColor:#82b74b;
+  --negtiveColor:#ff0000;
+/* event color change  */
 
 
+
+
+
+/* message color */
+  --infoColor:#87bdd8;
+  --successColor:#96ceb4;
+  --errorColor:#ffcc5c;
+  --warnColor:#ff6f69;
+
+
+
+/* test  */
   --test-color:red;
   --test-color2:red;
 }
 
 html[data-theme='light'] {
-  --background-color: #fff;
-  --text-color: #121416d8;
-  --link-color: #543fd7;
-  --primaryheader: gray;
+  --backgroundColor: #fff;
+  --textColor: #121416d8;
+  --linkColor: #543fd7;
+  --primaryHeader: gray;
 }
 
 html[data-theme='dark'] {
-  --background-color: #212a2e;
-  --text-color: #F7F8F8;
-  --link-color: #828fff;
-  --primaryheader: black;
+  --backgroundColor: #212a2e;
+  --textColor: #F7F8F8;
+  --linkColor: #828fff;
+  --primaryHeader: black;
 }
 
 body {
-  background: var(--background-color);
-  color: var(--text-color);
+  background: var(--backgroundColor);
+  color: var(--textColor);
 }
 
 a {
-  color: var(--link-color);
+  color: var(--linkColor);
 }
 
 label{
-  color: var(--text-color);
+  color: var(--textColor);
 }
 
 a:hover {
@@ -75,29 +95,26 @@ a:hover {
 
 .headerp{
   background: var(--primaryheader);
-  color: var(--text-color)
+  color: var(--textColor)
 }
 /* UI */
 
 .info{
-  background-color: var(--info-color);
+  background-color: var(--infoColor);
 }
 
 .success{
-  background-color: var(--success-color);
+  background-color: var(--successColor);
 }
 
 .error{
-  background-color: var(--error-color);
+  background-color: var(--errorColor);
 }
 
 .warn{
-  background-color: var(--warn-color);
+  background-color: var(--warnColor);
 }
-
-
-
-
+/* BUTTON */
 
 .btn_pri
 ,.btn_sec
@@ -120,28 +137,28 @@ a:hover {
 }
 
 .btn_pri{
-  background-color: var(--btn-primary);
+  background-color: var(--primaryColor);
 }
 .btn_pri:hover {
 	background-color:#5cbf2a;
 }
 .btn_sec{
-  background-color: var(--btn-secondary);
+  background-color: var(--secondaryColor);
 }
 .btn_sec:hover {
 	background-color:#5cbf2a;
 }
 
 .btn_ter{
-  background-color: var(--btn-tertiary);
+  background-color: var(--tertiaryColor);
 }
 
 .btn_pos{
-  background-color: var(--btn-pos);
+  background-color: var(--positiveColor);
 }
 
 .btn_neg{
-  background-color: var(--btn-neg);
+  background-color: var(--negtiveColor);
 }
 
 

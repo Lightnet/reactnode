@@ -5,31 +5,35 @@
 
 import React, { useEffect, useState } from "react";
 
-export default function Button({value,color,onChange,children,props}){
+export default function Input({value,color,onChange}){
 
   const [inputColor,setInputColor] = useState('');
   const [val, setVal] = useState('');
 
   useEffect(()=>{
     if(typeof value != 'undefined'){
-      setVal(val);
+      setVal(value);
     }
   },[value])
 
   useEffect(()=>{
     if(color){
-      if(color=="pri"){
-        setInputColor("color");
-      }
+      //if(color=="pri"){
+        //setInputColor("color");
+      //}
     }
   },[color])
 
   const typeVal = e => {
     setVal(e.target.value)
     if(typeof onChange == 'function'){
-      onChange(e.target.value)
+      onChange({
+        target:{
+          value:e.target.value
+        }
+      })
     }
   };
 
-  return <input className={inputColor} value={val} onChange={typeVal} {...props}>{children}</input>
+  return <input className={inputColor} value={val} onChange={typeVal} />
 }
