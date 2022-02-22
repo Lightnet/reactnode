@@ -15,20 +15,23 @@ import { BrowserRouter } from 'react-router-dom';
 import { NotifyProvider } from './notify/notifyprovider.js';
 import { Provider } from "react-redux";
 import store from "./store/store.js";
+import { EventProvider } from './event/EventProvider.js';
 
 export default function App() {
 
   return (<>
     <Provider store={store}>
-      <ThemeProvider>
-        <NotifyProvider>
-          <AuthProvider>
-            <BrowserRouter>
-              <RoutePage />
-            </BrowserRouter>
-          </AuthProvider>
-        </NotifyProvider>
-      </ThemeProvider>
+      <EventProvider>
+        <ThemeProvider>
+          <NotifyProvider>
+            <AuthProvider>
+              <BrowserRouter>
+                <RoutePage />
+              </BrowserRouter>
+            </AuthProvider>
+          </NotifyProvider>
+        </ThemeProvider>
+      </EventProvider>
     </Provider>
   </>);
 }
