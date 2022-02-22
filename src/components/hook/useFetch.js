@@ -3,7 +3,7 @@
   Created by: Lightnet
 */
 
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 // https://javascript.info/fetch
@@ -14,38 +14,26 @@ import { useEffect, useState } from "react";
 
 //GET, POST, PUT, DELETE, PATCH
 
-export default async function useFetch(url,options){
-  //const [response, setResponse] = useState(null);
-  //const [error, setError] = useState(null);
-  //const [isLoading, setIsLoading] = useState(false);
-
-  //useEffect(() => {
-    //const fetchData = async () => {
-      //setIsLoading(true);
-      try{
-        if(!url){
-          return console.log("url error");
-        }
-        if(!options){
-          options={};
-        }
-        let response = await fetch(url, options);
-        if (!response.ok) {
-          //const message = 'Error with Status Code: ' + response.status;
-          //throw new Error(message);
-          console.log("RESPONSE FETCH ERROR");
-          return {error:'SERVER FETCH ERROR'};// check if the server error
-        }
-        let data = await response.json();
-        return data;
-        //setResponse(data);
-        //setIsLoading(false)
-      }catch(e){
-        console.log("TRY FETCH ERROR: ", e);
-        return {error:'TRY FETCH ERROR'}; //check for json format error
-      }
-    //}
-    //fetchData();
-  //}, [url])
-  //return response;
+export default async function useFetch(url, options){
+  try{
+    if(!url){
+      console.log("url error");
+      return {error:'null url ERROR'}
+    }
+    if(!options){
+      options={};
+    }
+    let response = await fetch(url, options);
+    if (!response.ok) {
+      //const message = 'Error with Status Code: ' + response.status;
+      //throw new Error(message);
+      console.log("RESPONSE FETCH ERROR");
+      return {error:'SERVER FETCH ERROR'};// check if the server error
+    }
+    let data = await response.json();
+    return data;
+  }catch(e){
+    console.log("TRY FETCH ERROR: ", e);
+    return {error:'TRY FETCH ERROR'}; //check for json format error
+  }
 }

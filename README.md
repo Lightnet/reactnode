@@ -28,6 +28,10 @@
 
   Some packages will required some simple like random id as reactjs required key when doing map loop render html.
 
+  Note: Some file might be change depend on the logic thinking. Due to case sensitive when working with linux.
+
+  Need to rebuild or rework the layout for logics as learning more about the context and other functions.
+
 - dayjs
   
   Used for time stamp for time or date for data store.

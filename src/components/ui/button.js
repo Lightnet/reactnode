@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from "react";
 
-export default function Button({color,onClick,children,props}){
+export default function Button({color,onClick,children}){
 
   const [btnColor,setBtnColor] = useState('pri');
 
@@ -34,13 +34,11 @@ export default function Button({color,onClick,children,props}){
     }
   },[color])
 
-  function onBtn(e){
-    //console.log(props)
-    //console.log(this)
+  function emitClick(e){
     if(typeof onClick !='undefined'){
       onClick(e);
     }
   }
 
-  return <button className={btnColor} {...props} onClick={onBtn}>{children}</button>
+  return <button className={btnColor} onClick={emitClick}>{children}</button>
 }

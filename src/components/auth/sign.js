@@ -1,3 +1,7 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
 import React, { useState } from 'react';
 import { useAuth } from './auth.js';

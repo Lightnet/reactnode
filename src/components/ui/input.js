@@ -24,7 +24,7 @@ export default function Input({value,color,onChange}){
     }
   },[color])
 
-  const typeVal = e => {
+  const emitChange = e => {
     setVal(e.target.value)
     if(typeof onChange == 'function'){
       onChange({
@@ -35,5 +35,5 @@ export default function Input({value,color,onChange}){
     }
   };
 
-  return <input className={inputColor} value={val} onChange={typeVal} />
+  return <input className={inputColor} value={val} onChange={emitChange} />
 }

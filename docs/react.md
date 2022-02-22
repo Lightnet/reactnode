@@ -106,9 +106,39 @@ setMyArray(state.filter((item) => item != textstr));
 setMyArray(state.filter((item) => item.id != id));
 ```
 
+```js
+const [parmeters, setParameters] = useState({
+  width:1,
+  height:1,
+  depth:1,
+  widthSegments :1,
+  heightSegments :1,
+  depthSegments :1
+})
+
+//update object
+function handleChange(evt) {
+  const value = evt.target.value;
+  //const name = evt.target.name;
+  setParameters(state => ({...state, [evt.target.name]: value}));
+}
+```
 
 
+```js 
+const [projects,setProjects] = useState([]);
+//update vars key on value
+setProjects(projects.map(item=> item.id == data.project.id ? {...item, name:data.project.name,description:data.project.description   }: item ))
+```
 
+```js
+const [projects,setProjects] = useState([]);
+//remove item
+setProjects(projects.filter(item=> item.id != data.projectid ))
+```
 
+https://www.digitalocean.com/community/tutorials/understanding-map-and-set-objects-in-javascript
 
+https://blog.logrocket.com/using-react-usestate-object/
 
+https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react

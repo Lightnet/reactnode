@@ -30,3 +30,9 @@ export default function useFetchPromise(url,options){
       });
   });
 }
+/*
+async function clickFetchPromise(){
+  let data = await useFetchPromise('/json');
+  console.log(data);
+}
+*/

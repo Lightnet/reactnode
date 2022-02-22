@@ -10,6 +10,8 @@ import clientDB from "../../lib/database.js";
 const router = express.Router();
 
 router.post('/signin',async function (req, res) {
+  var contentType = req.headers['content-type'];
+  console.log(contentType);
   //console.log(req.body); // your JSON
   let data = req.body;
   let db = await clientDB();
@@ -77,12 +79,9 @@ router.post('/signout',async function (req, res) {
   let db = await clientDB();
   let User = db.model('User');
   // neeed token
-
+  // 
 
   //let user = await User.findOne({ username: data.user }).exec();
-
-
-
   //if(!user){
     //return res.send({action:'NONEXIST'});
   //}else{

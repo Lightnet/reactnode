@@ -9,14 +9,14 @@ import useFetchPromise from "../hook/useFetchPromise.js";
 import Modal from "../modal/modal.js";
 import BtnUseAxios from "../ui/btnuseaxios.js";
 import Button from "../ui/button.js";
+import CheckBox from "../ui/checkbox.js";
 import Input from "../ui/input.js";
+import Switch from "../ui/Switch.js";
 
 export default function UIPage(){
 
-  const[isOpenModal, setIsOpenModal] = useState(false);
-
-  const[inputValue, setInputValue] = useState("");
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const [modalPos, setModalPos] = useState([0,0]);
 
   function clickOpenModal(){
@@ -64,7 +64,11 @@ export default function UIPage(){
       <BtnUseAxios /><br/>
       <br/>
 
-      <Input value={inputValue} onChange={typingInput}/>
+      <Input value={inputValue} onChange={typingInput}/><br/>
+
+      <CheckBox checked test="ss"/><br/>
+      <br/>
+      <Input value={inputValue} onChange={typingInput}/><label> Switch </label><Switch/> <Switch round/> <Button color={"pri"}> Primary </Button><br/>
 
       <br/>
       <br/>
@@ -99,6 +103,7 @@ export default function UIPage(){
 
       <Modal
         isOpen={isOpenModal}
+        //resize
         title="Modal"
         pheight="200"
         pos={modalPos}
