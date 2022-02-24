@@ -16,12 +16,14 @@ export default function UploadProgressAxiosPage(){
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSelectFile, setIsSelectFile] = useState(false);
+  const [status, setStatus] = useState("idle");
 
   const [percent, setPercent] = useState(0);
 
   const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsSelectFile(true);
+    setStatus("Ready!")
 	};
 
   async function clickUpload(){
@@ -30,6 +32,7 @@ export default function UploadProgressAxiosPage(){
     console.log(selectedFile)
     if(!selectedFile){
       console.log("FILE EMPTY!");
+      setStatus("File Empty!")
       return;
     }
     
@@ -38,21 +41,28 @@ export default function UploadProgressAxiosPage(){
 
     const config = {
       onUploadProgress: function(progressEvent) {
-        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        console.log(percentCompleted)
+        var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total
+        //console.log(percentCompleted)
         setPercent(percentCompleted);
+        setStatus(percentCompleted.toFixed(2)+"%")
       }
     }
 
     axios.post("/upload", formData, config)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .then(res => {
+        console.log(res)
+        setStatus("Finish Upload!")
+      })
+      .catch(err => {
+        console.log(err)
+        setStatus("Error Upload!")
+      })
   }
 
   return (<>
     <label> Upload progress test! </label>
     <input type="file" name="file" onChange={changeHandler}/><progress value={percent} max="100"/>
-    <button onClick={clickUpload}> Upload Axios </button>
+    <button onClick={clickUpload}> Upload Axios </button><label>{status}</label>
     {isSelectFile ? (
 				<div>
 					<p>Filename: {selectedFile.name}</p>

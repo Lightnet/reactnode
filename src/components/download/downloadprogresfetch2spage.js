@@ -12,10 +12,11 @@ import React, { useState } from "react";
 export default function DownloadProgressFetch2Page(){
   const [percent, setPercent] = useState(0);
   //const [receivedLength, setReceivedLength] = useState(0);
+  const [status, setStatus] = useState("idle");
 
   async function clickDownload(){
     setPercent(0);
-
+    setStatus("download...")
     fetch("/downloadtest")
       // Retrieve its body as ReadableStream
       .then(response => {
@@ -36,7 +37,9 @@ export default function DownloadProgressFetch2Page(){
                 }
                 //console.log(value)
                 receivedLength += value.length;
-                setPercent( (receivedLength/contentLength)*100 );
+                let _percent = (receivedLength/contentLength)*100;
+                setPercent( _percent );
+                setStatus( _percent.toFixed(2) + "%" )
                 // Enqueue the next data chunk into our target stream
                 controller.enqueue(value);
                 return pump();
@@ -50,6 +53,7 @@ export default function DownloadProgressFetch2Page(){
       .then(response => response.blob())
       .then(blob => {
         //URL.createObjectURL(blob)
+        setStatus("Finish download...")
         const url = window.URL.createObjectURL(
           new Blob([blob]),
         );
@@ -67,11 +71,14 @@ export default function DownloadProgressFetch2Page(){
         link.parentNode.removeChild(link);
         console.log("done?")
       })
-      .catch(err => console.error(err));
+      .catch(err =>{
+        setStatus("Error download!")
+        console.error(err)
+      });
   }
 
   return (<>
     <button onClick={clickDownload}> Download Fetch 2</button>
-    <progress value={percent} max="100"/>
+    <progress value={percent} max="100"/><label>{status}</label>
   </>)
 }

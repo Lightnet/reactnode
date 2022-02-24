@@ -116,6 +116,8 @@ export default function EventLog(){
 
 EventTest.js
 ```js
+// dispatch event
+
 import React from "react";
 import { useEvent } from "./EventProvider.js";
 

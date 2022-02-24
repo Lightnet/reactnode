@@ -107,7 +107,7 @@ export default function UIPage(){
         title="Modal"
         pheight="200"
         pos={modalPos}
-        closeWindow={closeModal}
+        onClose={closeModal}
         updatePos={updateModelPos}
       >
         <label> Hello Modal </label>

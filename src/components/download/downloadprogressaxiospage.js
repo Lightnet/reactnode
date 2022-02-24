@@ -13,9 +13,7 @@
 // delay in popup if big file in browser
 
 /*
-
 const controller = new AbortController();
-
 axios.get('/foo/bar', {
    signal: controller.signal
 }).then(function(response) {
@@ -30,6 +28,7 @@ import React, { useState } from "react";
 
 export default function DownloadProgressAxiosPage(){
   const [percent, setPercent] = useState(0);
+  const [status, setStatus] = useState("idle");
 
   async function clickDownload(){
     setPercent(0);
@@ -38,15 +37,15 @@ export default function DownloadProgressAxiosPage(){
       .get(url, { 
         responseType: "blob"
         , onDownloadProgress: function (progressEvent) {
-          var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-          console.log(percentCompleted)
+          var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total
+          //console.log(percentCompleted)
           setPercent(percentCompleted);
+          setStatus(percentCompleted.toFixed(2)+"%")
         }
       })
-
       .then((response)=> {
         let filename = "tyes.txt";
-
+        setStatus("Download Finish!")
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
@@ -55,8 +54,6 @@ export default function DownloadProgressAxiosPage(){
         link.click();
         window.URL.revokeObjectURL(url);
         //link.remove();
-
-
         //const reader = new window.FileReader();
         //reader.readAsDataURL(response.data);
         //reader.onload = () => {
@@ -65,12 +62,13 @@ export default function DownloadProgressAxiosPage(){
         //};
       })
       .catch(function (error) {
+        setStatus("Download Error!")
         console.log(error);
       });
   }
 
   return (<>
     <button onClick={clickDownload}> Download Axios</button>
-    <progress value={percent} max="100"/>
+    <progress value={percent} max="100"/> <label>{status}</label>
   </>)
 }

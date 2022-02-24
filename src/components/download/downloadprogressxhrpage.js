@@ -14,22 +14,26 @@ import React, { useState } from "react";
 
 export default function DownloadProgressXHRPage(){
   const [percent, setPercent] = useState(0);
+  const [status, setStatus] = useState("idle");
 
   async function clickDownload(){
     setPercent(0);
+    setStatus("Downloading...")
     const xhr = new XMLHttpRequest();
     xhr.responseType = "blob";
 
     xhr.addEventListener("progress", function (evt) {
       if(evt.lengthComputable) {
-        var percentComplete = evt.loaded / evt.total;
-        console.log(percentComplete);
-        setPercent(percentComplete*100);
+        var percentComplete = (evt.loaded / evt.total) *100;
+        //console.log(percentComplete);
+        setPercent(percentComplete);
+        setStatus(percentComplete.toFixed(2)+"%")
       }
     }, false);
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
+        setStatus("Finish Download...")
         //var filename = $(that).data('filename');
         var filename = "test01.txt";
         if (typeof window.chrome !== 'undefined') {
@@ -47,15 +51,16 @@ export default function DownloadProgressXHRPage(){
           var file = new File([xhr.response], filename, { type: 'application/force-download' });
           window.open(URL.createObjectURL(file));
         }
+        return;
       }
+      setStatus("Error Download!")
     };
-
     xhr.open('GET', '/downloadtest', true);
     xhr.send(); 
   }
 
   return (<>
     <button onClick={clickDownload}> Download XHR</button>
-    <progress value={percent} max="100"/>
+    <progress value={percent} max="100"/><label>{status}</label>
   </>)
 }
