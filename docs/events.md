@@ -10,11 +10,11 @@ app.js
 ```js
 // Example app top or root level
 import React from 'react';
-import { RoutePage } from './routepage.js';
-import { ThemeProvider } from './theme/themeprovider.js';
+import { RoutePage } from './RoutePage.jsx';
+import { ThemeProvider } from './theme/ThemeProvider.jsx';
 import { BrowserRouter } from 'react-router-dom';
-import { NotifyProvider } from './notify/notifyprovider.js';
-import { EventProvider } from './event/EventProvider.js';
+import { NotifyProvider } from './notify/NotifyProvider.jsx';
+import { EventProvider } from './event/EventProvider.jsx';
 
 export default function App() {
 
@@ -33,7 +33,7 @@ export default function App() {
 ```
 
 
-EventProvider.js
+EventProvider.jsx
 ```js
 import React,{ createContext, useContext, useMemo, useReducer } from "react";
 
@@ -78,7 +78,7 @@ export function EventProvider(props){
 ```
 
 
-EventLog.js
+EventLog.jsx
 ```js
 //listen to event context
 import React,{ useEffect, useState } from "react";

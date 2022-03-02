@@ -72,7 +72,7 @@ export default configureStore({
 ```js
 import { createSlice } from '@reduxjs/toolkit';
 //import React from 'react';
-import { nanoid16 } from '../../lib/helper.js';
+import { nanoid16 } from '../../lib/helper.mjs';
 
 export const Color = {
   info: "info",

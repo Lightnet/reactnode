@@ -4,7 +4,7 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import useFetch from '../hook/useFetch.js';
+import useFetch from '../hook/useFetch.mjs';
 
 export default function Message() {
 

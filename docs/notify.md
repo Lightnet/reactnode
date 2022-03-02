@@ -88,8 +88,8 @@ export function RoutePage() {
 
 ```js
 import React from 'react';
-import { nanoid16 } from '../../lib/helper.js';
-import { useNotifty } from './notify.js';
+import { nanoid16 } from '../../lib/helper.mjs';
+import { useNotifty } from './notify.jsx';
 
 export default function NotiftyTestv2(){
 
