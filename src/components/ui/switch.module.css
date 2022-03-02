@@ -2,8 +2,7 @@
   position: relative;
   display: inline-block;
   width: 40px;
-  height: 22px;
-  top:-12px;
+  height: 20px;
 }
 
 .switch input { 
@@ -30,18 +29,18 @@
   height: 16px;
   width: 16px;
   left: 4px;
-  bottom: 3px;
-  background-color: white;
+  bottom: 2px;
+  background-color: var(--switch-default);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: var(--switch-color);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px var(--switch-color);
 }
 
 input:checked + .slider:before {

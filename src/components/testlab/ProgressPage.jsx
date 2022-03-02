@@ -4,12 +4,12 @@
 */
 
 import React from "react";
-import DownloadProgressFetch2Page from "../download/DownloadProgressFetchPage.jsx";
-import DownloadProgressAxiosPage from "../download/downloadprogressaxiospage.jsx";
-import DownloadProgressXHRPage from "../download/downloadprogressxhrpage.jsx";
-import ProgressBarUI from "../progress/progressbarui.js";
-import UploadProgressAxiosPage from "../upload/uploadprogressaxiospage.js";
-import UploadProgressXHRPage from "../upload/uploadprogressxhrpage.js";
+import DownloadProgressFetchPage from "../download/DownloadProgressFetchPage.jsx";
+import DownloadProgressAxiosPage from "../download/DownloadProgressAxiosPage.jsx";
+import DownloadProgressXHRPage from "../download/DownloadProgressXHRPage.jsx";
+import ProgressBarUI from "../progress/ProgressBarUI.jsx";
+import UploadProgressAxiosPage from "../upload/UploadProgressAxiosPage.jsx";
+import UploadProgressXHRPage from "../upload/UploadProgressXHRPage.jsx";
 
 export default function ProgressPage(){
 
@@ -23,7 +23,7 @@ export default function ProgressPage(){
     <br />
     <UploadProgressAxiosPage/><br />
     <br />
-    <DownloadProgressFetch2Page /> <br/>
+    <DownloadProgressFetchPage /> <br/>
     <br/>
     <DownloadProgressXHRPage /><br/>
     <br/>

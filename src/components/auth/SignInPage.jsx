@@ -22,8 +22,9 @@ export function SignInPage() {
   async function clickLogin(){
     //console.log("login")
     let data = await useFetch('/signin',{
-      method:'POST',
-      body:JSON.stringify({userName,password})
+        method:'POST'
+      , headers: {'Content-Type': 'application/json'}
+      , body:JSON.stringify({userName,password})
     })
     console.log(data)
     if(data.error){

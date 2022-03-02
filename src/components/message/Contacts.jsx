@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../hook/useFetch.js';
 
-export default function Inbox() {
+export default function Contacts() {
 
   function renderView(){
 

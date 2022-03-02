@@ -20,8 +20,9 @@ export function SignUpPage() {
 
   async function clickRegister(){
     let data = await useFetch('/signup',{
-      method:'POST',
-      body:JSON.stringify({user,password})
+      method:'POST'
+      , headers: {'Content-Type': 'application/json'}
+      , body:JSON.stringify({user,password})
     })
     console.log(data)
     if(data.error){

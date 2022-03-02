@@ -52,7 +52,7 @@ export default function CountDownTimerUI({timedate}){
   }
 
   useEffect(()=>{
-    /*
+    
     if(timer){
       clearInterval(timer);
       setTimer(null);
@@ -73,7 +73,7 @@ export default function CountDownTimerUI({timedate}){
         clearInterval(_timer);
       }
     }
-    */
+    
   },[timedate])
 
   // After 2 second, we want to show a loader:

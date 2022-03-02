@@ -22,8 +22,9 @@ export function SignOutPage() {
     console.log("clickSignOut")
     console.log("login")
     let data = await useFetch('/signout',{
-      method:'POST',
-      body:JSON.stringify({token})
+        method:'POST'
+      , headers: {'Content-Type': 'application/json'}
+      , body:JSON.stringify({token})
     })
     console.log(data)
     if(data.error){

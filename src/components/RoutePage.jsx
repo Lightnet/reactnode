@@ -17,7 +17,7 @@ import { SignUpPage } from './auth/SignUpPage.jsx';
 import { AccountPage } from './account/AccountPage.jsx';
 import NavBarTop from './layout/navbartop.jsx';
 import { GamePage } from './game/GamePage.jsx';
-import Message from './message/index.js';
+import Message from './message/MessagePage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import NotifyManager from './notify/NotifyManager.jsx';
 import TestLabPage from './testlab/TestLabPage.jsx';

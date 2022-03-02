@@ -124,6 +124,7 @@ async function main(){
 
   // https://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
 
+  /*
   process.on('exit',()=>{
     server.close();
   })
@@ -141,6 +142,7 @@ async function main(){
   process.on('uncaughtException',()=>{
     server.close();
   })
+  */
 }
 
 main();
