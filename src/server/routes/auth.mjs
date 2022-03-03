@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/signin',async function (req, res) {
   var contentType = req.headers['content-type'];
   console.log(contentType);
-  //console.log(req.body); // your JSON
+  console.log(req.body); // your JSON
   let data = req.body;
   let db = await clientDB();
   let User = db.model('User');
@@ -26,6 +26,7 @@ router.post('/signin',async function (req, res) {
       //user.toAuthJSON();
       //console.log("[login] password pass!");
       let datasub = user.toAuthJSON()
+      console.log(datasub);
       req.session.user = datasub.name;
       req.session.token = datasub.token;
       //console.log(req.session);

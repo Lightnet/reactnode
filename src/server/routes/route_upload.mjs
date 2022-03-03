@@ -7,7 +7,6 @@
 // https://www.section.io/engineering-education/uploading-files-using-formidable-nodejs/
 // 
 
-
 import express from 'express';
 import formidable from "formidable";
 import fs from "fs";
@@ -28,12 +27,14 @@ const isFileValid = (file) => {
     "jpg"
     , "jpeg"
     , "png"
+    , "gif"
+    , "jsx"
+    , "mjs"
     , "pdf"
     , "txt"
     , "md"
     , "js"
     , "zip"
-    , "iso"
   ];
   console.log(validTypes.indexOf(type));
   if (validTypes.indexOf(type) === -1) {

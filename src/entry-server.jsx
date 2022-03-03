@@ -16,9 +16,9 @@ import { EventProvider } from './components/event/EventProvider'
 
 import store from "./components/store/store.jsx";
 
-export function render(url) {
+export function render(url, context) {
   return ReactDOMServer.renderToString(
-    <StaticRouter location={url} >
+    <StaticRouter location={url} context={context}>
       <Provider store={store}>
         <EventProvider>
           <NotifyProvider>

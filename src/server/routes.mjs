@@ -2,25 +2,24 @@
   LICENSE: MIT
   Created by: Lightnet
 */
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
-const __dirname = dirname(fileURLToPath(import.meta.url));
+//import path, { dirname } from 'path';
+//import { fileURLToPath } from 'url';
+//const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import express from 'express';
-const router = express.Router();
-import route_test from './routes/route_test.mjs';
+import auth from './routes/auth.mjs';
+import route_api from './routes/route_api.mjs';
 import route_download from './routes/route_download.mjs';
 import route_upload from './routes/route_upload.mjs';
+import route_test from './routes/route_test.mjs';
 
-import auth from './routes/auth.mjs';
-import game from './routes/game/game.mjs';
+const router = express.Router();
 
+router.use(auth);
+router.use("/api",route_api);
 router.use(route_upload);
 router.use(route_download);
 router.use(route_test);
-
-router.use(auth);
-router.use(game);
 
 //router.get('*', (req, res) => {
   //res.send(

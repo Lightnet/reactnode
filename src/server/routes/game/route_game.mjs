@@ -1,16 +1,15 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 import express from 'express';
 import clientDB from "../../../lib/database.mjs";
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 import { isEmpty } from "../../../lib/helper.mjs";
 const router = express.Router();
 
-router.get('/game', (req, res) => {
-  res.send(
-    '<script src="/bundle.js"></script>'
-  )
-})
-
-router.get('/api/base',async function (req, res) {
+router.get('/base',async function (req, res) {
 
   const db = await clientDB();
   let userid =null;
@@ -47,7 +46,8 @@ router.get('/api/base',async function (req, res) {
   res.send({error:'fail'});
 });
 
-router.post('/api/baseoutpost',async function (req, res) {
+router.post('/baseoutpost',async function (req, res) {
+  
   let db = await clientDB();
   let userid =null;
 
@@ -61,7 +61,7 @@ router.post('/api/baseoutpost',async function (req, res) {
   }else{
     return res.send({error:'failtoken'});
   }
-
+  
   const BaseOutPost = db.model('BaseOutPost');
   const Character = db.model('Character');
   let data = req.body;
@@ -105,11 +105,6 @@ router.post('/api/baseoutpost',async function (req, res) {
     }
   }
 
-  res.send({error:'fail'});
-});
-
-router.post('/game',async function (req, res) {
-  //return res.send({action:'EXIST'});
   res.send({error:'fail'});
 });
 

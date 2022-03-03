@@ -20,6 +20,9 @@ import BaseOutPostSchema from "./mongoose/baseoutpost.mjs";
 import ResourceSchema from "./mongoose/resource.mjs";
 import BuildingSchema from "./mongoose/building.mjs";
 import CharacterSchema from "./mongoose/character.mjs";
+import MessageSchema from "./mongoose/message.mjs";
+import ContactSchema from "./mongoose/contact.mjs";
+
 //import dotEnv from 'dotenv';
 
 //Set up default mongoose connection
@@ -47,9 +50,10 @@ export default async function clientDB(){
   mongoose.model('Resource', ResourceSchema)
   mongoose.model('Building', BuildingSchema)
   mongoose.model('Character', CharacterSchema)
-  //import('./mongoose/baseoutpost.mjs');
-  //import('./mongoose/building.mjs');
-  //import('./mongoose/resource.mjs');
+
+  mongoose.model('Contact', ContactSchema)
+  mongoose.model('Message', MessageSchema)
+
   //import('./mongoose/character.mjs');
   //Get the default connection
   db = mongoose.connection;

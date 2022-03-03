@@ -4,11 +4,22 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import useFetch from '../hook/useFetch.js';
+import useFetch from '../hook/useFetch.mjs';
 
 export default function Contacts() {
 
-  function renderView(){
+  useEffect(()=>{
+    getContacts();
+  },[])
+
+  async function getContacts(){
+    let data = await useFetch("/api/contact")
+    console.log(data);
+  }
+
+  function renderContacts(){
+
+
 
     return <></>
   }

@@ -8,20 +8,24 @@
 // @ts-check
 import chalk from 'chalk';
 import fs from 'fs'
-//import path, { dirname } from 'path'
 import path from 'path'
 import { fileURLToPath } from 'url';
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-console.log(__dirname);
 import compression from 'compression';
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import express from 'express';
-//import routes from "./src/server/routes.mjs";
+import session  from 'express-session';
+import MongoStore from 'connect-mongo';
+import routes from "./src/server/routes.mjs";
 
-//import routes from './routes.js';
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+//console.log(__dirname);
+
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
-process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
+process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop';
+
+const DATABASE_URL = process.env.DATABASE_URL;
+console.log(DATABASE_URL);
 
 console.log("env.PORT:", process.env.PORT)
 console.log("env.HOST:", process.env.HOST)
@@ -29,7 +33,6 @@ console.log("env.HOST:", process.env.HOST)
 const PORT =  process.env.PORT || 3000;
 const HOST =  process.env.HOST || "0.0.0.0";
 const log = console.log;
-
 
 async function vitecreateServer(
   root = process.cwd(),
@@ -42,7 +45,16 @@ async function vitecreateServer(
     : ''
   
   const app = express()
-  //app.use(routes);
+  app.use(session({
+    secret: 'keyboard cat',
+    store: MongoStore.create({ mongoUrl: DATABASE_URL }),
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }))
+  app.use(express.json())
+
+  app.use(routes);
 
   /**
    * @type {import('vite').ViteDevServer}
@@ -76,10 +88,6 @@ async function vitecreateServer(
     )
   }
 
-  //app.get("/api/json", async (req, res) => {
-    //res.json({text:"hello"})
-  //})
-
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl
@@ -99,7 +107,7 @@ async function vitecreateServer(
       const appHtml = render(url, context)
 
       if (context.url) {
-        // Somewhere a `<Redirect>` was rendered
+        //Somewhere a `<Redirect>` was rendered
         return res.redirect(301, context.url)
       }
 
