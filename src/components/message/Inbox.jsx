@@ -16,13 +16,7 @@ export default function Inbox() {
   },[])
 
   async function getMessages(){
-    let data = await useFetch("/api/message",{
-        method:"POST"
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:'MESSAGES'
-      })
-    });
+    let data = await useFetch("/api/message");
 
     console.log(data);
     if(data.api == API.TYPES.MESSAGES){

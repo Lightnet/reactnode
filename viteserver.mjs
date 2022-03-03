@@ -17,6 +17,7 @@ import express from 'express';
 import session  from 'express-session';
 import MongoStore from 'connect-mongo';
 import routes from "./src/server/routes.mjs";
+import cookieParser from 'cookie-parser';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 //console.log(__dirname);
@@ -45,6 +46,7 @@ async function vitecreateServer(
     : ''
   
   const app = express()
+  app.use(cookieParser())
   app.use(session({
     secret: 'keyboard cat',
     store: MongoStore.create({ mongoUrl: DATABASE_URL }),

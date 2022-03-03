@@ -29,6 +29,26 @@ router.get('/jsone', function (req, res) {
   res.json({message:'test page'})
 })
 
+// http://expressjs.com/en/4x/api.html#res.cookie
+
+router.get('/setcookie', function (req, res) {
+  res.cookie('Cookie token name','encrypted cookie string Value');
+  res.send('Cookie have been saved successfully');
+})
+
+// get the cookie incoming request
+router.get('/getcookie', (req, res) => {
+  //show the saved cookies
+  console.log(req.cookies)
+  res.send(req.cookies);
+});
+
+router.get('/deletecookie', (req, res) => {
+  //show the saved cookies
+  res.clearCookie('Cookie token name')
+  res.send('Cookie has been deleted successfully');
+});
+
 router.get('/exit', function (req, res) {
   console.log('browser close...')
   res.send('test page')

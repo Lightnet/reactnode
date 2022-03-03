@@ -79,11 +79,11 @@ export async function sessionTokenCheck(session){
       if(!session.user.name){
         resolve({error:"FAIL",userid:null,username:null});
       }
-      if(!session.user.token){
+      if(!session.token){
         resolve({error:"FAIL",userid:null,username:null});
       }
 
-      if(session.user.token){
+      if(session.token){
         const cdb = await clientDB();
         const User = cdb.model('User');
         const user = await User.findOne({username: session.user.name}).exec();
@@ -107,6 +107,58 @@ export async function sessionTokenCheck(session){
       }
     }else{
       resolve({error:"FAIL",userid:null,username:null});
+    }
+  });
+}
+
+//check for session or cookies that is set for the token
+export async function checkTokenUser(req){
+  return new Promise( async (resolve, reject) => {
+    let isSession = false;
+    let isCookie = false;
+    let isToken = false;
+    let token = null;
+    if(req.session){
+      isSession=true;
+      if(!req.session.user.name){
+        resolve({error:"FAIL",userid:null,username:null});
+      }
+      if(!req.session.token){
+        resolve({error:"FAIL",userid:null,username:null});
+      }else{
+        isToken=true;
+        token=req.session.token;
+      }
+    }else{
+      //resolve({error:"FAIL SESSION",userid:null,username:null});
+    }
+
+    if(req.cookies){
+      isCookie=true;
+      if(req.cookies.token){
+        isToken=true;
+        token=req.cookies.token;
+      }else{
+        //resolve({error:"FAIL COOKIE",userid:null,username:null});
+      }
+    }else{
+      //resolve({error:"FAIL COOKIE",userid:null,username:null});
+    }
+
+    if((isSession == false) || (isCookie == false)){
+      resolve({error:"FAIL NOT SETUP Session || Cookie",userid:null,username:null});
+    }
+
+    if(token){
+      console.log(token)
+      const cdb = await clientDB();
+
+
+
+
+
+    }else{
+      resolve({error:"FAIL ACCESS",userid:null,username:null});
     }
   });
 }
