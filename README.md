@@ -15,6 +15,7 @@
 - jsonwebtoken
 - dayjs
 - nanoid
+- vite
 
 # Information:
   This is testing project. 
@@ -249,9 +250,17 @@ export default function App(){
   Need to install mongodb and nodejs.
 
 ```
-npm install
+$ npm install
 
-npm run dev
+$ npm run dev
+```
+
+## Vite set up:
+
+```
+$ npm run vitebuild ( build dist server and client )
+$ npm run generate ( build html files )
+$ npm run devv ( set up hot reload server ssr )
 ```
 
 .env

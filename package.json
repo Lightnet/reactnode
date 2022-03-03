@@ -1,27 +1,36 @@
 {
   "name": "reactnode",
+  "private": true,
   "version": "1.0.0",
   "description": "node react",
-  "main": "app.js",
+  "main": "servermodule.js",
   "type": "module",
   "exports": {
-    "import": "./dist/mjs/index.js",
-    "require": "./dist/cjs/index.js"
+    "import": "./servermodule.mjs",
+    "require": "./index.cjs"
   },
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
-    "dev:nodemon": "nodemon app.mjs",
+    "devv": "nodemon watchvite.mjs",
+    "dev:nodemon": "nodemon servermodule.mjs",
     "dev:webpack": "webpack -c webpack.config.cjs --watch",
-    "start": "node app.js"
+    "vitebuild": "npm-run-all --parallel build:vite",
+    "build:vite": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
+    "generate": "vite build --outDir dist/static && npm run build:server && node prerender.mjs",
+    "start": "node servermodule.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
+    "@vitejs/plugin-react": "^1.2.0",
     "axios": "^0.26.0",
     "body-parser": "^1.19.2",
     "chalk": "^5.0.0",
     "classnames": "^2.3.1",
+    "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "dayjs": "^1.10.8",
@@ -36,7 +45,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.2"
+    "react-router-dom": "^6.2.2",
+    "serve-static": "^1.14.2",
+    "vite": "^2.8.6"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
