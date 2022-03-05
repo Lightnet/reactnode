@@ -34,12 +34,12 @@ var db;
 
 export default async function clientDB(){
   if(db){
-    console.log("LOCAL REUSED")
+    //console.log("LOCAL REUSED")
     return db;
   }
 
   if(global.db){
-    console.log("GLOBAL REUSED")
+    //console.log("GLOBAL REUSED")
     return global.db;
   }
 

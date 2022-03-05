@@ -5,6 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { API } from '../../lib/API.mjs';
+import { isEmpty } from '../../lib/helper.mjs';
 import useFetch from '../hook/useFetch.mjs';
 
 export default function Contacts() {
@@ -62,12 +63,23 @@ export default function Contacts() {
   }
 
   async function clickRemoveContacts(){
+    let id = null;
+    for(let idx in contacts){
+      if(contacts[idx].friend == userName){
+        id = contacts[idx].id;
+        break;
+      }
+    }
+    if(isEmpty(id)){
+      return;
+    }
+
     let data = await useFetch("/api/contact",{
       method:API.DELETE
       , headers: {'Content-Type': 'application/json'}
       , body:JSON.stringify({
           api:API.DELETE
-        ,  userName
+        ,  id:id
       })
     })
     console.log(data);
@@ -77,7 +89,7 @@ export default function Contacts() {
     }
 
     if(data.api=="DELETE"){
-      setContacts(state=>state.filter(item=>item.friend!=data.username))
+      setContacts(state=>state.filter(item=>item.id!=data.id))
     }
   }
 

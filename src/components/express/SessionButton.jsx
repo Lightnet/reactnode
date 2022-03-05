@@ -4,12 +4,10 @@
 */
 import React from "react";
 
-// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+export default function SessionButton(){
 
-export default function CookieButton(){
-
-  function clickGetCookie(){
-    fetch('/cookie')
+  function clickGetSession(){
+    fetch('/session')
     .then(response => response.json())
     .then(data => console.log(data))
     .catch((error) => {
@@ -18,6 +16,6 @@ export default function CookieButton(){
   }
 
   return (<>
-    <button onClick={clickGetCookie}> cookie </button>
+    <button onClick={clickGetSession}> Get Session </button>
   </>)
 }

@@ -33,7 +33,7 @@ export function AuthProvider(props){
       setStatus('unauth')
       return;
     }
-
+    console.log(data)
     if(data.token){
       setToken(data.token);
       setUser(data.user);

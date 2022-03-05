@@ -53,5 +53,33 @@ router.get('/exit', function (req, res) {
   console.log('browser close...')
   res.send('test page')
 })
+// https://expressjs.com/en/api.html
+// https://sailsjs.com/documentation/reference/request-req/req-accepts
+// https://stackoverflow.com/questions/23271250/how-do-i-check-content-type-using-expressjs
+// https://techeplanet.com/express-set-content-type/
+// https://flaviocopes.com/express-headers/
+// https://hackersandslackers.com/making-api-requests-with-nodejs/
+router.get('/agent', function (req, res) {
+  console.log("///////////////////////////")
+  //console.log("json: ",req.is('json'))
+  console.log(req.accepts('application/json'))
+  if (req.accepts('application/json')) {// 'accept':'application/json, charset=utf-8'
+    console.log("FOUND json")
+  }
+
+  //console.log("Request type :", req.get('Content-Type'));
+  //console.log("Request type :", req.get('Content-Type')?.match('application/json'));
+  var contype = req.headers['content-type'];
+  console.log(contype)
+  if (contype && contype.indexOf('application/json') == 0){//pass
+    console.log(contype.indexOf('application/json'));
+  }
+
+  let agent = req.headers['user-agent'];
+  console.log(agent);
+  let accept = req.headers['accept']
+  console.log("accept:", accept);
+  res.json(agent)
+})
 
 export default router;

@@ -46,6 +46,9 @@ async function vitecreateServer(
     : ''
   
   const app = express()
+  
+  app.set('trust proxy', true)
+
   app.use(cookieParser())
   app.use(session({
     secret: 'keyboard cat',

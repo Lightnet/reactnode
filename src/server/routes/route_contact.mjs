@@ -118,9 +118,10 @@ router.delete('/contact', async function (req, res) {
       let data = req.body;
       await Contact.deleteOne({
         userid: userid
-        , friend:data.userName
+        , id:data.id
       }).exec();
-      return res.send({api:'DELETE',username:data.userName});
+      console.log(data.id)
+      return res.send({api:'DELETE',id:data.id});
     }catch(e){
       console.log(e)
       return res.send({error:'faildb'});

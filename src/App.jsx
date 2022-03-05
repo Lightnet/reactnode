@@ -6,6 +6,7 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import NotifyManager from './components/notify/NotifyManager'
 import NotifyReduxManager from './components/notifyredux/NotifyReduxManager'
+import ViteNavBar from './components/vite/ViteNavBar'
 
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
@@ -38,11 +39,14 @@ export function App() {
 
   function renderNavBar(){
     //need code checks...
-    return <div>
-      {pageroutes.map(({ name, path }) => {
-        return (<span key={path}> <Link to={path}> {name} </Link> | </span>)
-      })}
-    </div>
+    //return <div>
+      //{pageroutes.map(({ name, path }) => {
+        //console.log(path)
+        //console.log(name)
+        //return (<span key={path}> <Link to={path}> {name} </Link> | </span>)
+      //})}
+    //</div>
+    return <ViteNavBar/>
   }
 
   return (

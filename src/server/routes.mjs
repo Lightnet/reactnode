@@ -15,6 +15,8 @@ import route_test from './routes/route_test.mjs';
 
 const router = express.Router();
 
+//router.use('/favicon.ico', express.static('images/favicon.ico'));
+
 router.use(auth);
 router.use("/api",route_api);
 router.use(route_upload);

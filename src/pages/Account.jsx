@@ -5,10 +5,13 @@
 
 import React from "react";
 import { AccountPage } from "../components/account/AccountPage";
+import AuthAccess from "../components/auth/AuthAccess";
 
 export default function Account() {
 
-  return (
+  return (<>
+  <AuthAccess>
     <AccountPage/>
-  )
+  </AuthAccess>
+  </>)
 }
