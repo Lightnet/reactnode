@@ -69,9 +69,9 @@ router.use((req, res, next) => {
 })
 
 router.post('/signin',async function (req, res) {
-  var contentType = req.headers['content-type'];
-  console.log(contentType);
-  console.log(req.body); // your JSON
+  //var contentType = req.headers['content-type'];
+  //console.log(contentType);
+  //console.log(req.body); // your JSON
   let data = req.body;
   let db = await clientDB();
   let User = db.model('User');
@@ -88,7 +88,7 @@ router.post('/signin',async function (req, res) {
       //let datasub = user.toAuthJSON()
       let token = user.generateToken(req)
       if(enableSession){
-        console.log(token);
+        //console.log(token);
         req.session.user = user.username;
         req.session.token = token;
       }
@@ -119,7 +119,7 @@ router.post('/signin',async function (req, res) {
 });
 
 router.post('/signup',async function (req, res) {
-  console.log(req.body); // your JSON
+  //console.log(req.body); // your JSON
   let data = req.body;
   let db = await clientDB();
   let User = db.model('User');
@@ -158,35 +158,35 @@ router.post('/signout',async function (req, res) {
   // 
   let user = await User.findOne({ token: token }).exec();
   if(user){
-    console.log(user);
+    //console.log(user);
     if(user.token == token){
-      console.log("FOUND");
-      let datatoken = checkToken(token, secret); //check token
+      //console.log("FOUND");
+      let datatoken = checkToken(token, process.env.REFRESH_TOKEN_SECRET); //check token
       if(datatoken){//passed
         let hash = crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
         if(hash == datatoken.hash){
-          console.log("FOUND HASH!")
+          //console.log("FOUND HASH!")
           try{  
             user.tokenSalt="";
             user.token="";
             await user.save()
           }catch(e){
-            console.log(e);
+            //console.log(e);
           }
           if(req.cookies?.token){
             res.clearCookie('token')
           }
           if(req.session){//delete session
             req.session.destroy(function(err) {
-              console.log(err);
-              console.log(req.session);
+              //console.log(err);
+              //console.log(req.session);
             })
           }
         }
       }else{
         //check for fake or outdate token
         datatoken = parseJwt(token);
-        console.log(datatoken);
+        //console.log(datatoken);
         let hash = crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
         // if expire but match the hash update token to none.
         if(hash == datatoken.hash){
@@ -196,7 +196,7 @@ router.post('/signout',async function (req, res) {
             user.token="";
             await user.save()
           }catch(e){
-            console.log(e);
+            //console.log(e);
           }
         }
         if(req.cookies?.token){
@@ -205,8 +205,8 @@ router.post('/signout',async function (req, res) {
         // clear out session
         if(req.session){//delete session
           req.session.destroy(function(err) {
-            console.log(err);
-            console.log(req.session);
+            //console.log(err);
+            //console.log(req.session);
           })
         }
       }

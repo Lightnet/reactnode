@@ -89,8 +89,10 @@ Work in progress testing...
   - posts ( added /  work in progress)
 - upload ( added / simple )
   - using the reactjs
+  - progress bar ( added )
 - download ( added / simple )
   - using the reactjs
+  - progress bar ( added )
 - Game
   - moblie base game
   - Testing game logic.

@@ -96,7 +96,7 @@ UserSchema.methods.generateToken = function(req) {
   exp.setDate(today.getDate() + (60*60));
   this.tokenSalt = nanoid32();
   //need express trust true to work for ip?
-  console.log(req.ip)
+  //console.log(req.ip)
   this.token = jwt.sign({
       id: this.id
     , hash: crypto.createHash('md5').update(req.ip + this.tokenSalt).digest('hex')
@@ -114,7 +114,7 @@ UserSchema.methods.generateTokenKey = function(req) {
   exp.setDate(today.getDate() + 60);
   this.tokenKey = nanoid32();
   //need express trust true to work for ip?
-  console.log(req.ip)
+  //console.log(req.ip)
   //this.token = jwt.sign({
   return jwt.sign({
       id: this.id

@@ -11,12 +11,12 @@ export function checkToken(token, key){
       //console.log("decoded///") // bar
       //console.log(decoded) // bar
     //});
-    console.log("true")
+    //console.log("true")
     return jwt.verify(token, key);
   } catch(err) {
     // err
     //console.log("error")
-    console.log("false")
+    //console.log("false")
     return null;
     //return false;
   }
