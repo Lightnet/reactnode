@@ -55,7 +55,7 @@ Work in progress testing...
 # Database:
   Using mongodb for easy update data.
 
-# features:
+# Features:
 - Account management dummy test (work in progress)
   - sign up (added)
   - logout (added)
@@ -69,10 +69,10 @@ Work in progress testing...
   - context
   - provider
   - useReducer
-- cookie (added /not work on)
-  - button fetch test
-- session (added / testing )
-  - button fetch test
+
+- express
+  - button cookie fetch test
+  - button session fetch test
 - Theme toggle light and dark (added / simple / work in progress)
   - custom color (not added)
 - route pages (added / work in progress)
@@ -216,7 +216,7 @@ export default function App(){
     return ()=>{
       //this is clean up once the react element is remove
     }
-  }, [])
+  }, [])//if there no variable. It will mount once and unmount.
 
 //...
   const [isLoading, setIsLoading] = useState(false);
@@ -236,7 +236,7 @@ export default function App(){
   setIsLoading(false); // will trigger change state
 //...
 
-// Similar to componentDidMount and componentDidUpdate:
+// Similar to componentDidUpdate:
   useEffect(() => {
     // Update the document ... using the browser API
   });
