@@ -31,8 +31,8 @@ export function SignOutPage() {
       console.log('Fetch Error Signout');
       return;
     }
-    if(data.action){
-      if(data.action=='SIGNOUT'){
+    if(data.api){
+      if(data.api=='LOGOUT'){
         setToken('');
         setUser('');
         navigate('/');

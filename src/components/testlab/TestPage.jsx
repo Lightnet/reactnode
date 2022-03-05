@@ -13,10 +13,10 @@ import SessionButton from "../express/SessionButton";
 export default function TestPage(){
 
   return <>
-    <label> Test </label>
+    <label> Test </label><br/>
     <BtnAgent/>
-    <BtnFetch/>
-    <SessionButton/>
+    <BtnFetch/><br/>
+    <SessionButton/><br/>
     <CookieButton/>
     <CookieDoc/>
   </>

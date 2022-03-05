@@ -34,10 +34,10 @@ export function AuthProvider(props){
       return;
     }
     console.log(data)
-    if(data.token){
+    if(!isEmpty(data.token)){
       setToken(data.token);
       setUser(data.user);
-      //setStatus('auth');
+      setStatus('auth');
     }else{
       setStatus('unauth')
     }

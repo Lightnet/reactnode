@@ -5,14 +5,16 @@
 
 //https://expressjs.com/en/guide/routing.html
 
+import crypto from 'crypto';
 import express from 'express';
+//import session from 'express-session';
 import clientDB from "../../lib/database.mjs";
-import { checkToken } from '../../lib/helperToken.mjs';
+import { checkToken, parseJwt } from '../../lib/helperToken.mjs';
 const router = express.Router();
 
 var secret = process.env.SECRET;
 var enableSession = process.env.ISSESSION || true;
-var enableCookie = process.env.ISCOOKIE || true;
+var enableCookie = process.env.ISCOOKIE || false;
 
 console.log("secret:", secret)
 
@@ -47,11 +49,18 @@ router.use((req, res, next) => {
     console.log('Request URL:', req.originalUrl)
     if(req.session.token){
       console.log("checking...")
-      let sessionToken = checkToken(req.session.token);
-      console.log(sessionToken)
+      //let sessionToken = checkToken(req.session.token, secret);
+      //console.log("sessionToken: ", sessionToken)
     }
-
-
+    return next();
+  }else if(req.originalUrl?.indexOf("/session") == 0 ){
+    console.log("FOUND /session!")
+    console.log('Request URL:', req.originalUrl)
+    if(req.session.token){
+      console.log("checking...")
+      let sessionToken = checkToken(req.session.token, secret);
+      console.log("sessionToken: ", sessionToken)
+    }
     return next();
   }else{
     console.log('Request URL:', req.originalUrl)
@@ -77,19 +86,25 @@ router.post('/signin',async function (req, res) {
       //user.toAuthJSON();
       //console.log("[login] password pass!");
       //console.log(req.session);
-      let datasub = user.toAuthJSON()
+      //let datasub = user.toAuthJSON()
+      let token = user.generateToken(req)
       if(enableSession){
-        console.log(datasub);
-        req.session.user = datasub.name;
-        req.session.token = datasub.token;
+        console.log(token);
+        req.session.user = user.username;
+        req.session.token = token;
+        try{
+          await user.save()
+        }catch(e){
+          console.log("LOGIN FAIL SAVE TOKEN!")
+        }
       }
 
       if(enableCookie){
-        res.cookie("user", datasub.name)
-        res.cookie("token", datasub.token)
+        res.cookie("user", user.name)
+        res.cookie("token", token)
       }
       
-      return res.send({action:'LOGIN',user:datasub.name,token:datasub.token});
+      return res.send({action:'LOGIN',user:user.username,token:token});
     }else{
       console.log("[login] password fail!");
       return res.send({error:"PASSWORDFAIL"});
@@ -127,38 +142,78 @@ router.post('/signup',async function (req, res) {
 
 router.post('/signout',async function (req, res) {
   //console.log(req.session)
-  //req.session.user = null;
-  //req.session.token = null;
-  if(req.session){
-    req.session.destroy(function(err) {
-      console.log(err);
-      console.log(req.session);
-      // cannot access session here
-    })
+  let token =null;
+  if(req.session?.token){
+    token=req.session.token;
   }
+
+  /*
+  
 
   if(req.cookies?.token){
     res.clearCookie('token')
     res.clearCookie('user')
   }
+  */
 
-  
-  //console.log(req.body); // your JSON
-  //let data = req.body;
   let db = await clientDB();
   let User = db.model('User');
   // neeed token
   // 
-
-  //let user = await User.findOne({ username: data.user }).exec();
-  //if(!user){
-    //return res.send({action:'NONEXIST'});
-  //}else{
-    //return res.send({action:'EXIST'});
-  //}
-  return res.json({action:'SIGNOUT'}); // echo the result back
+  let user = await User.findOne({ token: token }).exec();
+  if(user){
+    console.log(user);
+    if(user.token == token){
+      console.log("FOUND");
+      let datatoken = checkToken(token, secret); //check token
+      if(datatoken){//passed
+        let hash = crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
+        if(hash == datatoken.hash){
+          console.log("FOUND HASH!")
+          try{  
+            user.tokenSalt="";
+            user.token="";
+            await user.save()
+          }catch(e){
+            console.log(e);
+          }
+          if(req.session){//delete session
+            req.session.destroy(function(err) {
+              console.log(err);
+              console.log(req.session);
+            })
+          }
+        }
+      }else{
+        //check for fake or outdate token
+        datatoken = parseJwt(token);
+        console.log(datatoken);
+        let hash = crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
+        // if expire but match the hash update token to none.
+        if(hash == datatoken.hash){
+          console.log("OUTDATE FOUND HASH!")
+          try{  
+            user.tokenSalt="";
+            user.token="";
+            await user.save()
+          }catch(e){
+            console.log(e);
+          }
+        }
+        // clear out session
+        if(req.session){//delete session
+          req.session.destroy(function(err) {
+            console.log(err);
+            console.log(req.session);
+          })
+        }
+      }
+    }
+    return res.send({api:'LOGOUT'});
+  }else{
+    return res.send({api:'NOTOKEN!'});
+  }
   //return res.send({error:'ERROR'}); // echo the result back
-  //res.send(`<html lang="en">page</html>`);
 });
 
 router.get('/session',async function (req, res) {

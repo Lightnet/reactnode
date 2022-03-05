@@ -17,8 +17,8 @@ export default function ViteNavBar(){
     if(isEmpty(user)){
       setNavNames([
         {name: "Home", path:"/"}
-        ,{name: "SignIn", path:"/signin"}
-        ,{name: "TestLab", path:"/testlab"}
+        ,{name: "Sign In", path:"/signin"}
+        ,{name: "Test Lab", path:"/testlab"}
       ])
     }else{
       setNavNames([
@@ -26,7 +26,7 @@ export default function ViteNavBar(){
         ,{name: "Game", path:"/game"}
         ,{name: "Message", path:"/message"}
         ,{name: "Sign Out", path:"/signout"}
-        ,{name: "TestLab", path:"/testlab"}
+        ,{name: "Test Lab", path:"/testlab"}
       ])
     }
   },[user])

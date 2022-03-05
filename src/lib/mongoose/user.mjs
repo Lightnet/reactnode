@@ -34,6 +34,10 @@ var UserSchema = new mongoose.Schema({
     type:String,
     default:''
   },
+  tokenSalt:  {
+    type:String,
+    default:''
+  },
   bio: {
     type:String,
     default:''
@@ -80,6 +84,25 @@ UserSchema.methods.setPassword = function(password){
 UserSchema.methods.validPassword = function(password) {
   let hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   return this.hash === hash;
+}
+
+UserSchema.methods.generateToken = function(req) {
+  var today = new Date();
+  var exp = new Date(today);
+  exp.setDate(today.getDate() + 60);
+  this.tokenSalt = nanoid32();
+  //need express trust true to work for ip?
+  console.log(req.ip)
+  this.token = jwt.sign({
+      id: this._id
+    , hash: crypto.createHash('md5').update(req.ip + this.tokenSalt).digest('hex')
+    , name: this.username
+    //, exp: parseInt(exp.getTime() / 1000)
+    //, exp: parseInt(exp.getTime() / 1000)
+    , exp: Math.floor(Date.now() / 1000) + ( 60) // 60 sec
+    }, secret);
+
+  return this.token;
 }
 
 UserSchema.methods.generateJWT = function() {
