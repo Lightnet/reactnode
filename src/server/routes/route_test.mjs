@@ -6,6 +6,7 @@
 //https://expressjs.com/en/guide/routing.html
 
 import express from 'express';
+import { verifyToken } from '../auth/VerifyToken.mjs';
 const router = express.Router();
 
 //Middle ware that is specific to this router
@@ -82,4 +83,12 @@ router.get('/agent', function (req, res) {
   res.json(agent)
 })
 
+// middleware check token
+// 
+router.get('/refreshtest', verifyToken, function (req, res) {
+  //console.log(req.get('authorization'))
+  //console.log(req.test)
+  //console.log(req.test1)
+  res.json({test:"test"})
+})
 export default router;

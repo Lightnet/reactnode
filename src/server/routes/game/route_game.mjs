@@ -5,7 +5,6 @@
 
 import express from 'express';
 import clientDB from "../../../lib/database.mjs";
-//import jwt from 'jsonwebtoken';
 import { isEmpty } from "../../../lib/helper.mjs";
 const router = express.Router();
 

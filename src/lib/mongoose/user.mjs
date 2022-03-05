@@ -38,6 +38,10 @@ var UserSchema = new mongoose.Schema({
     type:String,
     default:''
   },
+  tokenKey:  {
+    type:String,
+    default:''
+  },
   bio: {
     type:String,
     default:''
@@ -89,20 +93,37 @@ UserSchema.methods.validPassword = function(password) {
 UserSchema.methods.generateToken = function(req) {
   var today = new Date();
   var exp = new Date(today);
-  exp.setDate(today.getDate() + 60);
+  exp.setDate(today.getDate() + (60*60));
   this.tokenSalt = nanoid32();
   //need express trust true to work for ip?
   console.log(req.ip)
   this.token = jwt.sign({
-      id: this._id
+      id: this.id
     , hash: crypto.createHash('md5').update(req.ip + this.tokenSalt).digest('hex')
     , name: this.username
     //, exp: parseInt(exp.getTime() / 1000)
-    //, exp: parseInt(exp.getTime() / 1000)
-    , exp: Math.floor(Date.now() / 1000) + ( 60) // 60 sec
-    }, secret);
-
+    //, exp: Math.floor(Date.now() / 1000) + ( 60) // 60 sec
+    , exp: Math.floor(Date.now() / 1000) + (60 * 60) // 60 sec
+    }, process.env.REFRESH_TOKEN_SECRET);
   return this.token;
+}
+
+UserSchema.methods.generateTokenKey = function(req) {
+  var today = new Date();
+  var exp = new Date(today);
+  exp.setDate(today.getDate() + 60);
+  this.tokenKey = nanoid32();
+  //need express trust true to work for ip?
+  console.log(req.ip)
+  //this.token = jwt.sign({
+  return jwt.sign({
+      id: this.id
+    , hash: crypto.createHash('md5').update(req.ip + this.tokenKey).digest('hex')
+    , name: this.username
+    }, process.env.ACCESS_TOKEN_SECRET,{
+      expiresIn: '15s'
+    });
+  //return this.token;
 }
 
 UserSchema.methods.generateJWT = function() {
@@ -110,7 +131,7 @@ UserSchema.methods.generateJWT = function() {
   var exp = new Date(today);
   exp.setDate(today.getDate() + 60);
   return jwt.sign({
-    id: this._id,
+    id: this.id,
     name: this.username,
     exp: parseInt(exp.getTime() / 1000),
     }, secret);

@@ -10,11 +10,16 @@ import {
   useNavigate
 } from "react-router-dom";
 import { useAuth } from './AuthProvider.jsx';
+import { parseJwt } from '../../lib/helper.mjs';
 
 export function SignInPage() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const {setUser,setToken} = useAuth();
+  const {
+      setUser
+    , setToken
+    , setExpire
+  } = useAuth();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
   
@@ -39,6 +44,10 @@ export function SignInPage() {
       if(data.action=='LOGIN'){
         setUser(data.user);
         setToken(data.token);
+        let datatoken = parseJwt(data.token)
+        setExpire(datatoken.exp);
+        console.log(datatoken);
+
         navigate('/')
       }
 

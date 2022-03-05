@@ -14,7 +14,7 @@ const router = express.Router();
 
 var secret = process.env.SECRET;
 var enableSession = process.env.ISSESSION || true;
-var enableCookie = process.env.ISCOOKIE || false;
+var enableCookie = process.env.ISCOOKIE || true;
 
 console.log("secret:", secret)
 
@@ -68,7 +68,6 @@ router.use((req, res, next) => {
   next()
 })
 
-
 router.post('/signin',async function (req, res) {
   var contentType = req.headers['content-type'];
   console.log(contentType);
@@ -92,19 +91,22 @@ router.post('/signin',async function (req, res) {
         console.log(token);
         req.session.user = user.username;
         req.session.token = token;
-        try{
-          await user.save()
-        }catch(e){
-          console.log("LOGIN FAIL SAVE TOKEN!")
-        }
       }
 
       if(enableCookie){
-        res.cookie("user", user.name)
-        res.cookie("token", token)
+        //res.cookie("user", user.name)
+        res.cookie("token", token,{
+            httpOnly: true
+          , maxAge: 24 * 60 * 60 * 1000
+        })
       }
-      
-      return res.send({action:'LOGIN',user:user.username,token:token});
+      let tokenKey = user.generateTokenKey(req)
+      try{
+        await user.save()
+      }catch(e){
+        console.log("LOGIN FAIL SAVE TOKEN!")
+      }
+      return res.send({action:'LOGIN',user:user.username,token:tokenKey});
     }else{
       console.log("[login] password fail!");
       return res.send({error:"PASSWORDFAIL"});
@@ -147,15 +149,6 @@ router.post('/signout',async function (req, res) {
     token=req.session.token;
   }
 
-  /*
-  
-
-  if(req.cookies?.token){
-    res.clearCookie('token')
-    res.clearCookie('user')
-  }
-  */
-
   let db = await clientDB();
   let User = db.model('User');
   // neeed token
@@ -176,6 +169,9 @@ router.post('/signout',async function (req, res) {
             await user.save()
           }catch(e){
             console.log(e);
+          }
+          if(req.cookies?.token){
+            res.clearCookie('token')
           }
           if(req.session){//delete session
             req.session.destroy(function(err) {
@@ -200,6 +196,9 @@ router.post('/signout',async function (req, res) {
             console.log(e);
           }
         }
+        if(req.cookies?.token){
+          res.clearCookie('token')
+        }
         // clear out session
         if(req.session){//delete session
           req.session.destroy(function(err) {
@@ -215,6 +214,12 @@ router.post('/signout',async function (req, res) {
   }
   //return res.send({error:'ERROR'}); // echo the result back
 });
+
+// https://mfikri.com/en/blog/react-express-mysql-authentication
+//router.get('/token',async function (req, res) {
+  //console.log(req.session);
+  //return res.json(req.session);
+//})
 
 router.get('/session',async function (req, res) {
   //console.log(req.session);

@@ -5,7 +5,8 @@
 
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
 import useFetch from "../hook/useFetch.mjs";
-import { isEmpty } from "../../lib/helper.mjs";
+import { isEmpty, parseJwt } from "../../lib/helper.mjs";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -24,7 +25,10 @@ export function AuthProvider(props){
   const [session, setSession] = useState(''); // use?
   const [status, setStatus] = useState('unauth'); //loading, auth, unauth
 
+  const [expire, setExpire] = useState('');
+
   //safe?
+  /*
   useEffect(async()=>{
     setStatus('loading')
     let data = await useFetch('/session');
@@ -42,28 +46,72 @@ export function AuthProvider(props){
       setStatus('unauth')
     }
   },[])
+  */
 
-  useEffect(()=>{
-    if(!isEmpty(token)){
-      console.log("TOKEN")
+  useEffect(() => {
+    refreshToken();
+    //console.log("Hello?")
+  }, []);
+
+  //useEffect(()=>{
+    //if(!isEmpty(token)){
+      //console.log("TOKEN")
+      //setStatus('auth')
+    //}else{
+      //setStatus('unauth')
+    //}
+  //},[token])
+
+  async function refreshToken(){
+    setStatus('loading')
+    axios.get('/token').then(function (response) {
+      //console.log(response)
+      const decoded = parseJwt(response.data.accessToken);
+      //console.log(decoded)
+      setToken(response.data.accessToken);
+      setUser(decoded.user);
+      setExpire(decoded.exp);
       setStatus('auth')
-    }else{
+    }).catch(function (error) {
+      // handle error
+      console.log(error);
+      console.log("TOKEN ERROR...")
       setStatus('unauth')
-    }
-  },[token])
+      //history.push("/");
+    })
+  }
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(async (config) => {
+    const currentDate = new Date();
+    if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get('http://localhost:3000/token');
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = parseJwt(response.data.accessToken);
+        //setName(decoded.name);
+        setExpire(decoded.exp);
+      }
+      return config;
+  }, (error) => {
+      return Promise.reject(error);
+  });
 
   const value = useMemo(()=>({
     token, setToken,
     userID, setUserID,
     user, setUser,
     session, setSession,
-    status, setStatus
+    status, setStatus,
+    expire, setExpire
   }),[
     token,
     userID,
     user,
     session,
-    status
+    status,
+    expire
   ])
 
   return <AuthContext.Provider value={value} {...props} />

@@ -4,6 +4,7 @@
 */
 
 import React from "react";
+import TestRefreshToken from "../auth/TestRefreshToken";
 import BtnAgent from "../express/BtnAgent";
 import BtnFetch from "../express/BtnFetch";
 import CookieButton from "../express/CookieButton";
@@ -19,5 +20,6 @@ export default function TestPage(){
     <SessionButton/><br/>
     <CookieButton/>
     <CookieDoc/>
+    <TestRefreshToken/>
   </>
 }
