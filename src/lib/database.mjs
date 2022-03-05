@@ -43,7 +43,7 @@ export default async function clientDB(){
     return global.db;
   }
 
-  console.log("init DB")
+  //console.log("init DB")
   mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
   mongoose.model('User', UserSchema)
   mongoose.model('BaseOutPost', BaseOutPostSchema)
@@ -60,7 +60,7 @@ export default async function clientDB(){
   //Bind connection to error event (to get notification of connection errors)
   db.on('error', console.error.bind(console, 'MongoDB connection error:'));
   db.on('open', err => {
-    console.log(`DB connected`);
+    console.log(`open DB`);
   })
   db.on('connected', () => {
     console.log('connected to mongodb');

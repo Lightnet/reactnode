@@ -4,6 +4,7 @@
 */
 
 import React, { useState } from 'react';
+import AuthAccess from '../auth/AuthAccess.jsx';
 import { useAuth } from '../auth/AuthProvider.jsx';
 import useFetch from '../hook/useFetch.mjs';
 
@@ -17,8 +18,10 @@ export function AccountPage() {
   }
 
   return (<>
-    <label>Account</label> <br />
-    <label>User Name:{user}</label> <br />    
-    <button onClick={()=>getSession()}> session </button>
+    <AuthAccess>
+      <label>Account</label> <br />
+      <label>User Name:{user}</label> <br />    
+      <button onClick={()=>getSession()}> session </button>
+    </AuthAccess>
   </>);
 }

@@ -15,11 +15,11 @@ export const refreshToken = async(req, res) => {
   try {
     const refreshToken = req.cookies.token;
     //console.log("refreshToken:", refreshToken)
+    console.log("/token")
     if(!refreshToken) return res.sendStatus(401);
-
     //const user = await Users.fineOne({refresh_token: refreshToken}).exec()
     const user = await Users.findOne({token:refreshToken})
-      .select('id username token tokenSalt')
+      .select('id username tokenSalt')
       .exec()
     if(!user) return res.sendStatus(403);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {

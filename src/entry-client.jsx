@@ -17,21 +17,17 @@ import { EventProvider } from './components/event/EventProvider'
 import store from "./components/store/store.jsx";
 
 ReactDOM.hydrate(
-  <Provider store={store}>
-    <EventProvider>
-      <ThemeProvider>
+<ThemeProvider>
+  <EventProvider>
+    <Provider store={store}>
+      <BrowserRouter>
         <NotifyProvider>
           <AuthProvider>
-            <BrowserRouter>
-              
-                <App />
-              
-            </BrowserRouter>
+            <App />
           </AuthProvider>
         </NotifyProvider>
-      </ThemeProvider>
+      </BrowserRouter>
+      </Provider>
     </EventProvider>
-  </Provider>
-  ,
-  document.getElementById('app')
-)
+  </ThemeProvider>
+  , document.getElementById('app'))

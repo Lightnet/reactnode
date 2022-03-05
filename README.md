@@ -265,6 +265,8 @@ $ npm run devv ( set up hot reload server ssr )
 
 .env
 ```
+REFRESH_TOKEN_SECRET="REFRESH_TOKEN_SECRET"
+ACCESS_TOKEN_SECRET="ACCESS_TOKEN_SECRET"
 SECRET="SECRET"
 DATABASE_URL="mongodb://127.0.0.1/blankreact"
 ```

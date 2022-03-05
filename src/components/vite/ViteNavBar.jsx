@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isEmpty } from "../../lib/helper.mjs";
 import { useAuth } from "../auth/AuthProvider.jsx";
+import ThemeLink from "../theme/themelink.jsx";
 
 export default function ViteNavBar(){
 
@@ -23,6 +24,7 @@ export default function ViteNavBar(){
     }else{
       setNavNames([
         {name: "Home", path:"/"}
+        ,{name: "Account", path:"/account"}
         ,{name: "Game", path:"/game"}
         ,{name: "Message", path:"/message"}
         ,{name: "Sign Out", path:"/signout"}
@@ -37,5 +39,6 @@ export default function ViteNavBar(){
         //console.log(name)
         return (<span key={path}> <Link to={path}> {name} </Link> | </span>)
       })}
+    <ThemeLink/>
   </div>
 }

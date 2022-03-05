@@ -150,25 +150,27 @@ if (!isTest) {
       const server = app.listen(PORT, () => {
         //app.emit('listening');
         //console.log("dev:")
-        log(chalk.green(`http://localhost:${PORT}`))
+        //log(chalk.green(`http://localhost:${PORT}`))
+        //log("")
       })
 
       server.on('listening', function() { //works
         //console.log("init web server and hot reload SSR...")
         //console.log("listen...", server.address())
-        let ipaddress = server.address().address;
-        let port = server.address().port;
-
+        let address = server.address();
+        let ipaddress = address?.address || "0.0.0.0";
+        let port = address?.port || PORT;
         log("listen IP:", chalk.green(ipaddress), " PORT:", port)
+        log(chalk.green(`http://localhost:${PORT}`))
       });
     
       //server.on('connection', function() { //works
         //console.log("connection...")
       //});
     
-      server.on('close', function() {
-        console.log("close...")
-      });
+      //server.on('close', function() {
+        //console.log("close...")
+      //});
       
       return app;
     }

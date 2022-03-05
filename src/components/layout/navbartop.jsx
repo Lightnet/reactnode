@@ -10,14 +10,14 @@ import ThemeLink from '../theme/themelink.jsx';
 
 export default function NavBarTop(){
 
-  const {status} = useAuth();
+  const { status } = useAuth();
+  console.log(status);
 
   function renderAccess(){
     if(status == 'unauth'){
       return <></>
     }
     return(<>
-      
       <Link to="account">Account</Link> <span> | </span>
       <Link to="game">Game</Link> <span> | </span>
       <Link to="message">Message</Link> <span> | </span>

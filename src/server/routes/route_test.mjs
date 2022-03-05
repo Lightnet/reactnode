@@ -6,7 +6,7 @@
 //https://expressjs.com/en/guide/routing.html
 
 import express from 'express';
-import { verifyToken } from '../auth/VerifyToken.mjs';
+import { verifyToken } from '../middleware/VerifyToken.mjs';
 const router = express.Router();
 
 //Middle ware that is specific to this router

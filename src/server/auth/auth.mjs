@@ -63,7 +63,7 @@ router.use((req, res, next) => {
     }
     return next();
   }else{
-    console.log('Request URL:', req.originalUrl)
+    //console.log('Request URL:', req.originalUrl)
   }
   next()
 })
@@ -148,6 +148,9 @@ router.post('/signout',async function (req, res) {
   if(req.session?.token){
     token=req.session.token;
   }
+  if(req.cookies?.token){
+    token=req.cookies.token;
+  }
 
   let db = await clientDB();
   let User = db.model('User');
@@ -221,10 +224,10 @@ router.post('/signout',async function (req, res) {
   //return res.json(req.session);
 //})
 
-router.get('/session',async function (req, res) {
+//router.get('/session',async function (req, res) {
   //console.log(req.session);
-  return res.json(req.session);
-})
+  //return res.json(req.session);
+//})
 
 //router.get('/cookie', function (req, res) {
   //console.log('cookie ...')

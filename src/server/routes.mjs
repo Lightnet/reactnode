@@ -7,12 +7,12 @@
 //const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import express from 'express';
-import auth from './routes/auth.mjs';
+import auth from './auth/auth.mjs';
 import route_api from './routes/route_api.mjs';
 import route_download from './routes/route_download.mjs';
 import route_upload from './routes/route_upload.mjs';
 import route_test from './routes/route_test.mjs';
-import {refreshToken } from "./auth/RefreshToken.mjs";
+import {refreshToken } from "./controllers/RefreshToken.mjs";
 
 const router = express.Router();
 

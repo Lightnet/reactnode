@@ -3,7 +3,7 @@
   Created by: Lightnet
 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from "../hook/useFetch.mjs";
 
 import {
@@ -12,11 +12,19 @@ import {
 import { useAuth } from './AuthProvider.jsx';
 
 export function SignOutPage() {
-  //const [token, setToken] = useState('');
+
   const {token, setToken,
-    setUser
+      setUser
+    , status
+    , setStatus
   } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(status=="unauth"){
+      navigate('/signin');
+    }
+  },[status])
 
   async function clickSignOut(){
     console.log("clickSignOut")
@@ -35,6 +43,7 @@ export function SignOutPage() {
       if(data.api=='LOGOUT'){
         setToken('');
         setUser('');
+        setStatus('unauth')
         navigate('/');
       }
     }

@@ -19,11 +19,10 @@ export function SignInPage() {
       setUser
     , setToken
     , setExpire
+    , setStatus
   } = useAuth();
   const navigate = useNavigate();
-  const [status, setStatus] = useState('');
   
-
   async function clickLogin(){
     //console.log("login")
     let data = await useFetch('/signin',{
@@ -35,7 +34,7 @@ export function SignInPage() {
     if(data.error){
       console.log('Fetch error Login');
       if(data.error=='PASSWORDFAIL'){
-        setStatus('Password Fail!');
+        //setStatus('Password Fail!');
       }
       return;
     }
@@ -47,13 +46,13 @@ export function SignInPage() {
         let datatoken = parseJwt(data.token)
         setExpire(datatoken.exp);
         console.log(datatoken);
-
+        setStatus('auth')
         navigate('/')
       }
 
       if(data.action=='NONEXIST'){
         //navigate('/')
-        setStatus('Non Exist!');
+        //setStatus('Non Exist!');
       }
     }
   }
@@ -72,7 +71,7 @@ export function SignInPage() {
   }
 
   return (<>
-    <label>Login:{status}</label>
+    <label>Login:</label>
     <div>
       <table>
         <tbody>

@@ -14,8 +14,11 @@ import bodyParser from 'body-parser';
 import session  from 'express-session';
 import routes from './routes.mjs';
 import cors from "cors";
-//import clientDB from '../lib/database.js';
 import { networkInterfaces } from 'os';
+import path from 'path'
+import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 const log = console.log;
 
@@ -63,6 +66,7 @@ async function main(){
 
   //app.use(cors(corsOptions))
   app.use(cors())
+  app.use(cookieParser())
   //public | dist > folder
   app.use(express.static('dist'));
 
@@ -82,18 +86,42 @@ async function main(){
   // parse application/json
   app.use(bodyParser.json())
 
+  app.use('/favicon.ico', express.static('/favicon.ico'));
+
   // Access the session as req.session
   app.get('/', (req, res) => {
-    res.send(
-      '<script src="/bundle.js"></script>'
-    )
+    res.sendFile(path.join(__dirname, '../client/index.html'));
   })
-
-  //app.get('/game', (req, res) => {
-    //res.send(
-      //'<script src="/bundle.js"></script>'
-    //)
-  //})
+  app.get('/account', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
+  app.get('/game', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
+  app.get('/message', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
+  app.get('/signin', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
+  app.get('/signout', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
+  app.get('/testlab', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
 
   //Routes
   app.use(routes); 
@@ -110,11 +138,11 @@ async function main(){
 
   server.on('listening', function() {
     let localhost = getIPAddress();
-    console.log(`IP address 0 on http://${localhost}:${PORT} <- Local host IP address machine`);
+    console.log(`Local host IP Address on `,chalk.green(`http://${localhost}:${PORT}`));
     //console.log(`IP address 1 on http://localhost:${PORT} <- Default for dev testing...`);
-    log("");
-    log("IP address 1 on "+chalk.green(`http://localhost:${PORT} `) + chalk.red('Default for dev testing.'));
-    log("");
+    //log("");
+    log("Web Server on "+chalk.green(`http://localhost:${PORT} `) + chalk.red('Default for dev testing.'));
+    //log("");
     //console.log(`IP address 2 on http://${HOST}:${PORT}`)// does not work but if "0.0.0.0" this will aollow outside access
     //console.log(`IP address 3 on http://127.0.0.1:${PORT}`);//does not work script // Content Security Policy 
     //console.log(`IP address 4 on http://localhost:${PORT}/ip <- IP Test`);

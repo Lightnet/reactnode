@@ -19,17 +19,17 @@ import store from "./components/store/store.jsx";
 export function render(url, context) {
   return ReactDOMServer.renderToString(
     <StaticRouter location={url} context={context}>
-      <Provider store={store}>
+      <ThemeProvider>
         <EventProvider>
-          <NotifyProvider>
-            <ThemeProvider>
+          <Provider store={store}>
+            <NotifyProvider>              
               <AuthProvider>
                 <App/>
               </AuthProvider>
-            </ThemeProvider>
-          </NotifyProvider>
+            </NotifyProvider>
+          </Provider>
         </EventProvider>
-      </Provider>
+      </ThemeProvider>
     </StaticRouter>
   )
 }

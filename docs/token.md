@@ -1,11 +1,23 @@
 
+# Token:
+  By using the cookie from the browser client.
+
+  There are two type of tokens since they need one for user access and limited time token key.
+
+  One reason since we use react without need to page refresh. By using the fetch or other request http from javascript package.
+
+  The other reason is prevent fake tokens or attack in cross url domain.
+
+  Note this is dev builds.
+
+## Link:
+- https://mfikri.com/en/blog/react-express-mysql-authentication
+
 
 ```js
-
 // https://github.com/auth0/node-jsonwebtoken
 import jwt from 'jsonwebtoken';
-
-var secret = process.env.SECRET;
+//var secret = process.env.SECRET;
 secret = "012345678901234567890123"
 console.log(secret)
 
