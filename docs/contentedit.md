@@ -1,4 +1,23 @@
 
+# code-editor
+- https://github.com/uiwjs/react-textarea-code-editor
+- https://uiwjs.github.io/react-textarea-code-editor/
+- 
+- https://codesandbox.io/s/react-syntax-highlighter-logrocket-tutorial-b3ejq?file=/components/Highlighter.js
+- https://blog.logrocket.com/building-react-code-editor-syntax-highlighter/
+- 
+
+
+
+
+
+//tested
+https://codesandbox.io/s/4rlw34mnk7
+https://github.com/lovasoa/react-contenteditable
+
+
+
+
 
 // https://draftjs.org/docs/getting-started
 
@@ -27,11 +46,6 @@
 // 
 // https://codepen.io/mlbrgl/pen/QQVMRP?editors=0010
 // https://codepen.io/mlbrgl/pen/PQdLgb?editors=1010
-
-
-
-
-
 
 
 

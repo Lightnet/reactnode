@@ -42,13 +42,34 @@ export default function ContentEditable(props){
     }
   },[props.isedit]);
 
-  function emitChange(){
+  function replaceCaret(el) {
+    // Place the caret at the end of the element
+    const target = document.createTextNode('');
+    el.appendChild(target);
+    // do not move caret if element was not focused
+    const isTargetFocused = document.activeElement === el;
+    if (target !== null && target.nodeValue !== null && isTargetFocused) {
+      var sel = window.getSelection();
+      if (sel !== null) {
+        var range = document.createRange();
+        range.setStart(target, target.nodeValue.length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      if (el instanceof HTMLElement) el.focus();
+    }
+  }
+
+  function emitChange(e){
+    e.preventDefault();
+    //console.log(e.currentTarget.textContent)
     let value;
     if(_type=="text"){
-      console.log(_type)
+      //console.log(_type)
       value = refEl.current.innerText;
     }else if(_type=="html"){
-      console.log(_type)
+      //console.log(_type)
       value = refEl.current.innerHTML;
     }else{
       value = refEl.current.innerText;
@@ -61,6 +82,10 @@ export default function ContentEditable(props){
       });
     }
     setLastValue(value)
+    if(refEl.current){
+      replaceCaret(refEl.current);
+    }
+    
   }
 
   return <div 
@@ -76,7 +101,7 @@ export default function ContentEditable(props){
 
     //id="contenteditable"
     ref={refEl}
-    //contentEditable={isEdit}
+    contentEditable={isEdit}
     onInput={emitChange} 
     onBlur={emitChange}
     >
