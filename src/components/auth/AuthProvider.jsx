@@ -4,7 +4,7 @@
 */
 
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
-import useFetch from "../hook/useFetch.mjs";
+//import useFetch from "../hook/useFetch.mjs";
 import { isEmpty, parseJwt } from "../../lib/helper.mjs";
 import axios from "axios";
 
@@ -23,44 +23,13 @@ export function AuthProvider(props){
   const [userID, setUserID] = useState(''); // use?
   const [user, setUser] = useState(''); // user name
   const [session, setSession] = useState(''); // use?
-  const [status, setStatus] = useState('unauth'); //loading, auth, unauth
+  const [status, setStatus] = useState('loading'); //loading, auth, unauth
 
   const [expire, setExpire] = useState('');
 
-  //safe?
-  /*
-  useEffect(async()=>{
-    setStatus('loading')
-    let data = await useFetch('/session');
-    if(data.error){
-      console.log('Fetch Error Session!');
-      setStatus('unauth')
-      return;
-    }
-    console.log(data)
-    if(!isEmpty(data.token)){
-      setToken(data.token);
-      setUser(data.user);
-      setStatus('auth');
-    }else{
-      setStatus('unauth')
-    }
-  },[])
-  */
-
   useEffect(() => {
     refreshToken();
-    //console.log("Hello?")
   }, []);
-
-  //useEffect(()=>{
-    //if(!isEmpty(token)){
-      //console.log("TOKEN")
-      //setStatus('auth')
-    //}else{
-      //setStatus('unauth')
-    //}
-  //},[token])
 
   async function refreshToken(){
     setStatus('loading')
@@ -81,8 +50,8 @@ export function AuthProvider(props){
     })
   }
 
+  /*
   const axiosJWT = axios.create();
-
   axiosJWT.interceptors.request.use(async (config) => {
     const currentDate = new Date();
     if (expire * 1000 < currentDate.getTime()) {
@@ -97,6 +66,7 @@ export function AuthProvider(props){
   }, (error) => {
       return Promise.reject(error);
   });
+  */
 
   const value = useMemo(()=>({
     token, setToken,

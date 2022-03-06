@@ -8,8 +8,8 @@
 // https://flaviocopes.com/react-pass-parameter-event/
 
 
-import React, { useEffect, useState } from 'react';
-import useFetch from '../hook/useFetch.mjs';
+import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
 import Compose from './Compose.jsx';
 import Contacts from './Contacts.jsx';
 import Inbox from './Inbox.jsx';
@@ -17,50 +17,19 @@ import Settings from './Settings.jsx';
 
 export default function MessagePage() {
 
-  const [view, setView] = useState("inbox");
-
-  useEffect(()=>{
-    console.log(view)
-  },[view])
-
-  function renderView(){
-    
-    if(view == "inbox"){
-      return <Inbox/>
-    }else if(view == "compose"){
-      return <Compose/>
-    }else if(view == "compose"){
-      return <Compose/>
-    }else if(view == "settings"){
-      return <Settings/>
-    }else if(view == "contacts"){
-      return <Contacts/>
-    }
-    return <></>
-  }
-
-  function onView(param,e){
-    e.preventDefault();
-    console.log(param);
-    console.log(e);
-    setView(param);
-  }
-
-  async function clickTest(){
-    let data = await useFetch('/api/message');
-    console.log(data)
-  }
-
   return <div>
     <div>
-      <a href='#' onClick={(e)=>onView("inbox",e)}>Inbox</a><span> | </span>
-      <a href='#' onClick={(e)=>onView("compose",e)}>Compose</a><span> | </span>
-      <a href='#' onClick={(e)=>onView("contacts",e)}>Contacts</a><span> | </span>
-      <a href='#' onClick={(e)=>onView("settings",e)}>Settings</a><span> | </span>
-      <button onClick={clickTest}>Test</button><span> | </span>
+      <label> Message: </label>
+        <Link to={"/message"}>In Box</Link><span> | </span>
+        <Link to={"compose"}>Compose</Link><span> | </span>
+        <Link to={"contacts"}>Contacts</Link><span> | </span>
+        <Link to={"settings"}>Settings</Link><span> | </span>
     </div>
-    <div>
-      {renderView()}
-    </div>
+    <Routes>
+        <Route path="/" element={<Inbox />}/>
+        <Route path="compose" element={<Compose />}/>
+        <Route path="contacts" element={<Contacts />}/>
+        <Route path="settings" element={<Settings />}/>
+      </Routes>
   </div>
 }

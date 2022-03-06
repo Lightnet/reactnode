@@ -126,6 +126,7 @@ UserSchema.methods.generateTokenKey = function(req) {
   //return this.token;
 }
 
+//not used?
 UserSchema.methods.generateJWT = function() {
   var today = new Date();
   var exp = new Date(today);
@@ -137,6 +138,7 @@ UserSchema.methods.generateJWT = function() {
     }, secret);
 }
 
+//not used?
 UserSchema.methods.toAuthJSON = function(){
   return {
     name: this.username
@@ -147,11 +149,12 @@ UserSchema.methods.toAuthJSON = function(){
   };
 }
 
+//not used?
 UserSchema.methods.checkToken = function(token){
   // invalid token - synchronous
   try {
     //var decoded = jwt.verify(token, 'wrong-secret');//check fail
-    var decoded = jwt.verify(token, secret);
+    var decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
     if(decoded){
       return true;
     }else{
@@ -164,11 +167,12 @@ UserSchema.methods.checkToken = function(token){
   }
 }
 
+//not used?
 UserSchema.methods.checkTokenLogout = function(token){
   // invalid token - synchronous
   try {
     //var decoded = jwt.verify(token, 'wrong-secret');//check fail
-    var decoded = jwt.verify(token, secret);
+    var decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
     if(decoded){
       return true;
     }else{
