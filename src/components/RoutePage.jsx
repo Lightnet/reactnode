@@ -32,12 +32,12 @@ export function RoutePage() {
     </div>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="account" element={<AccountPage />} />
+      <Route path="account/*" element={<AccountPage />} />
       <Route path="signin" element={<SignInPage />} />
       <Route path="signup" element={<SignUpPage />} />
       <Route path="signout" element={<SignOutPage />} />
-      <Route path="game" element={<GamePage />} />
-      <Route path="message" element={<Message />} />
+      <Route path="game/*" element={<GamePage />} />
+      <Route path="message/*" element={<Message />} />
       <Route path="testlab/*" element={<TestLabPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

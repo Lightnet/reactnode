@@ -29,6 +29,7 @@ export default function ViteNavBar(){
         ,{name: "Message", path:"/message"}
         ,{name: "Sign Out", path:"/signout"}
         ,{name: "Test Lab", path:"/testlab"}
+        ,{name: "Text Editor", path:"/texteditor"}
       ])
     }
   },[user])
