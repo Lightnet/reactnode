@@ -17,6 +17,8 @@ import { Provider } from "react-redux";
 import store from "./store/store.jsx";
 import { EventProvider } from './event/EventProvider.jsx';
 
+//import _Ace from "react-ace";
+
 export default function App() {
 
   return (<>

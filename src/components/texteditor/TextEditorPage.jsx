@@ -7,14 +7,22 @@
 // https://stackoverflow.com/questions/34424845/adding-script-tag-to-react-jsx
 
 import React, { useEffect, useRef, useState } from "react"
-//import ContentEditable from "./ContentEditable";
-import ContentEditable from 'react-contenteditable'
 import useFetch from "../hook/useFetch.mjs";
+//import ContentEditable from "./ContentEditable";
+//import ContentEditable from 'react-contenteditable'
+//import CodeEditor from '@uiw/react-textarea-code-editor';
+
+
+//import AceEditor from "react-ace";
+//import "ace-builds/src-noconflict/mode-java";
+//import "ace-builds/src-noconflict/theme-github";
+import AceEditor from "./AceEditor";
 
 export default function TextEditorPage(){
 
   const contentEditable = useRef();
-  const [contentText, setContentText] = useState("asd");
+  //const textRef = useRef();
+  const [content, setContent] = useState(`sdfdf`);
   const [isEdit, setIsEdit] = useState(true);
 
   const [fileName, setFileName] = useState("filename.txt");
@@ -34,8 +42,7 @@ export default function TextEditorPage(){
       if(scripts[idx].id== e.target.value){
         setScriptID(e.target.value)
         setFileName(scripts[idx].filename)
-        setContentText(scripts[idx].data)
-        contentEditable.current.innerText = scripts[idx].data;
+        setContent(scripts[idx].data)
         console.log(scripts[idx].data)
         break;
       }
@@ -46,18 +53,19 @@ export default function TextEditorPage(){
     setFileName(e.target.value)
   }
 
-  function onChangeText(e){
+  function onChangeContent(newValue){
     //console.log(e.target.value)
-    setContentText(e.target.value)
-    //console.log(contentEditable.current.innerText)
+    console.log(newValue)
+    //setContent(newValue);
   }
 
   function clickPaste1(){
-    setContentText("Tests 1");
+    console.log("set??")
+    setContent("Tests 1");
   }
 
   function clickPaste2(){
-    setContentText(`console.log("test")`);
+    setContent(`console.log("test")`);
   }
 
   function toggleEdit(){
@@ -71,7 +79,7 @@ export default function TextEditorPage(){
     const script = document.createElement('script');
     script.async = true;
     script.type = "module";
-    script.innerText = contentEditable.current.innerText;
+    //script.innerText = contentEditable.current.innerText;
     document.body.appendChild(script);
     document.body.removeChild(script);
   }
@@ -98,7 +106,8 @@ export default function TextEditorPage(){
       , body:JSON.stringify({
           api:"CREATE"
         , filename:fileName
-        , content:contentEditable.current.innerText
+        //, content:contentEditable.current.innerText
+        , content:content
       })
     });
     console.log(data)
@@ -168,9 +177,36 @@ export default function TextEditorPage(){
       <button onClick={clickPaste1}> Test Put 1</button>
       <button onClick={clickPaste2}> Test Put 2</button>
 
-      
     </div>
-    <ContentEditable
+    <AceEditor
+      mode="jsx"
+      theme="github"
+      value={content}
+      onChange={onChangeContent}
+      name="UNIQUE_ID_OF_DIV"
+      editorProps={{ $blockScrolling: true }}
+    />
+
+  </div>
+}
+/*
+
+<CodeEditor
+      ref={textRef}
+      value={code}
+      language="jsx"
+      placeholder="Please enter JS code."
+      onChange={(evn) => setCode(evn.target.value)}
+      padding={4}
+      style={{
+        fontSize: 12,
+        //backgroundColor: "#f5f5f5",
+        //fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+      }}
+    />
+
+
+<ContentEditable
       innerRef={contentEditable}
       style={{height:"calc(100vh - 42px)"}}
       html={contentText} // innerHTML of the editable div
@@ -178,11 +214,7 @@ export default function TextEditorPage(){
       onChange={onChangeText} // handle innerHTML change
       tagName='div' // Use a custom HTML tag (uses a div by default)
     />
-    
-    
-  </div>
-}
-/*
+
 <ContentEditable 
       //type="html"
       isedit={isEdit}

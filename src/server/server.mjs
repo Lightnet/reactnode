@@ -122,6 +122,11 @@ async function main(){
       res.sendFile(path.join(__dirname, '../client/index.html'));
     }
   })
+  app.get('/texteditor', (req, res) => {
+    if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+  })
 
   //Routes
   app.use(routes); 

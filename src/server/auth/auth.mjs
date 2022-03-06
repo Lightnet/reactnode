@@ -63,7 +63,7 @@ router.use((req, res, next) => {
     }
     return next();
   }else{
-    //console.log('Request URL:', req.originalUrl)
+    console.log('Request URL:', req.originalUrl)
   }
   next()
 })

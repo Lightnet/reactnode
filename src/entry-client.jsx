@@ -16,6 +16,8 @@ import { EventProvider } from './components/event/EventProvider'
 
 import store from "./components/store/store.jsx";
 
+//import "react-ace";
+
 ReactDOM.hydrate(
 <ThemeProvider>
   <EventProvider>

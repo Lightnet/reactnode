@@ -22,6 +22,7 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import NotifyManager from './notify/NotifyManager.jsx';
 import TestLabPage from './testlab/TestLabPage.jsx';
 import NotifyReduxManager from './notifyredux/NotifyReduxManager.jsx';
+import TextEditorPage from './texteditor/TextEditorPage.jsx';
 
 export function RoutePage() {
 
@@ -39,6 +40,7 @@ export function RoutePage() {
       <Route path="game/*" element={<GamePage />} />
       <Route path="message/*" element={<Message />} />
       <Route path="testlab/*" element={<TestLabPage />} />
+      <Route path="texteditor/*" element={<TextEditorPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     <NotifyManager />
