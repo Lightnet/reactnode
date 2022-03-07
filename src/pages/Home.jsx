@@ -10,7 +10,8 @@ export default function Home() {
   return (
     <>
       <h1>React Home</h1>
-      <p> Weclome to test lab builds. </p>
+      <p> Welcome to test lab builds. </p>
+      <p> This vite.js and express.js mixed builds. </p>
     </>
   )
 }

@@ -5,9 +5,7 @@
 
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
-
 import { App } from './App'
-
 import { Provider } from 'react-redux'
 import { AuthProvider } from './components/auth/AuthProvider'
 import { NotifyProvider } from './components/notify/NotifyProvider'

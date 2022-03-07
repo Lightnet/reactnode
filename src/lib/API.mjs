@@ -9,10 +9,11 @@ export const API = {
   , TYPES:{
       MESSAGE:"MESSAGE"
     , MESSAGES:"MESSAGES"
+    , POST:"POST"
+    , POSTS:"POSTS"
     , CREATE:"CREATE"
     , SENT:"SENT"
   }
-
 }
 
 //export {

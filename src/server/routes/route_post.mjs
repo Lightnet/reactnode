@@ -9,7 +9,7 @@ import clientDB from '../../lib/database.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
 const router = express.Router();
 
-router.get('/message', async function (req, res) {
+router.get('/post', async function (req, res) {
   
   const db = await clientDB();
   let userid =null;
@@ -28,30 +28,31 @@ router.get('/message', async function (req, res) {
   }
 
   try{
-    const Message = db.model('Message');
+    const Post = db.model('Post');
     //console.log(username);
     console.log(userid);
     const data = req.body;
     console.log(data)
-    let messages = await Message.find({recipientid:userid})
-      .select('id from recipient subject message')
+    let posts = await Post.find({recipientid:userid})
+      //.select('id from recipient subject message')
       .exec();
 
-    return res.json({api:API.TYPES.MESSAGES,messages:messages});
+    return res.json({api:API.TYPES.POSTS,posts:posts});
   }catch(e){
     console.log(e)
-    return res.json({error:'fail messages db'});
+    return res.json({error:'fail get post db'});
   }
 
   //res.json({message:'message page'})
 })
 
-router.post('/message',async function (req, res) {
+router.post('/post',async function (req, res) {
   
+  console.log(req.body)
   const {api} = req.body;
   console.log(api);
   if(isEmpty(api)){
-    return res.send({error:'empty'});
+    return res.json({error:'empty'});
   }
 
   const db = await clientDB();
@@ -69,43 +70,41 @@ router.post('/message',async function (req, res) {
   }else{
     return res.send({error:'failtoken'});
   }
-  if(api == API.TYPES.MESSAGE){
+  
+  if(api == API.TYPES.CREATE){
+    
     try{
-      const Message = db.model('Message');
-      console.log(username);
-      console.log(userid);
+      const Post = db.model('Post');
 
       const data = req.body;
       console.log(data)
-      const User = db.model('User');
-      let user = await User.findOne({username:data.userName}).exec();
-      console.log(user)
-      if(!user){
-        return res.send({error:'Not found!'});
-      }
+      //const User = db.model('User');
+      //let user = await User.findOne({username:username}).exec();
+      //console.log(user)
+      //if(!user){
+        //return res.send({error:'Not found!'});
+      //}
 
-      let newMessage = new Message({
+      let newPost = new Post({
           fromid:userid
         , from:username
-        , recipientid:user.id
-        , recipient:user.username
-        , subject:data.subject
-        , message:data.content
+        , title:data.title
+        , content:data.content
       });
-      console.log(newMessage)
-      let msg = await newMessage.save();
-      console.log(msg);
-      return res.send({api:'SENT'});
+      console.log(newPost)
+      let post = await newPost.save();
+      console.log(post);
+      return res.send({api:API.TYPES.CREATE,post:post});
 
     }catch(e){
       console.log(e)
-      return res.send({error:'faildb'});
+      return res.send({error:'fail create post db'});
     }
   }
-  res.json({message:'message page'})
+  res.json({error:'post error!'})
 })
 
-router.delete('/message',async function (req, res) {
+router.delete('/post',async function (req, res) {
   const {api} = req.body;
   console.log(api);
   if(isEmpty(api)){
@@ -130,26 +129,24 @@ router.delete('/message',async function (req, res) {
 
   if(api == API.DELETE){
     try{
-      const Message = db.model('Message');
-      console.log(username);
-      console.log(userid);
+      const Post = db.model('Post');
+      //console.log(username);
+      //console.log(userid);
 
       const data = req.body;
-      console.log(data)
+      //console.log(data)
 
-      await Message.deleteOne({id:data.id}).exec();
+      await Post.deleteOne({id:data.id}).exec();
+      //let deletePost = await Post.deleteOne({id:data.id}).exec();
+      //console.log(deletePost)
 
-      //let deleteMessage = await Message.deleteOne({id:data.id}).exec();
-      //console.log(deleteMessage)
-
-      return res.send({api:'DELETE',id:data.id});
+      return res.send({api:API.DELETE,id:data.id});
     }catch(e){
       console.log(e)
-      return res.send({error:'faildb'});
+      return res.send({error:'fail delete post'});
     }
   }
-
-  res.json({message:'message page'})
+  res.json({error:'post delete'})
 })
 
 export default router;

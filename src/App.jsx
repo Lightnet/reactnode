@@ -23,19 +23,19 @@ const pageroutes = Object.keys(pages).map((path) => {
 
 export function App() {
 
-  function renderNavList(){
-    return <nav>
-      <ul>
-        {pageroutes.map(({ name, path }) => {
-          return (
-            <li key={path}>
-              <Link to={path}>{name}</Link>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  }
+  //function renderNavList(){
+    //return <nav>
+      //<ul>
+        //{pageroutes.map(({ name, path }) => {
+          //return (
+            //<li key={path}>
+              //<Link to={path}>{name}</Link>
+            //</li>
+          //)
+        //})}
+      //</ul>
+    //</nav>
+  //}
 
   function renderNavBar(){
     //need code checks...

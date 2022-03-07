@@ -18,6 +18,7 @@ var enableCookie = process.env.ISCOOKIE || true;
 
 console.log("secret:", secret)
 
+// https://stackoverflow.com/questions/22285921/how-to-handle-user-agent-in-nodejs-environment
 // https://expressjs.com/en/guide/using-middleware.html
 // dev need remove?
 router.use((req, res, next) => {
@@ -28,6 +29,9 @@ router.use((req, res, next) => {
   //console.log("req.cookies.token: ",req.cookies.token)
   //console.log(req.originalUrl.match("/src"))
   if(req.originalUrl == "/"){
+    console.log("req.User-Agent: ", req.get('User-Agent'))
+    //console.log("req.headers: ",req.headers)
+
     return next();
   }else if(req.originalUrl?.indexOf("/@vite") == 0){
     //console.log("FOUND vite!")

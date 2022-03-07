@@ -189,36 +189,3 @@ export default function TextEditorPage(){
 
   </div>
 }
-/*
-
-<CodeEditor
-      ref={textRef}
-      value={code}
-      language="jsx"
-      placeholder="Please enter JS code."
-      onChange={(evn) => setCode(evn.target.value)}
-      padding={4}
-      style={{
-        fontSize: 12,
-        //backgroundColor: "#f5f5f5",
-        //fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-      }}
-    />
-
-
-<ContentEditable
-      innerRef={contentEditable}
-      style={{height:"calc(100vh - 42px)"}}
-      html={contentText} // innerHTML of the editable div
-      disabled={false}       // use true to disable editing
-      onChange={onChangeText} // handle innerHTML change
-      tagName='div' // Use a custom HTML tag (uses a div by default)
-    />
-
-<ContentEditable 
-      //type="html"
-      isedit={isEdit}
-      value={contentText} 
-      onChange={onChangeText}
-      />
-*/

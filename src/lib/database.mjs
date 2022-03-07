@@ -23,6 +23,7 @@ import CharacterSchema from "./mongoose/character.mjs";
 import MessageSchema from "./mongoose/message.mjs";
 import ContactSchema from "./mongoose/contact.mjs";
 import ScriptSchema from "./mongoose/script.mjs";
+import PostSchema from "./mongoose/post.mjs";
 
 //import dotEnv from 'dotenv';
 
@@ -55,6 +56,7 @@ export default async function clientDB(){
   mongoose.model('Contact', ContactSchema)
   mongoose.model('Message', MessageSchema)
   mongoose.model('Script', ScriptSchema)
+  mongoose.model('Post', PostSchema)
 
   //import('./mongoose/character.mjs');
   //Get the default connection

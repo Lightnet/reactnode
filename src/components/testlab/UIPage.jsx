@@ -4,6 +4,7 @@
 */
 
 import React, { useEffect, useState } from "react";
+import ColorPalettesPage from "../colorpalettes/ColorPalettesPage.jsx";
 import useFetch from "../hook/useFetch.mjs";
 import useFetchPromise from "../hook/useFetchPromise.mjs";
 import Modal from "../modal/Modal.jsx";
@@ -60,6 +61,8 @@ export default function UIPage(){
       <button onClick={clickTestFetch}> Fetch Test </button><br/>
       <button onClick={clickFetchCall}> Fetch Call </button><br/>
       <button onClick={clickFetchPromise}> Fetch Promise </button><br/>
+      <br/>
+      <br/><ColorPalettesPage/>
       <br/>
       <BtnUseAxios /><br/>
       <br/>

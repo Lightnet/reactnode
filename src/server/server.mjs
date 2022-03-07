@@ -92,42 +92,28 @@ async function main(){
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
   })
-  app.get('/account', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/game', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/message', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/signin', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/signout', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/testlab', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
-  app.get('/texteditor', (req, res) => {
-    if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    }
-  })
 
+  let pages=[
+      '/account'
+    , '/post'
+    , '/game'
+    , '/message'
+    , '/signin'
+    , '/signout'
+    , '/testlab'
+    , '/texteditor'
+  ]
+  //  https://www.w3schools.com/jsref/jsref_indexof_array.asp
+  // load page index
+  app.use((req, res, next) => {
+    //console.log(pages.indexOf(req.originalUrl))
+    if((pages.indexOf(req.originalUrl) != -1)&&(req.method=="GET")){
+      console.log("load html???")
+      return res.sendFile(path.join(__dirname, '../client/index.html'));
+    }
+    next()
+  })
+  
   //Routes
   app.use(routes); 
   //const server = app.listen(app.get('PORT'), () => {
