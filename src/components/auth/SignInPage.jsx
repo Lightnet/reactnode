@@ -80,32 +80,27 @@ export function SignInPage() {
               <label> User: </label>
             </td>
           </tr>
-
           <tr>
             <td>
               <input value={userName} onChange={typingUser}></input>
             </td>
           </tr>
-
           <tr>
             <td>
               <label> Password: </label>
             </td>
           </tr>
-
           <tr>
             <td>
               <input value={password} onChange={typingPassword}></input>
             </td>
           </tr>
-
           <tr>
             <td>
               <button onClick={clickLogin}>Login</button>
               <button onClick={clickCancel}>Cancel</button>
             </td>
           </tr>
-
         </tbody>
       </table>
     </div>

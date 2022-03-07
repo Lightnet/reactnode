@@ -12,6 +12,7 @@ export const API = {
     , POST:"POST"
     , POSTS:"POSTS"
     , CREATE:"CREATE"
+    , UPDATE:"UPDATE"
     , SENT:"SENT"
   }
 }

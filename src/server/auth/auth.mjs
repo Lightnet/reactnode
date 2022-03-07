@@ -7,9 +7,14 @@
 
 import crypto from 'crypto';
 import express from 'express';
+import { API } from '../../lib/API.mjs';
 //import session from 'express-session';
 import clientDB from "../../lib/database.mjs";
+import { isEmpty } from '../../lib/helper.mjs';
 import { checkToken, parseJwt } from '../../lib/helperToken.mjs';
+import { refreshBaseToken } from '../controllers/RefreshBaseToken.mjs';
+import { refreshToken } from '../controllers/RefreshToken.mjs';
+import { verifyBaseToken } from '../middleware/VerifyBaseToken.mjs';
 const router = express.Router();
 
 var secret = process.env.SECRET;
@@ -122,9 +127,13 @@ router.post('/signin',async function (req, res) {
   //res.send(`<html lang="en">page</html>`);
 });
 
-router.post('/signup',async function (req, res) {
-  //console.log(req.body); // your JSON
+router.post('/signup', verifyBaseToken, async function (req, res) {
   let data = req.body;
+  console.log("BODY: ",data)
+  if((isEmpty(data.user)==true)||(isEmpty(data.password)==true)){
+    return res.send({api:'EMPTY'});
+  }
+
   let db = await clientDB();
   let User = db.model('User');
   let users = await User.findOne({ username: data.user }).exec();
@@ -135,15 +144,17 @@ router.post('/signup',async function (req, res) {
       username: data.user
     });
     newUser.setPassword(data.password);
-    let saveUser = await newUser.save();
-    //return res.send(saveUser);
-    return res.send({action:'CREATE'});
+    try{
+      await newUser.save();
+      //let saveUser = await newUser.save();
+      //return res.send(saveUser);
+      return res.send({api:'CREATE'});
+    }catch(e){
+      return res.send({error:'Fail create user'});
+    }
   }else{
-    return res.send({action:'EXIST'});
+    return res.send({api:'EXIST'});
   }
-
-  //return res.send(req.body); // echo the result back
-  //res.send(`<html lang="en">page</html>`);
 });
 
 router.post('/signout',async function (req, res) {
@@ -222,11 +233,56 @@ router.post('/signout',async function (req, res) {
   //return res.send({error:'ERROR'}); // echo the result back
 });
 
+//not secure?
+router.put('/passphrase',async function (req, res) {
+  //console.log(req.session)
+  let token =null;
+  if(req.cookies.token){
+    token=req.cookies.token;
+  }
+  if(!token){
+    console.log("Token null")
+    return res.sendStatus(403);
+  }
+
+  let db = await clientDB();
+  let User = db.model('User');
+
+  let user = await User.findOne({ token: token }).exec();
+  if(user){
+    //console.log(user);
+    //console.log("FOUND");
+    let datatoken = checkToken(token, process.env.REFRESH_TOKEN_SECRET); //check token
+    if(datatoken){//passed
+      let hash = crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
+      if(hash == datatoken.hash){
+        console.log("FOUND HASH!")
+        let data = req.body;
+        console.log(data)
+        if(user.changePassword(data.currentPassphrase,data.newPassphrase)){
+          console.log("pass change passphrase")
+          try{
+            await user.save()
+            return res.send({api:API.TYPES.UPDATE});
+          }catch(e){
+            return res.send({error:"Fail change passphrase DB"});
+          }
+        }else{
+          console.log("fail change passphrase")
+          return res.send({error:'passphrase fail'});
+        }
+      }
+    }
+    return res.send({error:'passphrase invalid'});
+  }else{
+    return res.send({api:'NOTOKEN!'});
+  }
+  //return res.send({error:'ERROR'}); // echo the result back
+});
+
 // https://mfikri.com/en/blog/react-express-mysql-authentication
-//router.get('/token',async function (req, res) {
-  //console.log(req.session);
-  //return res.json(req.session);
-//})
+router.get('/token', refreshToken);
+router.get('/basetoken', refreshBaseToken);
 
 //router.get('/session',async function (req, res) {
   //console.log(req.session);
@@ -234,8 +290,8 @@ router.post('/signout',async function (req, res) {
 //})
 
 //router.get('/cookie', function (req, res) {
-  //console.log('cookie ...')
-  //res.json({cookie:'nocookie'})
+  //console.log(req.cookies)
+  //res.json(req.cookies)
 //})
 
 export default router;

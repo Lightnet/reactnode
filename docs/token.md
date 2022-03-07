@@ -13,6 +13,47 @@
 ## Link:
 - https://mfikri.com/en/blog/react-express-mysql-authentication
 
+- https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+
+# jsonwebtoken:
+- https://www.npmjs.com/package/jsonwebtoken
+```js
+jwt.sign(payload, secretOrPublicKeyOrPrivateKey, [options, callback])
+// exp = numbers only
+
+//=====================
+// expiresIn = strings || number
+// default "120" is equal to "120ms"
+// "2 days" = 2 days
+// "1h" = 1 hour
+// "7d" = 7 days
+// "1h" = 1 hour
+// 60 * 60 = 1 hour
+
+```
+- https://github.com/vercel/ms
+
+```js
+jwt.sign({
+    id: "00000"
+  , hash: crypto.createHash('md5').update(req.ip).digest('hex')
+  , name: "test"
+  //, exp: parseInt(exp.getTime() / 1000) // now expire
+  //, exp: Math.floor(Date.now() / 1000) + ( 60) // 60 sec
+  //, exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour
+  }, process.env.TOKEN_SECRET,{
+    //algorithm: 'RS256'
+    expiresIn:'1h'
+  });
+```
+
+
+
+
+
+
+
+
 
 ```js
 // https://github.com/auth0/node-jsonwebtoken

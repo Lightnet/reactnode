@@ -34,7 +34,7 @@ router.get('/post', async function (req, res) {
     const data = req.body;
     console.log(data)
     let posts = await Post.find({recipientid:userid})
-      //.select('id from recipient subject message')
+      .select('id title content')
       .exec();
 
     return res.json({api:API.TYPES.POSTS,posts:posts});
@@ -78,13 +78,6 @@ router.post('/post',async function (req, res) {
 
       const data = req.body;
       console.log(data)
-      //const User = db.model('User');
-      //let user = await User.findOne({username:username}).exec();
-      //console.log(user)
-      //if(!user){
-        //return res.send({error:'Not found!'});
-      //}
-
       let newPost = new Post({
           fromid:userid
         , from:username
@@ -95,6 +88,58 @@ router.post('/post',async function (req, res) {
       let post = await newPost.save();
       console.log(post);
       return res.send({api:API.TYPES.CREATE,post:post});
+
+    }catch(e){
+      console.log(e)
+      return res.send({error:'fail create post db'});
+    }
+  }
+  res.json({error:'post error!'})
+})
+
+router.put('/post',async function (req, res) {
+  
+  console.log(req.body)
+  const {api} = req.body;
+  console.log(api);
+  if(isEmpty(api)){
+    return res.json({error:'empty'});
+  }
+
+  const db = await clientDB();
+  let userid =null;
+  let username =null;
+  if(req.session.token){
+    const User = db.model('User');
+    //req.session.token
+    //let user = await User.findOne({token:req.session.token});
+    let user = await User.findOne({username:req.session.user})
+      .exec();
+    //console.log(user);
+    username = user.username;
+    userid = user.id;
+  }else{
+    return res.send({error:'failtoken'});
+  }
+  
+  if(api == API.TYPES.UPDATE){
+    
+    try{
+      const Post = db.model('Post');
+      const data = req.body;
+      console.log(data)
+
+      const filter = { id: data.id };
+      const update = { 
+          title: data.title
+        , content: data.content
+      };
+
+      let doc = await Post.findOneAndUpdate(filter, update,{new: true})
+        .select('id title content')
+        .exec();
+
+      return res.send({api:API.TYPES.UPDATE,post:doc});
 
     }catch(e){
       console.log(e)

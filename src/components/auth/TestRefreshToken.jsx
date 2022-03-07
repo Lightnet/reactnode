@@ -38,9 +38,12 @@ export default function TestRefreshToken(){
       headers: {
         Authorization: `Bearer ${token}`
       }
+    }).then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    //setUsers(response.data);
-    console.log(response.data)
   }
 
   return  <>

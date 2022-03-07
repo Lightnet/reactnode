@@ -12,16 +12,17 @@ import route_api from './routes/route_api.mjs';
 import route_download from './routes/route_download.mjs';
 import route_upload from './routes/route_upload.mjs';
 import route_test from './routes/route_test.mjs';
-import {refreshToken } from "./controllers/RefreshToken.mjs";
+//import {refreshToken } from "./controllers/RefreshToken.mjs";
+//import {baseToken } from "./controllers/BaseToken.mjs";
+import { verifyToken } from './middleware/VerifyToken.mjs';
 
 const router = express.Router();
-
 //router.use('/favicon.ico', express.static('images/favicon.ico'));
 
 router.use(auth);
-router.get('/token', refreshToken);
 
 router.use("/api",route_api);
+//router.use("/api",verifyToken,route_api);
 router.use(route_upload);
 router.use(route_download);
 router.use(route_test);

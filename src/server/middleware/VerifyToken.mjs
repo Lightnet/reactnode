@@ -1,3 +1,8 @@
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
+
 import jwt from "jsonwebtoken";
 
 //check token access that is 15 sec recheck

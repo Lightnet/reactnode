@@ -5,7 +5,10 @@
 
 import React,{ createContext, useState, useMemo, useContext, useEffect } from "react";
 //import useFetch from "../hook/useFetch.mjs";
-import { isEmpty, parseJwt } from "../../lib/helper.mjs";
+import { 
+  parseJwt 
+  //, isEmpty
+} from "../../lib/helper.mjs";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -19,33 +22,60 @@ export function useAuth(){
 }
 
 export function AuthProvider(props){
-  const [token, setToken] = useState(''); // required access
+  
   const [userID, setUserID] = useState(''); // use?
   const [user, setUser] = useState(''); // user name
-  const [session, setSession] = useState(''); // use?
   const [status, setStatus] = useState('loading'); //loading, auth, unauth
 
+  //refresh token access
+  const [token, setToken] = useState(''); // required access
   const [expire, setExpire] = useState('');
+  //refresh token base access without keys but ip
+  const [baseToken, setBaseToken] = useState(''); // required access
+  const [baseExpire, setBaseExpire] = useState(0);
 
   useEffect(() => {
     refreshToken();
+    refreshBaseToken();
   }, []);
 
   async function refreshToken(){
     setStatus('loading')
     axios.get('/token').then(function (response) {
-      //console.log(response)
+      console.log(response)
+      if(response.data.error){
+        console.log("NOT LOGIN")
+        setStatus('unauth')
+        return;
+      }
       const decoded = parseJwt(response.data.accessToken);
       //console.log(decoded)
       setToken(response.data.accessToken);
       setUser(decoded.user);
       setExpire(decoded.exp);
+      console.log(decoded.exp);
       setStatus('auth')
     }).catch(function (error) {
       // handle error
       console.log(error);
       console.log("TOKEN ERROR...")
       setStatus('unauth')
+      //history.push("/");
+    })
+  }
+
+  async function refreshBaseToken(){
+    axios.get('/basetoken').then(function (response) {
+      console.log(response)
+      const decoded = parseJwt(response.data.accessToken);
+      console.log(decoded)
+      setBaseToken(response.data.accessToken);
+      setBaseExpire(decoded.exp);
+      console.log(decoded.exp);
+    }).catch(function (error) {
+      // handle error
+      console.log(error);
+      console.log("BASE TOKEN ERROR...")
       //history.push("/");
     })
   }
@@ -66,22 +96,30 @@ export function AuthProvider(props){
   }, (error) => {
       return Promise.reject(error);
   });
+
+  const response = await axiosJWT.get('/refreshtest', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   */
 
   const value = useMemo(()=>({
-    token, setToken,
+    status, setStatus,
     userID, setUserID,
     user, setUser,
-    session, setSession,
-    status, setStatus,
-    expire, setExpire
+    token, setToken,
+    expire, setExpire,
+    baseToken, setBaseToken,
+    baseExpire, setBaseExpire
   }),[
-    token,
+    status,
     userID,
     user,
-    session,
-    status,
-    expire
+    token,
+    expire,
+    baseToken,
+    baseExpire
   ])
 
   return <AuthContext.Provider value={value} {...props} />

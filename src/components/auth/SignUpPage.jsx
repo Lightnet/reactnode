@@ -4,40 +4,77 @@
 */
 
 import React, { useState } from 'react';
-import useFetch from "../hook/useFetch.mjs";
-
+//import useFetch from "../hook/useFetch.mjs";
 import {
   useNavigate
 } from "react-router-dom";
+//import { API } from '../../lib/API.mjs';
+import { useAuth } from './AuthProvider.jsx';
+import { parseJwt } from '../../lib/helper.mjs';
+import axios from 'axios';
 
 export function SignUpPage() {
 
-  const [status, setStatus] = useState('');
-
+  const navigate = useNavigate();
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
+  const {
+    baseToken, setBaseToken,
+    baseExpire, setBaseExpire
+  } = useAuth();
+
+  const axiosJWT = axios.create();
+  axiosJWT.interceptors.request.use(async (config) => {
+    const currentDate = new Date();
+    console.log("PROCESS???")
+    if (baseExpire * 1000 < currentDate.getTime()) {
+        console.log("EXPRE? base token????>>>>")
+        const response = await axios.get('/basetoken');
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        console.log(response.data.accessToken);
+        setBaseToken(response.data.accessToken);
+        const decoded = parseJwt(response.data.accessToken);
+        //setName(decoded.name);
+        setBaseExpire(decoded.exp);
+      }else{
+        config.headers.Authorization = `Bearer ${baseToken}`;
+      }
+      return config;
+  }, (error) => {
+      return Promise.reject(error);
+  });
+  
   async function clickRegister(){
-    let data = await useFetch('/signup',{
-      method:'POST'
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({user,password})
-    })
-    console.log(data)
-    if(data.error){
-      console.log('Fetch error Sign Up');
-      return;
-    }
-    if(data.action){
-      if(data.action=='CREATE'){
+    console.log(baseToken)
+    axiosJWT.post('/signup',
+      {
+        user:user
+        , password:password
+      }
+      ,{
+        headers: {
+        //Authorization: `Bearer ${baseToken}`, //ingore this as from the interceptors config
+        "Content-Type": "application/json"
+      }
+    }).then(response=>{
+      
+      let data=response.data;
+      console.log(data)
+      if(data.error){
+        console.log('Fetch error Sign Up');
+        return;
+      }
+      if(data?.api=='CREATE'){
+        console.log('CREATE');
         //navigate('/');
-        setStatus('CREATE')
       }
-      if(data.action=='EXIST'){
-        setStatus('EXIST')
+      if(data?.api=='EXIST'){
+        console.log('EXIST');
       }
-    }
+    }).catch(error=>{
+      console.log(error)
+    });
   }
 
   function clickCancel(){
@@ -55,7 +92,7 @@ export function SignUpPage() {
 
   return (<>
     <div>
-      <label>Register:{status}</label>
+      <label>Register:</label>
     </div>
     <div>
       <table>
@@ -65,7 +102,6 @@ export function SignUpPage() {
               <label> User: </label>
             </td>
           </tr>
-
           <tr>
             <td>
               <input value={user} onChange={typingUser}></input>

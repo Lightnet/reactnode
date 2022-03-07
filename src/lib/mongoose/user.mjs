@@ -90,6 +90,17 @@ UserSchema.methods.validPassword = function(password) {
   return this.hash === hash;
 }
 
+UserSchema.methods.changePassword = function(password, newpassword) {
+  let hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  if(this.hash === hash){
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.hash = crypto.pbkdf2Sync(newpassword, this.salt, 10000, 512, 'sha512').toString('hex');
+    return true;
+  }else{
+    return false;
+  }
+}
+
 UserSchema.methods.generateToken = function(req) {
   var today = new Date();
   var exp = new Date(today);
@@ -103,8 +114,11 @@ UserSchema.methods.generateToken = function(req) {
     , name: this.username
     //, exp: parseInt(exp.getTime() / 1000)
     //, exp: Math.floor(Date.now() / 1000) + ( 60) // 60 sec
-    , exp: Math.floor(Date.now() / 1000) + (60 * 60) // 60 sec
-    }, process.env.REFRESH_TOKEN_SECRET);
+    //, exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour
+    }, process.env.REFRESH_TOKEN_SECRET,{
+      //expiresIn:'1h'
+      expiresIn:60*60
+    });
   return this.token;
 }
 
@@ -184,7 +198,6 @@ UserSchema.methods.checkTokenLogout = function(token){
     return false;
   }
 }
-
 
 export default UserSchema;
 // Compile model from schema

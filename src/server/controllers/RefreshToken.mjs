@@ -9,21 +9,27 @@ import crypto from 'crypto';
 
 export const refreshToken = async(req, res) => {
 
-  const db = await clientDB();
-  const Users = db.model('User');
-
   try {
     const refreshToken = req.cookies.token;
     //console.log("refreshToken:", refreshToken)
     console.log("/token")
-    if(!refreshToken) return res.sendStatus(401);
+    //if(!refreshToken) return res.sendStatus(401);
+    if(!refreshToken) return res.json({ error:"NOTLOGIN" });;
+    const db = await clientDB();
+    const Users = db.model('User');
     //const user = await Users.fineOne({refresh_token: refreshToken}).exec()
     const user = await Users.findOne({token:refreshToken})
       .select('id username tokenSalt')
       .exec()
+    //console.log(user);
     if(!user) return res.sendStatus(403);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-      if(err) return res.sendStatus(403);
+      if(err) {
+        console.log(err)
+        //clear cookies
+        res.clearCookie('token')
+        return res.sendStatus(403);
+      }
       //console.log(decoded)
       let hash= crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
       if(hash == decoded.hash){//check hash if tmp token expire
@@ -38,5 +44,6 @@ export const refreshToken = async(req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.sendStatus(403);
   }
 }

@@ -19,6 +19,7 @@ export default function ViteNavBar(){
       setNavNames([
         {name: "Home", path:"/"}
         ,{name: "Sign In", path:"/signin"}
+        ,{name: "Sign Up", path:"/signup"}
         ,{name: "Test Lab", path:"/testlab"}
       ])
     }else{
