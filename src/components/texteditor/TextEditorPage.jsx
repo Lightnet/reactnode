@@ -7,20 +7,14 @@
 // https://stackoverflow.com/questions/34424845/adding-script-tag-to-react-jsx
 
 import React, { useEffect, useRef, useState } from "react"
-import useFetch from "../hook/useFetch.mjs";
-//import ContentEditable from "./ContentEditable";
-//import ContentEditable from 'react-contenteditable'
-//import CodeEditor from '@uiw/react-textarea-code-editor';
-
-
-//import AceEditor from "react-ace";
-//import "ace-builds/src-noconflict/mode-java";
-//import "ace-builds/src-noconflict/theme-github";
 import AceEditor from "./AceEditor";
+import useFetch from "../hook/useFetch.mjs";
+import useAxiosTokenAPI from "../hook/useAxiosTokenAPI";
+import { API } from "../../lib/API.mjs";
 
 export default function TextEditorPage(){
 
-  const contentEditable = useRef();
+  //const contentEditable = useRef();
   //const textRef = useRef();
   const [content, setContent] = useState(`sdfdf`);
   const [isEdit, setIsEdit] = useState(true);
@@ -31,9 +25,20 @@ export default function TextEditorPage(){
   const [scriptName, setScriptName] = useState("");
   const [scripts, setScripts] = useState([]);
 
+  const [axiosJWT, isJSTLoading] = useAxiosTokenAPI();
+
   useEffect(()=>{
-    getScripts();
-  },[])
+    //console.log("axiosJWT init...");
+    //console.log("isLoading: ", isJSTLoading)
+    if((typeof axiosJWT?.instance=="function")&&(isJSTLoading == false)){
+      console.log("GETTING...: ")
+      getScripts();
+    }
+  },[axiosJWT,isJSTLoading])
+
+  //useEffect(()=>{
+    //getScripts();
+  //},[])
   
   function onSelectScriptName(e){
     setScriptName(e.target.value)
@@ -55,8 +60,8 @@ export default function TextEditorPage(){
 
   function onChangeContent(newValue){
     //console.log(e.target.value)
-    console.log(newValue)
-    //setContent(newValue);
+    //console.log(newValue)
+    setContent(newValue);
   }
 
   function clickPaste1(){
@@ -85,73 +90,93 @@ export default function TextEditorPage(){
   }
 
   async function getScripts(){
-    let data = await useFetch("/api/script",{
-      method:"GET"
-      , headers: {'Content-Type': 'application/json'}
+    axiosJWT.instance.get("/api/script")
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log("fetch scripts error!")
+          return;
+        }
+        if(data.api=="SCRIPTS"){
+          setScripts(data.scripts);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    console.log(data)
-    if(data.error){
-      console.log("fetch scripts error!")
-      return;
-    }
-    if(data.api=="SCRIPTS"){
-      setScripts(data.scripts);
-    }
   }
 
   async function createScript(){
-    let data = await useFetch("/api/script",{
-      method:"POST"
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:"CREATE"
-        , filename:fileName
-        //, content:contentEditable.current.innerText
-        , content:content
-      })
+    axiosJWT.instance.post("/api/script",{
+        api:API.TYPES.CREATE
+      , filename:fileName
+      , content:content
+    })
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          return console.log("fetch create error!")
+        }
+        if(data.api==API.TYPES.CREATE){
+          setScripts(state=>
+            [...state,{
+                id:data.script.id
+              , filename:data.script.filename
+              , data:data.script.data
+            }]
+          )
+        }
+        if(data.api==API.TYPES.UPDATE){
+          setScripts(state=>
+            state.map(item=>{
+              if(item.id == data.script.id){
+                item.data = data.script.data;
+                return item;
+              }
+              return item;
+            })
+          )
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    console.log(data)
-    if(data.error){
-      return console.log("fetch create error!")
-    }
-    if(data.api=="CREATE"){
-      setScripts(state=>
-        [...state,{
-            id:data.script.id
-          , filename:data.script.filename
-          , data:data.script.data
-        }]
-      )
-    }
-    if(data.api=="UPDATE"){
-      setScripts(state=>
-        state.map(item=>{
-          if(item.id == data.script.id){
-            item.data = data.script.data;
-            return item;
-          }
-          return item;
-        })
-      )
-    }
   }
 
   async function deleteScript(){
-    let data = await useFetch("/api/script",{
-      method:"DELETE"
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:"DELETE"
+    axiosJWT.instance.delete("/api/script",{
+      data:{
+          api:API.DELETE
         , filename:fileName
-      })
-    });
-    console.log(data)
-    if(data.error){
-      return console.log("fetch delete error!")
-    }
-    if(data.api == "DELETE"){
-      setScripts(state=>state.filter(item=>item.filename != data.filename))
-    }
+      }
+    })
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          return console.log("fetch delete error!")
+        }
+        if(data.api == API.DELETE){
+          setScripts(state=>state.filter(item=>item.filename != data.filename))
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
   }
 
   return <div style={{height:"100%", width:"100%"}}>

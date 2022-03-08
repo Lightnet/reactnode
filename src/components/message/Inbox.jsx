@@ -28,7 +28,6 @@ export default function Inbox() {
   },[axiosJWT,isLoading])
 
   async function getMessages(){
-
     axiosJWT.instance.get("/api/message")
     .then(function (response) {
       //console.log(response);

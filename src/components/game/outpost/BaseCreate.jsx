@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { useGame } from '../GameProvider.jsx';
 import useFetch from '../../hook/useFetch.mjs';
 import { isEmpty } from '../../../lib/helper.mjs';
+import useAxiosTokenAPI from '../../hook/useAxiosTokenAPI.jsx';
+import { API } from '../../../lib/API.mjs';
 
 export default function BaseCreate({ops}) {
 
@@ -18,6 +20,8 @@ export default function BaseCreate({ops}) {
     setCharacterID,
     setCharacterName
   }=useGame();
+
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
 
   function typingBaseName(e){
     setBaseName0(e.target.value);
@@ -33,34 +37,41 @@ export default function BaseCreate({ops}) {
       console.log('Input Empty!');
       return;
     }
-    let data = await useFetch('api/baseoutpost',{
-      method:'POST',
-      body:JSON.stringify({
-        action:'CREATEMAINBASE',
-        basename:baseName,
-        charactername:characterName
-      })
+
+    axiosJWT.instance.post("api/baseoutpost",{
+        api:API.GAME.CREATEMAINBASE
+        , basename:baseName
+        , charactername:characterName
     })
-    if(data.error){
-      console.log(data.error);
-      console.log('Fetch Error Create Base')
-      return;
-    }
-
-    if(data.action){
-      if(data.action=='CREATE'){
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
         console.log(data);
-        setBaseName(data.base.name);
-        setBaseID(data.base.id);
-
-        setCharacterID(data.character.id);
-        setCharacterName(data.character.name);
-
-        if(typeof ops !== 'undefined'){
-          ops({action:'CREATEBASE'})
+        if(data.error){
+          console.log(data.error);
+          console.log('Fetch Error Create Base')
+          return;
+        }
+    
+        if(data.api=='CREATE'){
+          console.log(data);
+          setBaseName(data.base.name);
+          setBaseID(data.base.id);
+  
+          setCharacterID(data.character.id);
+          setCharacterName(data.character.name);
+  
+          if(typeof ops !== 'undefined'){
+            ops({api:'CREATEBASE'})
+          }
         }
       }
-    }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   return (<>

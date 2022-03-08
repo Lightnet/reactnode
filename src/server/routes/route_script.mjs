@@ -76,9 +76,18 @@ router.post('/script', async function (req, res) {
       console.log(userid);
       const data = req.body;
       console.log(data)
-      let scripts = await Script.find({filename:data.filename}).select('id filename filetype data').exec();
+      //let script = await Script.findOne({filename:data.filename}).select('id filename filetype data').exec();
+      let script = await Script.findOne({filename:data.filename}).exec();
+      console.log(script);
 
-      if(scripts.length==0){
+      if(script){
+        console.log("UPDATE?");
+        let currentScript = script;
+        console.log(data.content)
+        currentScript.data = data.content;
+        await currentScript.save();
+        return res.json({api:"UPDATE",script:currentScript});
+      }else{
         console.log("CREATE");
         const newScript = new Script({
             userid:userid
@@ -86,16 +95,8 @@ router.post('/script', async function (req, res) {
           , filename:data.filename
           , data:data.content
         })
-
         let saveScript = await newScript.save();
         return res.json({api:"CREATE",script:saveScript});
-      }else{
-        console.log("UPDATE?");
-        console.log("LEN:", scripts.length);
-        let currentScript = scripts[0];
-        currentScript.data = data.content;
-        await currentScript.save();
-        return res.json({api:"UPDATE",script:currentScript});
       }
 
     }catch(e){

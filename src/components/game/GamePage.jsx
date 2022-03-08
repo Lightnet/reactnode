@@ -3,7 +3,7 @@
   Created by: Lightnet
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { GameProvider } from './GameProvider.jsx';
 import GameWorld from './GameWorld.jsx';
 

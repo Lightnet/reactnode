@@ -10,7 +10,7 @@ import BaseOutPost from './baseoutpost.jsx';
 import Map from '../map/Map.jsx';
 import Buildings  from '../building/Buildings.jsx';
 import Construction from '../building/Construction.jsx'
-import ResearchAndDevelopment from '../ResearchAndDevelopment.jsx'
+import ResearchAndDevelopment from '../ui/ResearchAndDevelopment.jsx'
 import Storage from '../item/Storage.jsx';
 import Inventory from '../item/Inventory.jsx';
 import Characters from '../character/Characters.jsx';

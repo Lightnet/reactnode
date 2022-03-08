@@ -21,6 +21,9 @@ export const API = {
     , SEND:"SEND"
     , SENT:"SENT"
   },
+  GAME:{
+    CREATEMAINBASE:"CREATEMAINBASE"
+  },
   AUTHS:{
       EXISTS:"EXISTS"
     , LOGIN:"LOGIN"
