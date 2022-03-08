@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../../lib/API.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
-import useFetch from '../hook/useFetch.mjs';
+import useAxiosTokenAPI from '../hook/useAxiosTokenAPI.jsx';
 
 export default function Contacts() {
 
@@ -14,9 +14,16 @@ export default function Contacts() {
   const [selectName, setSelectName] = useState("")
   const [contacts, setContacts] = useState([])
 
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
+
   useEffect(()=>{
-    getContacts();
-  },[])
+    console.log("axiosJWT init...");
+    console.log("isLoading: ", isLoading)
+    if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
+      console.log("GETTING...: ")
+      getContacts();
+    }
+  },[axiosJWT,isLoading])
 
   function typeUserName(e){
     setUserName(e.target.value);
@@ -28,38 +35,54 @@ export default function Contacts() {
   }
 
   async function getContacts(){
-    let data = await useFetch("/api/contact")
-    console.log(data);
-    if(data.error){
-      console.log("Fetch contact fail!")
-      return;
-    }
-    if(data.api == "CONTACTS"){
-      setContacts(data.contacts)
-    }
+    axiosJWT.instance.get("/api/contact")
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log("Fetch contact fail!")
+          return;
+        }
+        if(data.api == "CONTACTS"){
+          setContacts(data.contacts)
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   async function clickAddContacts(){
-    let data = await useFetch("/api/contact",{
-      method:API.POST
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:API.TYPES.CREATE
-        ,  userName
-      })
+    axiosJWT.instance.post("/api/contact",{
+        api:API.TYPES.CREATE
+      , userName
     })
-    console.log(data);
-    if(data.error){
-      console.log("Fetch create contact fail!")
-      return;
-    }
-
-    if(data.api=="ADDED"){
-      setContacts(state=>[...state,{
-        id:data.id
-        ,friend:data.friend
-      }])
-    }
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log("Fetch create contact fail!")
+          return;
+        }
+    
+        if(data.api=="ADDED"){
+          setContacts(state=>[...state,{
+            id:data.id
+            ,friend:data.friend
+          }])
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   async function clickRemoveContacts(){
@@ -74,23 +97,31 @@ export default function Contacts() {
       return;
     }
 
-    let data = await useFetch("/api/contact",{
-      method:API.DELETE
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
+    axiosJWT.instance.delete("/api/contact",{
+      data:{
           api:API.DELETE
-        ,  id:id
-      })
+        , id:id
+      }
     })
-    console.log(data);
-    if(data.error){
-      console.log("Fetch delete contact fail!")
-      return;
-    }
-
-    if(data.api=="DELETE"){
-      setContacts(state=>state.filter(item=>item.id!=data.id))
-    }
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log("Fetch delete contact fail!")
+          return;
+        }
+    
+        if(data.api=="DELETE"){
+          setContacts(state=>state.filter(item=>item.id!=data.id))
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   function renderContacts(){

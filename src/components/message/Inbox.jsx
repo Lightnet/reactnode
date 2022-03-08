@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { API } from '../../lib/API.mjs';
-import useFetch from '../hook/useFetch.mjs';
+import useAxiosTokenAPI from '../hook/useAxiosTokenAPI.jsx';
 
 export default function Inbox() {
 
@@ -16,39 +16,74 @@ export default function Inbox() {
   const [subject, setSubject] = useState("");
   const [isMessage, setIsMessage] = useState(false);
 
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
+
   useEffect(()=>{
-    getMessages();
-  },[])
+    console.log("axiosJWT init...");
+    console.log("isLoading: ", isLoading)
+    if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
+      console.log("GETTING...: ")
+      getMessages();
+    }
+  },[axiosJWT,isLoading])
 
   async function getMessages(){
-    let data = await useFetch("/api/message");
 
-    console.log(data);
-    if(data.api == API.TYPES.MESSAGES){
-      console.log("message sent")
-      setMessages(data.messages);
-    }
+    axiosJWT.instance.get("/api/message")
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch error posts');
+          return;
+        }
+        if(data.api == API.TYPES.MESSAGES){
+          console.log("messages")
+          setMessages(data.messages);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   async function clickDelete(id){
     console.log("delete?")
-    let data = await useFetch("/api/message",{
-        method:API.DELETE
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:API.DELETE
-        , id: id
-      })
-    });
 
-    console.log(data);
-    if(data.api == API.DELETE){
-      console.log("message delete",data.id)
-      setMessages(state=>state.filter(item=>item.id != data.id))
-      if(data.id == messageID){
-        clearMessage(messageID)
+    axiosJWT.instance.delete("/api/message",{
+      data:{
+          api:API.DELETE
+        , id:id
       }
-    }
+    })
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log("Fetch delete contact fail!")
+          return;
+        }
+    
+        if(data.api == API.DELETE){
+          console.log("message delete",data.id)
+          setMessages(state=>state.filter(item=>item.id != data.id))
+          if(data.id == messageID){
+            clearMessage(messageID)
+          }
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   }
 
   function viewMessageID(id){

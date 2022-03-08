@@ -61,20 +61,20 @@ router.use((req, res, next) => {
   }else if(req.originalUrl?.indexOf("/api") == 0 ){
     console.log("FOUND /api!")
     console.log('Request URL:', req.originalUrl)
-    if(req.session.token){
-      console.log("checking...")
+    //if(req.session.token){
+      //console.log("checking...")
       //let sessionToken = checkToken(req.session.token, secret);
       //console.log("sessionToken: ", sessionToken)
-    }
+    //}
     return next();
   }else if(req.originalUrl?.indexOf("/session") == 0 ){
     console.log("FOUND /session!")
-    console.log('Request URL:', req.originalUrl)
-    if(req.session.token){
-      console.log("checking...")
-      let sessionToken = checkToken(req.session.token, secret);
-      console.log("sessionToken: ", sessionToken)
-    }
+    //console.log('Request URL:', req.originalUrl)
+    //if(req.session.token){
+      //console.log("checking...")
+      //let sessionToken = checkToken(req.session.token, secret);
+      //console.log("sessionToken: ", sessionToken)
+    //}
     return next();
   }else{
     console.log('Request URL:', req.originalUrl)

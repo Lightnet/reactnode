@@ -1,8 +1,19 @@
 
+```js
+// https://axios-http.com/docs/instance
+const axiosJWT = axios.create();
+axiosJWT.post("url",{body})
+
+axios#get(url[, config])
+axios#delete(url[, config])
+axios#post(url[, data[, config]])
+axios#put(url[, data[, config]])
+axios#patch(url[, data[, config]])
+```
+
+
+
 - https://stackoverflow.com/questions/51069552/axios-delete-request-with-body-and-headers
-
-
-
 
 - https://axios-http.com/docs/post_example
 

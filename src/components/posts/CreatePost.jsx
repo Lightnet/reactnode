@@ -26,29 +26,36 @@ export default function CreatePost(){
   const [axiosJWT, isLoading] = useAxiosTokenAPI();
   //console.log(isLoading);
 
-  useEffect(()=>{
-    console.log("init...");
-    console.log(axiosJWT);
-  },[axiosJWT])
+  //useEffect(()=>{
+    //console.log("init...");
+    //console.log(axiosJWT);
+  //},[axiosJWT])
 
   async function createPost(e){
-    let data = await useFetch("/api/post",{
-      method:'POST'
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:API.TYPES.CREATE
-        , title:title
-        , content:content
-      })
+    axiosJWT.instance.post('/api/post',{
+      api:API.TYPES.CREATE
+      , title:title
+      , content:content
     })
-    if(data.error){
-      console.log(data.error)
-      console.log('Fetch error create post');
-      return;
-    }
-    if(data.api=="POST"){
-      console.log(data.post);
-    }
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log(data.error)
+          console.log('Fetch error create post');
+          return;
+        }
+        if(data.api=="POST"){
+          console.log(data.post);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   return <>

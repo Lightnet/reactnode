@@ -53,30 +53,31 @@ export default function PostsPage(){
     });
   }
 
-  
-
   async function deletePost(id){
-
-
-
-
-    /*
-    let data =await useFetch("api/post",{
-      method:API.DELETE
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:API.DELETE
+    axiosJWT.instance.delete('/api/post',{
+      data:{
+        api:API.DELETE
         , id:id
-      })
+      }
     })
-    if(data.error){
-      console.log('Fetch error delete post');
-      return;
-    }
-    if(data.api==API.DELETE){
-      setPosts(state=>state.filter(item=>item.id !=data.id));
-    }
-    */
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch error delete post');
+          return;
+        }
+        if(data.api==API.DELETE){
+          setPosts(state=>state.filter(item=>item.id !=data.id));
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
   function editPost(id){
@@ -99,33 +100,41 @@ export default function PostsPage(){
   }
 
   async function updatePost(e){
-    let data = await useFetch("/api/post",{
-      method:'PUT'
-      , headers: {'Content-Type': 'application/json'}
-      , body:JSON.stringify({
-          api:API.TYPES.UPDATE
-        , id: postID
-        , title:title
-        , content:content
-      })
+
+    axiosJWT.instance.put('/api/post',{
+        api:API.TYPES.UPDATE
+      , id: postID
+      , title:title
+      , content:content
     })
-    if(data.error){
-      console.log(data.error)
-      console.log('Fetch error update post');
-      return;
-    }
-    if(data.api=="UPDATE"){
-      console.log(data.post);
-      setPosts(state=>state.map(item=>{
-        if(item.id ==data.post.id){
-          item.title = data.post.title;
-          item.content = data.post.content;
-          return item;
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        //console.log(data);
+        if(data.error){
+          console.log(data.error)
+          console.log('Fetch error update post');
+          return;
         }
-        return item;
-      }))
-    }
-    setIsEdit(false);
+        if(data.api=="UPDATE"){
+          console.log(data.post);
+          setPosts(state=>state.map(item=>{
+            if(item.id ==data.post.id){
+              item.title = data.post.title;
+              item.content = data.post.content;
+              return item;
+            }
+            return item;
+          }))
+        }
+        setIsEdit(false);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   return <>

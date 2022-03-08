@@ -30,9 +30,9 @@ router.get('/post', async function (req, res) {
   try{
     const Post = db.model('Post');
     //console.log(username);
-    console.log(userid);
-    const data = req.body;
-    console.log(data)
+    //console.log(userid);
+    //const data = req.body;
+    //console.log(data)
     let posts = await Post.find({recipientid:userid})
       .select('id title content')
       .exec();
@@ -151,11 +151,13 @@ router.put('/post',async function (req, res) {
 
 router.delete('/post',async function (req, res) {
   const {api} = req.body;
+  
+  console.log("req.body ",req.body);
   console.log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
-
+  
   const db = await clientDB();
   let userid =null;
   let username =null;
@@ -191,6 +193,7 @@ router.delete('/post',async function (req, res) {
       return res.send({error:'fail delete post'});
     }
   }
+  
   res.json({error:'post delete'})
 })
 
