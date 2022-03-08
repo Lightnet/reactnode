@@ -18,14 +18,24 @@ export default function UploadProgressXHRPage(){
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSelectFile, setIsSelectFile] = useState(false);
   const [status, setStatus] = useState("idle");
-
   const [percent, setPercent] = useState(0);
+
+  const [controller, setController] = useState(null);
+  const [isAbort, setIsAbort] = useState(false);
 
   const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsSelectFile(true);
     setStatus("Ready!")
 	};
+
+  function clickAbort(){
+    // cancel the request
+    if(controller){
+      controller.abort()
+      setIsAbort(false);
+    }
+  }
 
   async function clickUpload(){
     setPercent(0)
@@ -36,9 +46,13 @@ export default function UploadProgressXHRPage(){
       setStatus("Empty File!")
       return;
     }
+    setIsAbort(true);
     const formData = new FormData();
     formData.append('myfiles', selectedFile);
     var xhr = new XMLHttpRequest();
+    //const control = new AbortController();
+    setController(xhr);
+
     //Monitor file upload progress
     function onprogress(e) {
       //console.log("...")
@@ -51,17 +65,30 @@ export default function UploadProgressXHRPage(){
       }
     }
     
-    function onloadstart(e) {
-      console.log("start upload")
+    xhr.upload.addEventListener('progress',onprogress, false)
+    xhr.onreadystatechange = function() {
+      console.log(this.readyState , " : : ", this.status)
+      if (this.readyState == 1 && this.status == 0) {
+        console.log("start upload")
+      }
+
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("finish upload")
+        setIsAbort(false);
+      }
+
+      if (this.readyState == 4 && this.status == 0) {
+        console.log("Abort upload")
+        setStatus("Abort upload")
+        setIsAbort(false);
+      }
     }
-    function onload(){
+
+    xhr.onload = function(e){
       console.log ('upload complete ')
       setStatus("Upload Finish")
+      setIsAbort(false);
     }
-    
-    xhr.upload.addEventListener('progress',onprogress, false)
-    xhr.addEventListener('loadstart',onloadstart,false)
-    xhr.addEventListener('load',onload , false);
     
     let url = "/upload";
     xhr.open("POST", url);
@@ -72,6 +99,7 @@ export default function UploadProgressXHRPage(){
     <label> Upload progress test! </label>
     <input type="file" name="file" onChange={changeHandler}/><progress value={percent} max="100"/>
     <button onClick={clickUpload}> Upload XHR </button> <label>{status}</label>
+    {isAbort && <button onClick={clickAbort}> Abort! </button>}
     {isSelectFile ? (
 				<div>
 					<p>Filename: {selectedFile.name}</p>

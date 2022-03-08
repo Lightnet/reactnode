@@ -48,7 +48,8 @@ router.post('/upload', function (req, res) {
   // setup
   const form = formidable({
     multiples: false
-    , maxFileSize:50 * 1024 * 1024 // 5MB
+    //, maxFileSize:50 * 1024 * 1024 // 5MB
+    , maxFileSize: 10 * 50 * 1024 * 1024 // 50MB
     , uploadDir : uploadFolder
   });
   // Basic Configuration
@@ -99,11 +100,13 @@ router.post('/upload', function (req, res) {
         //fs.unlinkSync( file.filepath )
       } catch (error) {
         console.log(error);
+        return res.json({error:'rename file'})
       }
       return res.json({message:'uploaded'})
     }
+    return res.json({error:'fail upload'})
   });
-  return res.json({error:'fail upload'})
+  //return res.json({error:'fail upload'})
 })
 
 export default router;

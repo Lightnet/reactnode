@@ -25,7 +25,7 @@ router.get('/downloadtest', function (req, res) {
 
   console.log(__dirname);
   let _filename = './test.txt';
-  //_filename = "./"
+  //_filename = "./";
 
   res.download(path.join(uploadFolder, _filename), function (err) {
     console.log(err);

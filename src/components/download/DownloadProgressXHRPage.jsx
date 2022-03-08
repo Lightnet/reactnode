@@ -15,11 +15,24 @@ import React, { useState } from "react";
 export default function DownloadProgressXHRPage(){
   const [percent, setPercent] = useState(0);
   const [status, setStatus] = useState("idle");
+  const [isAbort, setIsAbort] = useState(false);
+  const [controller, setController] = useState(null);
+
+  function clickAbort(){
+    // cancel the request
+    if(controller){
+      controller.abort()
+      setIsAbort(false);
+    }
+  }
 
   async function clickDownload(){
     setPercent(0);
+
+    setIsAbort(true)
     setStatus("Downloading...")
     const xhr = new XMLHttpRequest();
+    setController(xhr);
     xhr.responseType = "blob";
 
     xhr.addEventListener("progress", function (evt) {
@@ -61,5 +74,6 @@ export default function DownloadProgressXHRPage(){
   return (<>
     <button onClick={clickDownload}> Download XHR</button>
     <progress value={percent} max="100"/><label>{status}</label>
+    {isAbort && <button onClick={clickAbort}> Abort! </button>}
   </>)
 }

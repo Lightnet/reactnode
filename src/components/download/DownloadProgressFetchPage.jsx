@@ -11,13 +11,30 @@ import React, { useState } from "react";
 
 export default function DownloadProgressFetchPage(){
   const [percent, setPercent] = useState(0);
-  //const [receivedLength, setReceivedLength] = useState(0);
   const [status, setStatus] = useState("idle");
+
+  const [controller, setController] = useState(null);
+  const [isAbort, setIsAbort] = useState(false);
+
+  function clickAbort(){
+    // cancel the request
+    if(controller){
+      controller.abort()
+      setIsAbort(false);
+    }
+  }
 
   async function clickDownload(){
     setPercent(0);
     setStatus("download...")
-    fetch("/downloadtest")
+
+    const control = new AbortController();
+    setController(control);
+    setIsAbort(true);
+
+    fetch("/downloadtest",{
+      signal: control.signal
+    })
       // Retrieve its body as ReadableStream
       .then(response => {
         const reader = response.body.getReader();
@@ -70,15 +87,19 @@ export default function DownloadProgressFetchPage(){
         // Clean up and remove the link
         link.parentNode.removeChild(link);
         console.log("done?")
+        setIsAbort(false);
       })
       .catch(err =>{
-        setStatus("Error download!")
+        //setStatus("Error download!")
         console.error(err)
+        setStatus(err.message)
+        setIsAbort(false);
       });
   }
 
   return (<>
     <button onClick={clickDownload}> Download Fetch 2</button>
     <progress value={percent} max="100"/><label>{status}</label>
+    {isAbort && <button onClick={clickAbort}> Abort! </button>}
   </>)
 }

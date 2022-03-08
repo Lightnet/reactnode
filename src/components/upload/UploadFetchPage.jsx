@@ -15,25 +15,45 @@ import React, { useState } from "react";
 
 export default function UploadFetchPage(){
 
+  const [status, setStatus] = useState("idle");
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSelectFile, setIsSelectFile] = useState(false);
+
+  const [controller, setController] = useState(null);
+  const [isAbort, setIsAbort] = useState(false);
 
   const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsSelectFile(true);
+    setStatus("Ready!");
 	};
 
+  function clickAbort(){
+    // cancel the request
+    if(controller){
+      controller.abort()
+      setIsAbort(false);
+    }
+  }
+
   function clickUpload(){
-    
     console.log(selectedFile)
     if(!selectedFile){
       console.log("Empty File!")
+      setStatus("Empty File!");
       return;
     }
+    setStatus("Uploading...!");
+    setIsAbort(true);
+    const control = new AbortController();
+    setController(control);
+
     const formData = new FormData();
     formData.append('myfiles', selectedFile);
     fetch('/upload',
 			{
+        signal:control.signal,
 				method: 'POST',
 				body: formData,
 			}
@@ -41,25 +61,30 @@ export default function UploadFetchPage(){
     .then((response) => response.json())
     .then((result) => {
       console.log('Success:', result);
+      setStatus("Finish!");
+      setIsAbort(false);
     })
     .catch((error) => {
       console.error('Error:', error);
+      setStatus(error.message);
+      setIsAbort(false);
     });
-
   }
 
   return (<>
     <label> Page! </label>
     <input type="file" name="file" onChange={changeHandler}/>
-    <button onClick={clickUpload}> Upload </button>
+    <button onClick={clickUpload}> Fetch Upload </button>
+    <label> Status: {status} </label>
+    {isAbort && <button onClick={clickAbort}> Abort! </button>}
     {isSelectFile ? (
 				<div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
+					<p>Filename: {selectedFile?.name}</p>
+					<p>Filetype: {selectedFile?.type}</p>
+					<p>Size in bytes: {selectedFile?.size}</p>
 					<p>
 						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
+						{selectedFile?.lastModifiedDate?.toLocaleDateString()}
 					</p>
 				</div>
 			) : (

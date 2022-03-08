@@ -10,6 +10,7 @@ import DownloadProgressXHRPage from "../download/DownloadProgressXHRPage.jsx";
 import ProgressBarUI from "../progress/ProgressBarUI.jsx";
 import UploadProgressAxiosPage from "../upload/UploadProgressAxiosPage.jsx";
 import UploadProgressXHRPage from "../upload/UploadProgressXHRPage.jsx";
+import UploadFetchPage from "../upload/UploadFetchPage.jsx";
 
 export default function ProgressPage(){
 
@@ -18,6 +19,8 @@ export default function ProgressPage(){
       <label>ProgressPage</label>
     </div>
     <ProgressBarUI /><br />
+    <br />
+    <UploadFetchPage /><br />
     <br />
     <UploadProgressXHRPage /><br />
     <br />
