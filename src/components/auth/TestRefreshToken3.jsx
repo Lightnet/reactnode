@@ -9,24 +9,27 @@
 import React from "react";
 import useAxiosTokenAPI from "../hook/useAxiosTokenAPI";
 //import { parseJwt } from "../../lib/helper.mjs";
-import { useAuth } from "./AuthProvider";
+//import { useAuth } from "./AuthProvider";
 
 export default function TestRefreshToken2(){
 
-  const {
-    axiosJWT
-  } = useAuth();
+  //const {
+    //axiosJWT
+  //} = useAuth();
 
-  const token = useAxiosTokenAPI();
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
 
   function clickRefreshTest(){
     //console.log(token)
-    console.log(axiosJWT)
-    token.instance.get('/refreshtest').then(function (response) {
-      console.log(response);
+    //console.log(axiosJWT)
+    axiosJWT.instance.get('/refreshtest').then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        console.log(response.data)
+      }
     })
     .catch(function (error) {
-      console.log(error);
+      console.log(error.message);
     });
   }
   return  <>

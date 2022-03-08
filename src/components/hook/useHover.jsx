@@ -18,8 +18,7 @@ export default function useHover() {
   const ref = useRef(null);
   const handleMouseOver = () => setValue(true);
   const handleMouseOut = () => setValue(false);
-  useEffect(
-    () => {
+  useEffect(() => {
       const node = ref.current;
       if (node) {
         node.addEventListener("mouseover", handleMouseOver);

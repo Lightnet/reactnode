@@ -38,7 +38,7 @@ export function AuthProvider(props){
   const [axiosJWT, setAxiosJWT] = useState(null);
 
   useEffect(() => {
-    console.log("init token jwt")
+    //console.log("init token jwt")
     refreshToken();
     refreshBaseToken();
   }, []);
@@ -85,9 +85,9 @@ export function AuthProvider(props){
   }
 
   useEffect( () => {
-    console.log("init axios jwt")
+    //console.log("init axios jwt")
     const instance = axios.create({
-        baseURL:"http://localhost:3000"
+        baseURL:API_URL
       , headers: {
         //'X-Custom-Header': 'foobar'
         "Content-Type": "application/json"
@@ -130,6 +130,7 @@ export function AuthProvider(props){
   */
 
   const value = useMemo(()=>({
+    API_URL , setAPI_URL,
     status, setStatus,
     userID, setUserID,
     user, setUser,
@@ -139,6 +140,7 @@ export function AuthProvider(props){
     baseExpire, setBaseExpire,
     axiosJWT, setAxiosJWT
   }),[
+    API_URL,
     status,
     userID,
     user,

@@ -8,6 +8,7 @@ import TestDeleteRefreshToken from "../auth/TestDeleteRefreshToken";
 import TestRefreshToken from "../auth/TestRefreshToken";
 import TestRefreshToken2 from "../auth/TestRefreshToken2";
 import TestRefreshToken3 from "../auth/TestRefreshToken3";
+import TestCryptoButton from "../crypto/TestCryptoButton";
 import BtnAgent from "../express/BtnAgent";
 import BtnFetch from "../express/BtnFetch";
 import CookieButton from "../express/CookieButton";
@@ -27,5 +28,7 @@ export default function TestPage(){
     <TestDeleteRefreshToken/>
     <TestRefreshToken2/>
     <TestRefreshToken3/>
+    <br/>
+    <TestCryptoButton/>
   </>
 }

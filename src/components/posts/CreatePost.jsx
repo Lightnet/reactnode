@@ -5,8 +5,9 @@
 
 // https://redux.js.org/tutorials/essentials/part-3-data-flow
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "../../lib/API.mjs";
+import useAxiosTokenAPI from "../hook/useAxiosTokenAPI.jsx";
 import useFetch from "../hook/useFetch.mjs";
 
 export default function CreatePost(){
@@ -21,6 +22,14 @@ export default function CreatePost(){
   function typeContent(e){
     setContent(e.target.value);
   }
+
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
+  //console.log(isLoading);
+
+  useEffect(()=>{
+    console.log("init...");
+    console.log(axiosJWT);
+  },[axiosJWT])
 
   async function createPost(e){
     let data = await useFetch("/api/post",{

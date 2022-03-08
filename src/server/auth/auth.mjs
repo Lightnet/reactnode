@@ -23,6 +23,8 @@ var enableSession = process.env.ISSESSION || true;
 var enableCookie = process.env.ISCOOKIE || true;
 
 console.log("SECRET:", secret)
+// https://github.com/expressjs/express/issues/2518
+//var isLocal = (req.connection.localAddress === req.connection.remoteAddress);
 
 // https://stackoverflow.com/questions/22285921/how-to-handle-user-agent-in-nodejs-environment
 // https://expressjs.com/en/guide/using-middleware.html
@@ -36,6 +38,8 @@ router.use((req, res, next) => {
   //console.log(req.originalUrl.match("/src"))
   if(req.originalUrl == "/"){
     console.log("req.User-Agent: ", req.get('User-Agent'))
+    console.log("req.socket.remoteAddress: ", req.socket.remoteAddress);//this?
+    console.log("req.socket.localAddress: ", req.socket.localAddress);
     //console.log("req.headers: ",req.headers)
 
     return next();

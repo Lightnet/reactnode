@@ -60,9 +60,16 @@ Work in progress testing...
   Using mongodb for easy update data.
 
 # Features:
+- Auth Token:
+  - Refreh token ( Added )
+  - Access Token ( Added )
+  - Base Token without login but verify access. ( Added )
+  - Examples ( ( Added ) )
+  - middleware verify access Refreh token ( Added )
 - Account management dummy test (work in progress)
   - sign up ( added )
   - logout ( added )
+  - change password ( added )
   - forgot password ( not added )
   - verify checks ( not added )
   - api fetch ( added / wip )

@@ -6,19 +6,19 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import CreatePost from "./CreatePost";
-import Posts from "./Posts";
+import PostsPage from "./PostsPage";
 
 export default function PostPage(){
 
   return <div>
   <div>
     <label> Post: </label>
-      <Link to={"/post"}>Post</Link><span> | </span>
-      <Link to={"createpost"}>Create Post</Link><span> | </span>
+    <Link to={"posts"}>Posts</Link><span> | </span>
+    <Link to={"createpost"}>Create Post</Link><span> | </span>
   </div>
   <Routes>
-      <Route path="/" element={<Posts />}/>
+      <Route path="posts" element={<PostsPage />}/>
       <Route path="createpost" element={<CreatePost />}/>
-    </Routes>
+  </Routes>
 </div>
 }

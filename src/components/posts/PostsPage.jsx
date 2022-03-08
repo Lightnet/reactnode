@@ -7,9 +7,10 @@
 
 import React, { useEffect, useState } from "react";
 import { API } from "../../lib/API.mjs";
+import useAxiosTokenAPI from "../hook/useAxiosTokenAPI.jsx";
 import useFetch from "../hook/useFetch.mjs";
 
-export default function Posts(){
+export default function PostsPage(){
 
   const [posts, setPosts] = useState([]);
 
@@ -18,27 +19,48 @@ export default function Posts(){
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
+
+  //console.log("isLoading ",isLoading);
   useEffect(()=>{
-    getPost();
-  },[])
+    console.log("axiosJWT init...");
+    console.log("isLoading: ", isLoading)
+    if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
+      console.log("GETTING...: ")
+      getPost();
+    }
+  },[axiosJWT,isLoading])
 
   async function getPost(){
-    console.log("get post?")
-    let data =await useFetch("/api/post",{
-      method:'GET'
-      , headers: {'Content-Type': 'application/json'}
+    axiosJWT.instance.get('/api/post')
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch error posts');
+          return;
+        }
+        if(data.api=="POSTS"){
+          setPosts(data.posts);
+        }
+      }
     })
-    console.log(data);
-    if(data.error){
-      console.log('Fetch error posts');
-      return;
-    }
-    if(data.api=="POSTS"){
-      setPosts(data.posts);
-    }
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
+  
+
   async function deletePost(id){
+
+
+
+
+    /*
     let data =await useFetch("api/post",{
       method:API.DELETE
       , headers: {'Content-Type': 'application/json'}
@@ -54,6 +76,7 @@ export default function Posts(){
     if(data.api==API.DELETE){
       setPosts(state=>state.filter(item=>item.id !=data.id));
     }
+    */
   }
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
   function editPost(id){
