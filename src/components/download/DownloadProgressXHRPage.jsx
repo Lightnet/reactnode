@@ -35,18 +35,19 @@ export default function DownloadProgressXHRPage(){
     setController(xhr);
     xhr.responseType = "blob";
 
-    xhr.addEventListener("progress", function (evt) {
+    xhr.onprogress = function(evt){
       if(evt.lengthComputable) {
         var percentComplete = (evt.loaded / evt.total) *100;
         //console.log(percentComplete);
         setPercent(percentComplete);
         setStatus(percentComplete.toFixed(2)+"%")
       }
-    }, false);
+    }
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         setStatus("Finish Download...")
+        setIsAbort(false);
         //var filename = $(that).data('filename');
         var filename = "test01.txt";
         if (typeof window.chrome !== 'undefined') {

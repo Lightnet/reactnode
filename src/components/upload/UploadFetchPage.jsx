@@ -1,6 +1,9 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Not possible for upload progress bar.
+
 */
 
 // https://stackoverflow.com/questions/35711724/upload-progress-indicators-for-fetch
@@ -8,6 +11,11 @@
 // https://jakearchibald.com/2016/streams-ftw/
 // https://dev.to/tqbit/how-to-monitor-the-progress-of-a-javascript-fetch-request-and-cancel-it-on-demand-107f
 // https://serversideup.net/file-uploads-using-fetch-api-and-vuejs/
+// 
+// https://medium.com/deno-the-complete-reference/file-upload-through-fetch-in-deno-5c40cc6115e
+// https://developer.mozilla.org/en-US/docs/Web/API/Request
+// https://developer.mozilla.org/en-US/docs/Web/API/Request/Request
+// https://wanago.io/2019/03/18/node-js-typescript-6-sending-http-requests-understanding-multipart-form-data/
 // 
 // 
 
@@ -51,11 +59,12 @@ export default function UploadFetchPage(){
 
     const formData = new FormData();
     formData.append('myfiles', selectedFile);
+
     fetch('/upload',
 			{
         signal:control.signal,
 				method: 'POST',
-				body: formData,
+				body: formData
 			}
 		)
     .then((response) => response.json())
@@ -69,12 +78,13 @@ export default function UploadFetchPage(){
       setStatus(error.message);
       setIsAbort(false);
     });
+    
   }
 
   return (<>
     <label> Page! </label>
     <input type="file" name="file" onChange={changeHandler}/>
-    <button onClick={clickUpload}> Fetch Upload </button>
+    <button onClick={clickUpload}> Fetch Upload (No Progress Bar) </button>
     <label> Status: {status} </label>
     {isAbort && <button onClick={clickAbort}> Abort! </button>}
     {isSelectFile ? (

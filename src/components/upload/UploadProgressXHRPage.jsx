@@ -10,6 +10,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/progress_event
 // 
 // FETCH UPLOAD DOES NOT WORK ATM
+// https://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
 
 import React, { useState } from "react";
 
@@ -54,7 +55,7 @@ export default function UploadProgressXHRPage(){
     setController(xhr);
 
     //Monitor file upload progress
-    function onprogress(e) {
+    xhr.upload.onprogress = function(e) {
       //console.log("...")
       if (e.lengthComputable) {
         const _progress = (e.loaded * 100) / e.total;
@@ -65,7 +66,7 @@ export default function UploadProgressXHRPage(){
       }
     }
     
-    xhr.upload.addEventListener('progress',onprogress, false)
+    //xhr.upload.addEventListener('progress',onprogress, false)
     xhr.onreadystatechange = function() {
       console.log(this.readyState , " : : ", this.status)
       if (this.readyState == 1 && this.status == 0) {
