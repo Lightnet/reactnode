@@ -15,13 +15,14 @@ import { checkToken, parseJwt } from '../../lib/helperToken.mjs';
 import { refreshBaseToken } from '../controllers/RefreshBaseToken.mjs';
 import { refreshToken } from '../controllers/RefreshToken.mjs';
 import { verifyBaseToken } from '../middleware/VerifyBaseToken.mjs';
+import { verifyToken } from '../middleware/VerifyToken.mjs';
 const router = express.Router();
 
 var secret = process.env.SECRET;
 var enableSession = process.env.ISSESSION || true;
 var enableCookie = process.env.ISCOOKIE || true;
 
-console.log("secret:", secret)
+console.log("SECRET:", secret)
 
 // https://stackoverflow.com/questions/22285921/how-to-handle-user-agent-in-nodejs-environment
 // https://expressjs.com/en/guide/using-middleware.html
@@ -77,11 +78,12 @@ router.use((req, res, next) => {
   next()
 })
 
-router.post('/signin',async function (req, res) {
+router.post('/signin', verifyBaseToken ,async function (req, res) {
   //var contentType = req.headers['content-type'];
   //console.log(contentType);
-  //console.log(req.body); // your JSON
+  
   let data = req.body;
+  //console.log(req.body); // your JSON
   let db = await clientDB();
   let User = db.model('User');
   let user = await User.findOne({ username: data.userName }).exec();
@@ -91,9 +93,7 @@ router.post('/signin',async function (req, res) {
     return res.send({action:'NONEXIST'});
   }else{
     if(user.validPassword(data.password)){
-      //user.toAuthJSON();
       //console.log("[login] password pass!");
-      //console.log(req.session);
       //let datasub = user.toAuthJSON()
       let token = user.generateToken(req)
       if(enableSession){
@@ -115,7 +115,7 @@ router.post('/signin',async function (req, res) {
       }catch(e){
         console.log("LOGIN FAIL SAVE TOKEN!")
       }
-      return res.send({action:'LOGIN',user:user.username,token:tokenKey});
+      return res.send({api:API.AUTHS.LOGIN,user:user.username,token:tokenKey});
     }else{
       console.log("[login] password fail!");
       return res.send({error:"PASSWORDFAIL"});
@@ -129,7 +129,7 @@ router.post('/signin',async function (req, res) {
 
 router.post('/signup', verifyBaseToken, async function (req, res) {
   let data = req.body;
-  console.log("BODY: ",data)
+  //console.log("BODY: ",data)
   if((isEmpty(data.user)==true)||(isEmpty(data.password)==true)){
     return res.send({api:'EMPTY'});
   }
@@ -157,7 +157,7 @@ router.post('/signup', verifyBaseToken, async function (req, res) {
   }
 });
 
-router.post('/signout',async function (req, res) {
+router.post('/signout', verifyToken,async function (req, res) {
   //console.log(req.session)
   let token =null;
   if(req.session?.token){
@@ -281,8 +281,8 @@ router.put('/passphrase',async function (req, res) {
 });
 
 // https://mfikri.com/en/blog/react-express-mysql-authentication
-router.get('/token', refreshToken);
-router.get('/basetoken', refreshBaseToken);
+router.get('/token', refreshToken); // get token last 15s
+router.get('/basetoken', refreshBaseToken); // get token last 15s
 
 //router.get('/session',async function (req, res) {
   //console.log(req.session);

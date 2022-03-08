@@ -4,15 +4,19 @@
 */
 
 import React, { useState } from 'react';
-import useFetch from "../hook/useFetch.mjs";
+//import useFetch from "../hook/useFetch.mjs";
 
 import {
   useNavigate
 } from "react-router-dom";
 import { useAuth } from './AuthProvider.jsx';
 import { parseJwt } from '../../lib/helper.mjs';
+import axios from 'axios';
+import { API } from '../../lib/API.mjs';
 
 export function SignInPage() {
+
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const {
@@ -20,10 +24,75 @@ export function SignInPage() {
     , setToken
     , setExpire
     , setStatus
+    , baseToken
+    , setBaseToken
+    , baseExpire
+    , setBaseExpire
   } = useAuth();
-  const navigate = useNavigate();
-  
+
+  const axiosJWT = axios.create();
+  axiosJWT.interceptors.request.use(async (config) => {
+    const currentDate = new Date();
+    //console.log("PROCESS???")
+    if (baseExpire * 1000 < currentDate.getTime()) {
+        //console.log("EXPIRE? base token????>>>>")
+        const response = await axios.get('/basetoken');
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        //console.log(response.data.accessToken);
+        setBaseToken(response.data.accessToken);
+        const decoded = parseJwt(response.data.accessToken);
+        setBaseExpire(decoded.exp);
+      }else{
+        config.headers.Authorization = `Bearer ${baseToken}`;
+      }
+      return config;
+  }, (error) => {
+      return Promise.reject(error);
+  });
+
+
   async function clickLogin(){
+
+    axiosJWT.post('/signin',
+      {
+        api:API.AUTHS.LOGIN
+        , userName:userName
+        , password:password
+      }
+      ,{
+        headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response=>{
+      let data=response.data;
+      console.log(data)
+      if(data.error){
+        if(data.error=='PASSWORDFAIL'){
+          console.log('Password Fail!');
+        }
+        return;
+      }
+      if(data?.api=='LOGIN'){
+        setUser(data.user);
+        setToken(data.token);
+        let datatoken = parseJwt(data.token)
+        setExpire(datatoken.exp);
+        console.log(datatoken);
+        setStatus('auth')
+        navigate('/')
+      }
+      if(data?.api=='NONEXIST'){
+        setStatus('Non Exist!');
+        //navigate('/')
+      }
+    }).catch(error=>{
+      console.log(error)
+    });
+
+
+
+
+    /*
     //console.log("login")
     let data = await useFetch('/signin',{
         method:'POST'
@@ -55,6 +124,7 @@ export function SignInPage() {
         //setStatus('Non Exist!');
       }
     }
+    */
   }
 
   function clickCancel(){

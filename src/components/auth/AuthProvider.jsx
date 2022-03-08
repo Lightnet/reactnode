@@ -23,6 +23,7 @@ export function useAuth(){
 
 export function AuthProvider(props){
   
+  const [API_URL , setAPI_URL] = useState('http://localhost:3000'); // use?
   const [userID, setUserID] = useState(''); // use?
   const [user, setUser] = useState(''); // user name
   const [status, setStatus] = useState('loading'); //loading, auth, unauth
@@ -34,26 +35,29 @@ export function AuthProvider(props){
   const [baseToken, setBaseToken] = useState(''); // required access
   const [baseExpire, setBaseExpire] = useState(0);
 
+  const [axiosJWT, setAxiosJWT] = useState(null);
+
   useEffect(() => {
+    console.log("init token jwt")
     refreshToken();
     refreshBaseToken();
   }, []);
 
-  async function refreshToken(){
+  function refreshToken(){
     setStatus('loading')
     axios.get('/token').then(function (response) {
-      console.log(response)
+      //console.log(response)
       if(response.data.error){
         console.log("NOT LOGIN")
         setStatus('unauth')
         return;
       }
       const decoded = parseJwt(response.data.accessToken);
-      //console.log(decoded)
+      console.log(decoded)
       setToken(response.data.accessToken);
       setUser(decoded.user);
       setExpire(decoded.exp);
-      console.log(decoded.exp);
+      //console.log(decoded.exp);
       setStatus('auth')
     }).catch(function (error) {
       // handle error
@@ -64,14 +68,14 @@ export function AuthProvider(props){
     })
   }
 
-  async function refreshBaseToken(){
+  function refreshBaseToken(){
     axios.get('/basetoken').then(function (response) {
-      console.log(response)
+      //console.log(response)
       const decoded = parseJwt(response.data.accessToken);
       console.log(decoded)
       setBaseToken(response.data.accessToken);
       setBaseExpire(decoded.exp);
-      console.log(decoded.exp);
+      //console.log(decoded.exp);
     }).catch(function (error) {
       // handle error
       console.log(error);
@@ -80,28 +84,49 @@ export function AuthProvider(props){
     })
   }
 
-  /*
-  const axiosJWT = axios.create();
-  axiosJWT.interceptors.request.use(async (config) => {
-    const currentDate = new Date();
-    if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get('http://localhost:3000/token');
+  useEffect( () => {
+    console.log("init axios jwt")
+    const instance = axios.create({
+        baseURL:"http://localhost:3000"
+      , headers: {
+        //'X-Custom-Header': 'foobar'
+        "Content-Type": "application/json"
+      }
+    });
+    //console.log(instance)
+    
+    instance.interceptors.request.use(async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get('/token');
+        if(response.data.error){
+          console.log("NOT LOGIN")
+          setStatus('unauth')
+          return config;
+        }
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = parseJwt(response.data.accessToken);
         //setName(decoded.name);
         setExpire(decoded.exp);
+      }else{
+        config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
-  }, (error) => {
+    }, (error) => {
       return Promise.reject(error);
-  });
-
-  const response = await axiosJWT.get('/refreshtest', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
     });
+
+    setAxiosJWT({instance:instance });
+    
+  }, []);
+  /*
+  const response = await axiosJWT.get('/refreshtest', {
+    headers: {
+      //Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  });
   */
 
   const value = useMemo(()=>({
@@ -111,7 +136,8 @@ export function AuthProvider(props){
     token, setToken,
     expire, setExpire,
     baseToken, setBaseToken,
-    baseExpire, setBaseExpire
+    baseExpire, setBaseExpire,
+    axiosJWT, setAxiosJWT
   }),[
     status,
     userID,
@@ -119,7 +145,8 @@ export function AuthProvider(props){
     token,
     expire,
     baseToken,
-    baseExpire
+    baseExpire,
+    axiosJWT
   ])
 
   return <AuthContext.Provider value={value} {...props} />

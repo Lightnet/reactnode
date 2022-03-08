@@ -91,4 +91,11 @@ router.get('/refreshtest', verifyToken, function (req, res) {
   //console.log(req.test1)
   res.json({test:"test"})
 })
+
+router.delete('/refreshdelete', verifyToken, function (req, res) {
+  //console.log(req.get('authorization'))
+  console.log(req.body)
+  //console.log(req.test1)
+  res.json({test:"delete test"})
+})
 export default router;

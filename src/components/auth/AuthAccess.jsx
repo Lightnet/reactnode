@@ -4,13 +4,12 @@
 */
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { isEmpty } from "../../lib/helper.mjs";
 import { useAuth } from "./AuthProvider";
 
 export default function AuthAccess({children}){
 
   const navigate = useNavigate();
-  const { user, status } =useAuth();
+  const { status } =useAuth();
 
   useEffect(()=>{
     if(status=="loading"){

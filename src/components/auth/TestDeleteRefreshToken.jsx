@@ -8,7 +8,7 @@ import React from "react";
 import { parseJwt } from "../../lib/helper.mjs";
 import { useAuth } from "./AuthProvider";
 
-export default function TestRefreshToken(){
+export default function TestDeleteRefreshToken(){
   const {
       token
     , setToken
@@ -36,10 +36,12 @@ export default function TestRefreshToken(){
   });
 
   async function clickRefreshTest(){
-    const response = await axiosJWT.get('/refreshtest', {
+    const response = await axiosJWT.delete('/refreshdelete', {
       headers: {
-        //Authorization: `Bearer ${token}`
         "Content-Type": "application/json"
+      },
+      data:{
+        test:"text"
       }
     }).then(function (response) {
       console.log(response);
@@ -50,6 +52,6 @@ export default function TestRefreshToken(){
   }
 
   return  <>
-    <button onClick={clickRefreshTest}> Test Refresh Token </button>
+    <button onClick={clickRefreshTest}> Test Refresh Token Delete </button>
   </>
 }

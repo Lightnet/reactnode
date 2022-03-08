@@ -20,7 +20,7 @@ export const refreshBaseToken = async(req, res) => {
       //.exec()
     //if(!user) return res.sendStatus(403);
       //need signature ip
-      console.log("process.env.BASE_TOKEN_SECRET:", process.env.BASE_TOKEN_SECRET)
+      //console.log("process.env.BASE_TOKEN_SECRET:", process.env.BASE_TOKEN_SECRET)
       let hash= crypto.createHash('md5').update(req.ip+process.env.BASE_TOKEN_SECRET).digest('hex');
       const accessToken = jwt.sign({
         hash:hash

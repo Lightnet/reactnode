@@ -22,24 +22,28 @@ axios.post('/user', {
 ```
 
 ```js
+
+const {
+    baseToken, setBaseToken,
+    baseExpire, setBaseExpire
+  } = useAuth();
 // every time the user request url it check token time before expire.
 // then pass config to the user call post
 // https://axios-http.com/docs/instance
 const axiosJWT = axios.create();
   axiosJWT.interceptors.request.use(async (config) => {
     const currentDate = new Date();
-    console.log("PROCESS???")
+    //console.log("PROCESS???")
     if (baseExpire * 1000 < currentDate.getTime()) {
-        console.log("EXPRE? base token????>>>>")
+        //console.log("EXPIRE? base token????>>>>")
         const response = await axios.get('/basetoken');
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        console.log(response.data.accessToken);
+        //console.log(response.data.accessToken);
         setBaseToken(response.data.accessToken);
         const decoded = parseJwt(response.data.accessToken);
-        //setName(decoded.name);
         setBaseExpire(decoded.exp);
       }else{
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        config.headers.Authorization = `Bearer ${baseToken}`;
       }
       return config;
   }, (error) => {

@@ -4,11 +4,10 @@
 */
 
 import React, { useState } from 'react';
-//import useFetch from "../hook/useFetch.mjs";
 import {
   useNavigate
 } from "react-router-dom";
-//import { API } from '../../lib/API.mjs';
+import { API } from '../../lib/API.mjs';
 import { useAuth } from './AuthProvider.jsx';
 import { parseJwt } from '../../lib/helper.mjs';
 import axios from 'axios';
@@ -27,15 +26,14 @@ export function SignUpPage() {
   const axiosJWT = axios.create();
   axiosJWT.interceptors.request.use(async (config) => {
     const currentDate = new Date();
-    console.log("PROCESS???")
+    //console.log("PROCESS???")
     if (baseExpire * 1000 < currentDate.getTime()) {
-        console.log("EXPRE? base token????>>>>")
+        //console.log("EXPIRE? base token????>>>>")
         const response = await axios.get('/basetoken');
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        console.log(response.data.accessToken);
+        //console.log(response.data.accessToken);
         setBaseToken(response.data.accessToken);
         const decoded = parseJwt(response.data.accessToken);
-        //setName(decoded.name);
         setBaseExpire(decoded.exp);
       }else{
         config.headers.Authorization = `Bearer ${baseToken}`;
@@ -49,7 +47,8 @@ export function SignUpPage() {
     console.log(baseToken)
     axiosJWT.post('/signup',
       {
-        user:user
+        api:API.AUTHS.SIGNUP
+        , user:user
         , password:password
       }
       ,{
@@ -58,18 +57,17 @@ export function SignUpPage() {
         "Content-Type": "application/json"
       }
     }).then(response=>{
-      
       let data=response.data;
       console.log(data)
       if(data.error){
         console.log('Fetch error Sign Up');
         return;
       }
-      if(data?.api=='CREATE'){
+      if(data?.api==API.TYPES.CREATE){
         console.log('CREATE');
         //navigate('/');
       }
-      if(data?.api=='EXIST'){
+      if(data?.api==API.TYPES.EXIST){
         console.log('EXIST');
       }
     }).catch(error=>{
