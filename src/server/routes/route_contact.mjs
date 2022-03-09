@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../lib/API.mjs';
 import clientDB, { checkTokenUser } from '../../lib/database.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
+import { log } from '../../lib/log.mjs';
 const router = express.Router();
 
 router.get('/contact', async function (req, res) {
@@ -18,7 +19,7 @@ router.get('/contact', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -49,7 +50,7 @@ router.post('/contact', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -58,12 +59,12 @@ router.post('/contact', async function (req, res) {
 
   if(api == API.TYPES.CREATE){
     let data = req.body;
-    console.log(userid)
+    log(userid)
     //const User = db.model('User');
     const Contact = db.model('Contact');
     let user = await Contact.findOne({userid:userid,friend:data.userName})
       .exec();
-    console.log(user);
+    log(user);
     if(!user){
       let newContact = new Contact({
           userid:userid
@@ -92,7 +93,7 @@ router.delete('/contact', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -107,10 +108,10 @@ router.delete('/contact', async function (req, res) {
         userid: userid
         , id:data.id
       }).exec();
-      console.log(data.id)
+      log(data.id)
       return res.send({api:'DELETE',id:data.id});
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'faildb'});
     }
   }

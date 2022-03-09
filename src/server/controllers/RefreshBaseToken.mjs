@@ -5,6 +5,7 @@
 
 import jwt from "jsonwebtoken";
 import crypto from 'crypto';
+import { log } from "../../lib/log.mjs";
 
 const BASE_TOKEN_SECRET = process.env.BASE_TOKEN_SECRET || "BASE_TOKEN_SECRET";
 
@@ -13,7 +14,7 @@ const BASE_TOKEN_SECRET = process.env.BASE_TOKEN_SECRET || "BASE_TOKEN_SECRET";
 export const refreshBaseToken = async(req, res) => {
   //without user access but guest token
   try {
-    console.log("/refreshbasetoken")
+    log("/refreshbasetoken")
     let hash= crypto.createHash('md5').update(req.ip+BASE_TOKEN_SECRET+req.socket.remoteAddress).digest('hex');
     const accessToken = jwt.sign({
       hash:hash
@@ -22,7 +23,7 @@ export const refreshBaseToken = async(req, res) => {
     });
     res.json({ accessToken });
   } catch (error) {
-    console.log(error);
+    log(error);
     res.json({ error:'base token error!' });
   }
 }

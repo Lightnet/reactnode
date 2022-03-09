@@ -10,6 +10,7 @@ import {
   //, isEmpty
 } from "../../lib/helper.mjs";
 import axios from "axios";
+import { log } from "../../lib/log.mjs";
 
 export const AuthContext = createContext();
 
@@ -48,12 +49,12 @@ export function AuthProvider(props){
     axios.get('/token').then(function (response) {
       //console.log(response)
       if(response.data.error){
-        console.log("NOT LOGIN")
+        log("NOT LOGIN")
         setStatus('unauth')
         return;
       }
       const decoded = parseJwt(response.data.accessToken);
-      console.log(decoded)
+      log(decoded)
       setToken(response.data.accessToken);
       setUser(decoded.user);
       setExpire(decoded.exp);
@@ -61,8 +62,8 @@ export function AuthProvider(props){
       setStatus('auth')
     }).catch(function (error) {
       // handle error
-      console.log(error);
-      console.log("TOKEN ERROR...")
+      log(error);
+      log("TOKEN ERROR...")
       setStatus('unauth')
       //history.push("/");
     })
@@ -72,20 +73,20 @@ export function AuthProvider(props){
     axios.get('/basetoken').then(function (response) {
       //console.log(response)
       const decoded = parseJwt(response.data.accessToken);
-      console.log(decoded)
+      log(decoded)
       setBaseToken(response.data.accessToken);
       setBaseExpire(decoded.exp);
       //console.log(decoded.exp);
     }).catch(function (error) {
       // handle error
-      console.log(error);
-      console.log("BASE TOKEN ERROR...")
+      log(error);
+      log("BASE TOKEN ERROR...")
       //history.push("/");
     })
   }
 
-  useEffect( () => {
-    //console.log("init axios jwt")
+  useEffect(() => {
+    log("AUTH: init axios jwt")
     const instance = axios.create({
         baseURL:API_URL
       , headers: {
@@ -94,13 +95,12 @@ export function AuthProvider(props){
       }
     });
     //console.log(instance)
-    
     instance.interceptors.request.use(async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
         const response = await axios.get('/token');
         if(response.data.error){
-          console.log("NOT LOGIN")
+          log("NOT LOGIN")
           setStatus('unauth')
           return config;
         }
@@ -116,14 +116,11 @@ export function AuthProvider(props){
     }, (error) => {
       return Promise.reject(error);
     });
-
     setAxiosJWT({instance:instance });
-    
   }, []);
   /*
   const response = await axiosJWT.get('/refreshtest', {
     headers: {
-      //Authorization: `Bearer ${token}`,
       "Content-Type": "application/json"
     }
   });

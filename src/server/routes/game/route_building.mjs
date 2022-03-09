@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../../lib/API.mjs';
 import clientDB from "../../../lib/database.mjs";
 import { isEmpty, unixTime } from "../../../lib/helper.mjs";
+import { log } from '../../../lib/log.mjs';
 const router = express.Router();
 
 router.get('/building',async function (req, res) {
@@ -18,7 +19,7 @@ router.get('/building',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -28,7 +29,7 @@ router.get('/building',async function (req, res) {
   try{
     const Building = db.model('Building');
     let buildings = await Building.find({userid:userid}).exec();
-    console.log("Building:", buildings.length);
+    log("Building:", buildings.length);
 
     if(buildings.length == 0){
       return res.json({api:"NOTFOUND"});
@@ -57,7 +58,7 @@ router.post('/building',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -72,7 +73,7 @@ router.post('/building',async function (req, res) {
     try{
       const Building = db.model('Building');
       let data = req.body;
-      console.log('api',data)
+      log('api',data)
       let newBuilding = new Building({
         userid:userid,
         data:data.building
@@ -97,7 +98,7 @@ router.put('/building',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -109,7 +110,7 @@ router.put('/building',async function (req, res) {
     let data = req.body;
     if(data.mode){
       if(data.mode=='BUILD'){
-        console.log("BUILD.....")
+        log("BUILD.....")
         const building = await Building.findOne({id:data.id}).exec();
         if(building.data.mode=='BUILD'){
           //return res.json({error:"BUILDALREADY"});
@@ -138,7 +139,7 @@ router.put('/building',async function (req, res) {
         }
         building.data.mode = 'BUILD';
         building.data.buildtime = building.data.buildtime + unixTime();
-        console.log(building.data.buildtime)
+        log(building.data.buildtime)
         //let obj = building.data;
         let query = {
           id:data.id
@@ -150,7 +151,7 @@ router.put('/building',async function (req, res) {
         let doc = await Building.findOneAndUpdate(query, update, {
           new: true
         });
-        console.log(doc)
+        log(doc)
         return res.json({api:"BUILDTIME",time:building.data.buildtime});
       }
     }
@@ -161,7 +162,7 @@ router.put('/building',async function (req, res) {
       }  
     }
   }catch(e){
-    console.log(e)
+    log(e)
     return res.send({error:'fail create db'});
   }
 });

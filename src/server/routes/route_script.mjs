@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../lib/API.mjs';
 import clientDB from '../../lib/database.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
+import { log } from '../../lib/log.mjs';
 const router = express.Router();
 
 router.get('/script', async function (req, res) {
@@ -18,7 +19,7 @@ router.get('/script', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -27,17 +28,17 @@ router.get('/script', async function (req, res) {
 
   try{
     const Script = db.model('Script');
-    //console.log(username);
-    console.log(userid);
+    //log(username);
+    log(userid);
     const data = req.body;
-    console.log(data)
+    log(data)
     let scripts = await Script.find({userid:userid})
       .select('id filename filetype data')
       .exec();
 
     return res.json({api:"SCRIPTS",scripts:scripts});
   }catch(e){
-    console.log(e)
+    log(e)
     return res.json({error:'SCRIPTSFAIL'});
   }
 
@@ -58,7 +59,7 @@ router.post('/script', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -68,23 +69,23 @@ router.post('/script', async function (req, res) {
   if(api== API.TYPES.CREATE){
     try{
       const Script = db.model('Script');
-      //console.log(username);
-      console.log(userid);
+      //log(username);
+      log(userid);
       const data = req.body;
-      console.log(data)
+      log(data)
       //let script = await Script.findOne({filename:data.filename}).select('id filename filetype data').exec();
       let script = await Script.findOne({filename:data.filename}).exec();
-      console.log(script);
+      log(script);
 
       if(script){
-        console.log("UPDATE?");
+        log("UPDATE?");
         let currentScript = script;
-        console.log(data.content)
+        log(data.content)
         currentScript.data = data.content;
         await currentScript.save();
         return res.json({api:"UPDATE",script:currentScript});
       }else{
-        console.log("CREATE");
+        log("CREATE");
         const newScript = new Script({
             userid:userid
           , username:username
@@ -96,7 +97,7 @@ router.post('/script', async function (req, res) {
       }
 
     }catch(e){
-      console.log(e)
+      log(e)
       return res.json({error:'SCRIPTSFAIL'});
     }
   }
@@ -113,7 +114,7 @@ router.delete('/script', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -122,10 +123,10 @@ router.delete('/script', async function (req, res) {
 
   try{
     const Script = db.model('Script');
-    //console.log(username);
-    console.log(userid);
+    //log(username);
+    log(userid);
     const data = req.body;
-    console.log(data)
+    log(data)
     await Script.deleteOne({
       userid: userid
       , filename:data.filename
@@ -133,7 +134,7 @@ router.delete('/script', async function (req, res) {
 
     return res.json({api:"DELETE",filename:data.filename});
   }catch(e){
-    console.log(e)
+    log(e)
     return res.json({error:'FAILSCRIPTDELETE'});
   }
 

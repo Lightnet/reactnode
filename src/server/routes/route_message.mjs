@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../lib/API.mjs';
 import clientDB from '../../lib/database.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
+import { log } from '../../lib/log.mjs';
 const router = express.Router();
 
 router.get('/message', async function (req, res) {
@@ -18,7 +19,7 @@ router.get('/message', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -27,8 +28,8 @@ router.get('/message', async function (req, res) {
 
   try{
     const Message = db.model('Message');
-    //console.log(username);
-    //console.log(userid);
+    //log(username);
+    //log(userid);
     const data = req.body;
     //console.log(data)
     let messages = await Message.find({recipientid:userid})
@@ -36,7 +37,7 @@ router.get('/message', async function (req, res) {
       .exec();
     return res.json({api:API.TYPES.MESSAGES,messages:messages});
   }catch(e){
-    console.log(e)
+    log(e)
     return res.json({error:'fail messages db'});
   }
 
@@ -46,7 +47,7 @@ router.get('/message', async function (req, res) {
 router.post('/message',async function (req, res) {
   
   const {api} = req.body;
-  //console.log(api);
+  //log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
@@ -58,7 +59,7 @@ router.post('/message',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -67,13 +68,13 @@ router.post('/message',async function (req, res) {
   if(api == API.TYPES.MESSAGE){
     try{
       const Message = db.model('Message');
-      //console.log(username);
-      //console.log(userid);
+      //log(username);
+      //log(userid);
       const data = req.body;
       //console.log(data)
       const User = db.model('User');
       let user = await User.findOne({username:data.userName}).exec();
-      //console.log(user)
+      //log(user)
       if(!user){
         return res.send({error:'Not found!'});
       }
@@ -86,13 +87,13 @@ router.post('/message',async function (req, res) {
         , subject:data.subject
         , message:data.content
       });
-      //console.log(newMessage)
+      //log(newMessage)
       let msg = await newMessage.save();
-      //console.log(msg);
+      //log(msg);
       return res.send({api:'SENT'});
 
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'faildb'});
     }
   }
@@ -101,7 +102,7 @@ router.post('/message',async function (req, res) {
 
 router.delete('/message',async function (req, res) {
   const {api} = req.body;
-  //console.log(api);
+  //log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
@@ -113,7 +114,7 @@ router.delete('/message',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -123,20 +124,20 @@ router.delete('/message',async function (req, res) {
   if(api == API.DELETE){
     try{
       const Message = db.model('Message');
-      console.log(username);
-      console.log(userid);
+      log(username);
+      log(userid);
 
       const data = req.body;
-      console.log(data)
+      log(data)
 
       await Message.deleteOne({id:data.id}).exec();
 
       //let deleteMessage = await Message.deleteOne({id:data.id}).exec();
-      //console.log(deleteMessage)
+      //log(deleteMessage)
 
       return res.send({api:'DELETE',id:data.id});
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'faildb'});
     }
   }

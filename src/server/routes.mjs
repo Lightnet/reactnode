@@ -15,10 +15,11 @@ import route_test from './routes/route_test.mjs';
 //import {refreshToken } from "./controllers/RefreshToken.mjs";
 //import {baseToken } from "./controllers/BaseToken.mjs";
 import { verifyToken } from './middleware/VerifyToken.mjs';
+import { log } from '../lib/log.mjs';
 
 const router = express.Router();
 //router.use('/favicon.ico', express.static('images/favicon.ico'));
-
+log("init routes...");
 router.use(auth);
 
 router.use("/api",route_api);

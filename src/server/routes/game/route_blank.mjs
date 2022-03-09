@@ -27,7 +27,7 @@ router.get('/baseblank',async function (req, res) {
 
   try{
     
-    return res.send({error:'failtoken'});
+    return res.send({api:'NONE'});
   }catch(e){
     return res.send({error:'faildb'});
   }

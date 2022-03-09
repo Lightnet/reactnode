@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../lib/API.mjs';
 import clientDB from '../../lib/database.mjs';
 import { isEmpty } from '../../lib/helper.mjs';
+import { log } from '../../lib/log.mjs';
 const router = express.Router();
 
 router.get('/post', async function (req, res) {
@@ -18,7 +19,7 @@ router.get('/post', async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -32,16 +33,16 @@ router.get('/post', async function (req, res) {
       .exec();
     return res.json({api:API.TYPES.POSTS,posts:posts});
   }catch(e){
-    console.log(e)
+    log(e)
     return res.json({error:'fail get post db'});
   }
 })
 
 router.post('/post',async function (req, res) {
   
-  //console.log(req.body)
+  //log(req.body)
   const {api} = req.body;
-  //console.log(api);
+  //log(api);
   if(isEmpty(api)){
     return res.json({error:'empty'});
   }
@@ -53,7 +54,7 @@ router.post('/post',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -66,20 +67,20 @@ router.post('/post',async function (req, res) {
       const Post = db.model('Post');
 
       const data = req.body;
-      console.log(data)
+      log(data)
       let newPost = new Post({
           fromid:userid
         , from:username
         , title:data.title
         , content:data.content
       });
-      //console.log(newPost)
+      //log(newPost)
       let post = await newPost.save();
-      //console.log(post);
+      //log(post);
       return res.send({api:API.TYPES.CREATE,post:post});
 
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'fail create post db'});
     }
   }
@@ -88,9 +89,9 @@ router.post('/post',async function (req, res) {
 
 router.put('/post',async function (req, res) {
   
-  //console.log(req.body)
+  //log(req.body)
   const {api} = req.body;
-  //console.log(api);
+  //log(api);
   if(isEmpty(api)){
     return res.json({error:'empty'});
   }
@@ -102,7 +103,7 @@ router.put('/post',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -114,7 +115,7 @@ router.put('/post',async function (req, res) {
     try{
       const Post = db.model('Post');
       const data = req.body;
-      //console.log(data)
+      //log(data)
       const filter = { id: data.id };
       const update = { 
           title: data.title
@@ -126,7 +127,7 @@ router.put('/post',async function (req, res) {
 
       return res.send({api:API.TYPES.UPDATE,post:doc});
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'fail create post db'});
     }
   }
@@ -135,8 +136,8 @@ router.put('/post',async function (req, res) {
 
 router.delete('/post',async function (req, res) {
   const {api} = req.body;
-  //console.log("req.body ",req.body);
-  //console.log(api);
+  //log("req.body ",req.body);
+  //log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
@@ -148,7 +149,7 @@ router.delete('/post',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -159,13 +160,13 @@ router.delete('/post',async function (req, res) {
     try{
       const Post = db.model('Post');
       const data = req.body;
-      //console.log(data)
+      //log(data)
       await Post.deleteOne({id:data.id}).exec();
       //let deletePost = await Post.deleteOne({id:data.id}).exec();
-      //console.log(deletePost)
+      //log(deletePost)
       return res.send({api:API.DELETE,id:data.id});
     }catch(e){
-      console.log(e)
+      log(e)
       return res.send({error:'fail delete post'});
     }
   }

@@ -6,13 +6,13 @@
 import jwt from "jsonwebtoken";
 import clientDB from "../../lib/database.mjs";
 import crypto from 'crypto';
+import { log } from "../../lib/log.mjs";
 
 export const refreshToken = async(req, res) => {
 
   try {
     const refreshToken = req.cookies.token;
-    //console.log("refreshToken:", refreshToken)
-    console.log("/token")
+    log("/token")
     //if(!refreshToken) return res.sendStatus(401);
     if(!refreshToken) return res.json({ error:"NOTLOGIN" });;
     const db = await clientDB();
@@ -21,11 +21,11 @@ export const refreshToken = async(req, res) => {
     const user = await Users.findOne({token:refreshToken})
       .select('id username tokenSalt')
       .exec()
-    //console.log(user);
+    //log(user);
     if(!user) return res.sendStatus(403);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
       if(err) {
-        console.log(err)
+        log(err)
         //clear cookies
         res.clearCookie('token')
         return res.sendStatus(403);
@@ -33,7 +33,7 @@ export const refreshToken = async(req, res) => {
       //console.log(decoded)
       let hash= crypto.createHash('md5').update(req.ip + user.tokenSalt).digest('hex');
       if(hash == decoded.hash){//check hash if tmp token expire
-        //console.log("MATCH HASH")
+        //log("MATCH HASH")
       }else{
         return res.sendStatus(403);
       }
@@ -43,7 +43,7 @@ export const refreshToken = async(req, res) => {
       res.json({ accessToken });
     });
   } catch (error) {
-    console.log(error);
+    log(error);
     return res.sendStatus(403);
   }
 }

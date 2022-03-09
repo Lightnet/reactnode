@@ -24,6 +24,7 @@ import MessageSchema from "./mongoose/message.mjs";
 import ContactSchema from "./mongoose/contact.mjs";
 import ScriptSchema from "./mongoose/script.mjs";
 import PostSchema from "./mongoose/post.mjs";
+import { log } from './log.mjs';
 
 //import dotEnv from 'dotenv';
 
@@ -67,13 +68,13 @@ export default async function clientDB(){
   //Bind connection to error event (to get notification of connection errors)
   db.on('error', console.error.bind(console, 'MongoDB connection error:'));
   db.on('open', err => {
-    console.log(`open DB`);
+    log(`open DB`);
   })
   db.on('connected', () => {
-    console.log('connected to mongodb');
+    log('connected to mongodb');
   });
   db.on('disconnected', () => {
-    console.log('connection disconnected');
+    log('connection disconnected');
   });
   
   global.db = db;
@@ -157,13 +158,8 @@ export async function checkTokenUser(req){
     }
 
     if(token){
-      console.log(token)
+      log(token)
       const cdb = await clientDB();
-
-
-
-
-
     }else{
       resolve({error:"FAIL ACCESS",userid:null,username:null});
     }

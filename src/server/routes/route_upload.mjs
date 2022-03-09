@@ -12,6 +12,7 @@ import formidable from "formidable";
 import fs from "fs";
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { log } from '../../lib/log.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const uploadFolder = path.join(__dirname, "../../../public", "files");
 
@@ -60,31 +61,30 @@ router.post('/upload', function (req, res) {
 
   // Parsing
   form.parse(req, async (err, fields, files) => {
-    console.log(fields);
-    console.log(files);
+    log(fields);
+    log(files);
     if (err) {
-      console.log("Error parsing the files");
-      console.log(err.message);
+      log("Error parsing the files");
+      log(err.message);
       return res.status(400).json({
         status: "Fail",
         message: "There was an error parsing the files",
         error: err,
       });
     }
-    console.log(files.myfiles.length)
+    log(files.myfiles.length)
     if(files.myfiles.length==1){
       //Single file
-      console.log("Hello?")
       const file = files.myfiles[0];
       //console.log(file);
-      console.log(file.filepath) // file store temporary and need to delete? permission to save of folder access?
-      console.log(file.originalFilename) 
-      console.log(file.mimetype) 
+      log(file.filepath) // file store temporary and need to delete? permission to save of folder access?
+      log(file.originalFilename) 
+      log(file.mimetype) 
       const isValid = isFileValid(file)
-      console.log(isValid)
+      log(isValid)
       if (!isValid) {
         // throes error if file isn't valid
-        console.log("The file type is not a valid type")
+        log("The file type is not a valid type")
         return res.status(400).json({
           status: "Fail",
           message: "The file type is not a valid type",
@@ -96,10 +96,10 @@ router.post('/upload', function (req, res) {
       try {
         // renames the file in the directory
         fs.renameSync(file.filepath, path.join(uploadFolder, fileName));
-        console.log(file.filepath)
+        log(file.filepath)
         //fs.unlinkSync( file.filepath )
       } catch (error) {
-        console.log(error);
+        log(error);
         return res.json({error:'rename file'})
       }
       return res.json({message:'uploaded'})

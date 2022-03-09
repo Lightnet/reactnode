@@ -9,6 +9,7 @@
 import express from 'express';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { log } from '../../lib/log.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const uploadFolder = path.join(__dirname, "../../../public", "files");
 
@@ -23,12 +24,12 @@ router.get('/downloadtest', function (req, res) {
   //res.download('/report.pdf')
   //res.download('path/report.pdf',"report.pdf")
 
-  console.log(__dirname);
+  log(__dirname);
   let _filename = './test.txt';
   //_filename = "./";
 
   res.download(path.join(uploadFolder, _filename), function (err) {
-    console.log(err);
+    log(err);
   });
   //res.json({message:'download'})
 })

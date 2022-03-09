@@ -4,16 +4,17 @@
 */
 
 import jwt from "jsonwebtoken";
+import { log } from "../../lib/log.mjs";
 
 //check token access that is 15 sec recheck
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  //console.log("midd token:",token)
+  //log("middleware token:",token)
   if(token == null) return res.sendStatus(401);
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if(err) return res.sendStatus(403);
-    console.log("Token PASS")
+    log("PASS verifyToken")
     //pass a variable to next request
     //req.test = "token";
     //req.test1 = "token1";

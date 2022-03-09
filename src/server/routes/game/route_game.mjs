@@ -7,6 +7,7 @@ import express from 'express';
 import { API } from '../../../lib/API.mjs';
 import clientDB from "../../../lib/database.mjs";
 import { isEmpty } from "../../../lib/helper.mjs";
+import { log } from '../../../lib/log.mjs';
 
 import route_building from './route_building.mjs';
 
@@ -21,7 +22,7 @@ router.get('/base',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -34,7 +35,7 @@ router.get('/base',async function (req, res) {
 
     const baseOutPost = await BaseOutPost.findOne({userid:userid})
     const character = await Character.findOne({userid:userid})
-    //console.log(baseOutPost);
+    //log(baseOutPost);
     if(baseOutPost){
       return res.send({api:'BASE',base:baseOutPost,character:character});
     }else{
@@ -59,7 +60,7 @@ router.post('/baseoutpost',async function (req, res) {
     const User = db.model('User');
     let user = await User.findOne({token:req.cookies.token})
       .exec();
-    //console.log(user);
+    //log(user);
     username = user.username;
     userid = user.id;
   }else{
@@ -70,7 +71,7 @@ router.post('/baseoutpost',async function (req, res) {
   const Character = db.model('Character');
   let data = req.body;
   if((isEmpty(data.basename)==true)||(isEmpty(data.charactername)==true)){
-    console.log('EMPTY string');
+    log('EMPTY string');
     res.send({error:'empty'});
     return;
   }
@@ -83,14 +84,14 @@ router.post('/baseoutpost',async function (req, res) {
         name:data.charactername
       })
       let saveCharacter = await newCharacter.save();
-      console.log(saveCharacter);
+      log(saveCharacter);
       let newBaseOutPost = new BaseOutPost({
         userid:userid,
         name:data.basename,
         isMain:true
       });
       let saveBaseOutPost = await newBaseOutPost.save();
-      console.log(saveBaseOutPost);    
+      log(saveBaseOutPost);    
       return res.send({api:'CREATE',base:saveBaseOutPost,character:saveCharacter});
     }catch(e){
       return res.send({error:'fail'});
@@ -98,7 +99,6 @@ router.post('/baseoutpost',async function (req, res) {
   }
   res.send({error:'fail'});
 });
-
 
 router.use(route_building);
 
