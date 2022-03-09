@@ -4,6 +4,7 @@
 */
 
 import { useEffect, useState } from 'react';
+import { API } from '../../../lib/API.mjs';
 import useAxiosTokenAPI from "../../hook/useAxiosTokenAPI"
 
 export default function BatteTurnBase() {
@@ -36,7 +37,7 @@ export default function BatteTurnBase() {
           console.log('Fetch Error GET battle');
           return;
         }
-        if((data.action=="UPDATE") || (data.action=="CREATED")){
+        if((data.api=="UPDATE") || (data.api=="CREATED")){
           //let battlefield = JSON.parse(data.battlefield);
           let battlefield = data.battlefield;
           console.log(battlefield);
@@ -61,7 +62,7 @@ export default function BatteTurnBase() {
     console.log("random Battle...");
 
     axiosJWT.instance.post('/api/battle/battleturn',{
-        action:'RANDOMBATTLE'
+        api:API.GAME.RANDOMBATTLE // RANDOMBATTLE
       , type:'normal' //weapon attack
     })
     .then(function (response) {
@@ -74,7 +75,7 @@ export default function BatteTurnBase() {
           console.log('Fetch Error post battle');
           return;
         }
-        if((data.action=="FOUND") || (data.action=="CREATED")){
+        if((data.api=="FOUND") || (data.api=="CREATED")){
           let battlefield = data.battlefield;
           console.log("battlefield>>>>>>>>>>>>>");
           console.log(battlefield);
@@ -95,7 +96,7 @@ export default function BatteTurnBase() {
   async function playerAttack(){
 
     axiosJWT.instance.post('/api/battle/battleturn',{
-        action:'BATTLE'
+        api:API.GAME.BATTLE
       , type:'normal' //weapon attack
     })
     .then(function (response) {
@@ -109,7 +110,7 @@ export default function BatteTurnBase() {
           return;
         }
         //server cal battle
-        if(data.action=="UPDATE"){
+        if(data.api=="UPDATE"){
           let battlefield = data.battlefield;
           console.log(battlefield);
           battlefield.ally[0]
@@ -119,17 +120,16 @@ export default function BatteTurnBase() {
           setEntities(objs);
         }
 
-        if(data.action=="NOBATTLE"){
+        if(data.api=="NOBATTLE"){
           //clear battle data
           setEntities([]);
           setIsBattle(false)
         }
 
-        if(data.action=="BATTLEFINISH"){
+        if(data.api=="BATTLEFINISH"){
           //clear battle data
           setEntities([]);
           setIsBattle(false);
-
           setIsFinishBattle(true);
         }
       }

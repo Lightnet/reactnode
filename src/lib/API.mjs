@@ -10,6 +10,12 @@ export const API = {
   , PUT:"PUT"
   , PATCH:"PATCH"
   , ERROR:"ERROR"
+  , FAIL:"FAIL"
+  , PASS:"PASS"
+  , NONE:"NONE"
+  , WARN:"WARN"
+  , LOG:"LOG"
+  , INFO:"INFO"
   , TYPES:{
       MESSAGE:"MESSAGE"
     , MESSAGES:"MESSAGES"
@@ -25,6 +31,9 @@ export const API = {
       CREATEMAINBASE:"CREATEMAINBASE"
     , BUILD:"BUILD"
     , BUILDTIME:"BUILDTIME"
+    , NOBATTLE:"NOBATTLE"
+    , RANDOMBATTLE:"RANDOMBATTLE"
+    , BATTLE:"BATTLE"
   },
   AUTHS:{
       EXISTS:"EXISTS"

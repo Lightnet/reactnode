@@ -4,6 +4,7 @@
 */
 
 import express from 'express';
+import { API } from '../../../lib/API.mjs';
 import clientDB from '../../../lib/database.mjs';
 import Creature from '../../../lib/game/creature.js';
 import { nanoid16 } from '../../../lib/helper.mjs';
@@ -27,24 +28,17 @@ router.get('/',async function (req, res) {
 
   try{
     const BattleField = db.model('BattleField');
-    //let characters = await Character.find({userid:userid}).exec();
     let BattleFields = await BattleField.find({userid:userid}).exec();
-    //console.log("characters");
-    //console.log(characters);
-    console.log("BattleFields");
-    console.log(BattleFields);
-
     //if there no battle count create battle
     if(BattleFields.length==0){
-      return res.json({action:"NOBATTLE"});
+      return res.json({api:API.GAME.NOBATTLE});
     }
     //if there current battle get and send to user
     if(BattleFields.length==1){
-      //return res.json({action:"UPDATE",battlefield:JSON.parse(BattleFields[0].data)});
-      return res.json({action:"UPDATE",battlefield:BattleFields[0].data});
+      return res.json({api:API.TYPES.UPDATE,battlefield:BattleFields[0].data});
     }
 
-    return res.send({api:'NONE'});
+    return res.send({api:API.NONE});
   }catch(e){
     return res.send({error:'faildb'});
   }
@@ -69,8 +63,8 @@ router.post('/',async function (req, res) {
   try{
     let data = req.body;
     console.log(data);
-    if(data.action){
-      if(data.action == 'RANDOMBATTLE'){
+    if(data.api){
+      if(data.api == API.GAME.RANDOMBATTLE){//RANDOMBATTLE
         const Character = db.model('Character');
         const BattleField = db.model('BattleField');
         let characters = await Character.find({userid:userid}).exec();
@@ -79,48 +73,47 @@ router.post('/',async function (req, res) {
           console.log("CREATE BATTLE...");
           try{
           
-          let battleid = nanoid16();
-          let new_creature = new Creature({
-            id:nanoid16(),
-            name:"rabit",
-            races:['beast'],
-            healthpoint:10,
-            healthpointmax:10,
-            experience:5
-          });
-    
-          //let player = JSON.parse(characters[0].data);
-          let player = characters[0].data;
-          let newBattleData = {};
-          newBattleData.turns =0;//number battle turns
-          newBattleData.allyturns =0;//count many unit finish
-          newBattleData.foeturns =0;
-          newBattleData.ally=[];
-          newBattleData.foe=[];
-          newBattleData.ally.push(player);
-          newBattleData.foe.push(new_creature);
-    
-          let newBattleField = new BattleField({
-            userid: userid
-            , battleid:battleid
-            , data: newBattleData
-          });
-    
-          
+            let battleid = nanoid16();
+            let new_creature = new Creature({
+              id:nanoid16(),
+              name:"rabit",
+              races:['beast'],
+              healthpoint:10,
+              healthpointmax:10,
+              experience:5
+            });
+      
+            //let player = JSON.parse(characters[0].data);
+            let player = characters[0].data;
+            let newBattleData = {};
+            newBattleData.turns =0;//number battle turns
+            newBattleData.allyturns =0;//count many unit finish
+            newBattleData.foeturns =0;
+            newBattleData.ally=[];
+            newBattleData.foe=[];
+            newBattleData.ally.push(player);
+            newBattleData.foe.push(new_creature);
+      
+            let newBattleField = new BattleField({
+              userid: userid
+              , battleid:battleid
+              , data: newBattleData
+            });
+
             let saveBattleField = await newBattleField.save();
             const User = db.model('User');
             await User.findOneAndUpdate({id: userid},{battleid:battleid}, {
               new: true
             });
-            return res.json({action:"CREATED",battlefield:newBattleData});
+            return res.json({api:"CREATED",battlefield:newBattleData});
           }catch(e){
             console.log(e)
-            return res.json({action:"FAIL"});
+            return res.json({api:"FAIL"});
           }
         }
       }
 
-      if(data.action == 'BATTLE'){
+      if(data.api == 'BATTLE'){
         const Character = db.model('Character');
         const BattleField = db.model('BattleField');
         let battleid;
@@ -128,7 +121,7 @@ router.post('/',async function (req, res) {
         let battleFields = await BattleField.find({userid:userid}).exec();
 
         if(battleFields.length==0){
-          return res.json({action:"NOBATTLE"});
+          return res.json({api:"NOBATTLE"});
         }
 
         if(battleFields.length==1){
@@ -177,10 +170,10 @@ router.post('/',async function (req, res) {
                 new: true
               });
               console.log(battleFieldUpate);
-              return res.json({action:"UPDATE",battlefield:battleData});
+              return res.json({api:"UPDATE",battlefield:battleData});
             }catch(e){
               console.log("FAIL UPDATE BATTLE!");
-              return res.json({action:"BATTLEERROR"});
+              return res.json({api:"BATTLEERROR"});
             }
           }else{
             // check enemies and ally is needed later to finish battle.
@@ -197,7 +190,7 @@ router.post('/',async function (req, res) {
               new: true
             });
 
-            return res.json({action:"BATTLEFINISH",character:updateCharacter});
+            return res.json({api:"BATTLEFINISH",character:updateCharacter});
           }
         }
       }
