@@ -1,5 +1,10 @@
-import { Link } from "react-router-dom";
+/*
+  LICENSE: MIT
+  Created by: Lightnet
+*/
 
+import React from 'react';
+import { Link } from "react-router-dom";
 
 export default function GameNavMenu(){
   return <div>

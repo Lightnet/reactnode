@@ -8,12 +8,13 @@ import ReactDOM from 'react-dom';
 import App from "../components/App.jsx"
 
 window.addEventListener('load', (event) => {
-  console.log('page is fully loaded');
-  let root = document.createElement("div");
-  root.setAttribute("id", "root");
-  document.body.appendChild(root);
+  //console.log('page is fully loaded');
+  //let root = document.createElement("div");
+  //root.setAttribute("id", "root");
+  //document.body.appendChild(root);
 
-  ReactDOM.render(<App />, document.getElementById('root'));
+  //ReactDOM.render(<App />, document.getElementById('root'));
+  ReactDOM.render(<App />, document.getElementById('app'));
 });
 window.addEventListener("beforeunload", function(event) {
   fetch('/exit');

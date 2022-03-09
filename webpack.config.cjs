@@ -10,7 +10,8 @@ module.exports = {
     path: path.resolve('dist')
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js','.mjs','.jsx']
+      extensions: ['.ts', '.tsx', '.js','.mjs','.jsx']
+    , fallback:{"path": false}
   },
   module: {
     //rules: [{ test: /\.tsx?$/, loader: 'ts-loader' }]
