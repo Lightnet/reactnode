@@ -7,6 +7,9 @@ import express from 'express';
 import { API } from '../../../lib/API.mjs';
 import clientDB from "../../../lib/database.mjs";
 import { isEmpty } from "../../../lib/helper.mjs";
+
+import route_building from './route_building.mjs';
+
 const router = express.Router();
 
 router.get('/base',async function (req, res) {
@@ -95,5 +98,8 @@ router.post('/baseoutpost',async function (req, res) {
   }
   res.send({error:'fail'});
 });
+
+
+router.use(route_building);
 
 export default router;

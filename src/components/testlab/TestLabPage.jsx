@@ -29,7 +29,7 @@ export default function TestLabPage(){
     </div>
     <div>
     <Routes>
-      <Route path="/" element={<TestPage />} />
+      <Route index element={<TestPage />} />
       <Route path="timers" element={<TimersPage />} />
       <Route path="counters" element={<CountersPage />} />
       <Route path="progress" element={<ProgressPage />} />

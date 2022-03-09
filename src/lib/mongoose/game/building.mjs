@@ -15,6 +15,8 @@ var BuildingSchema = new mongoose.Schema({
   },
   userid: String,
   username: String,
+  baseid: String,
+  data: Schema.Types.Mixed,
   cost: Schema.Types.Mixed,
   level:  {
     type:Number,

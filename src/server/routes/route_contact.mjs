@@ -65,7 +65,7 @@ router.post('/contact', async function (req, res) {
       .exec();
     console.log(user);
     if(!user){
-      let newContact =  new Contact({
+      let newContact = new Contact({
           userid:userid
         , friend: data.userName
       })

@@ -32,7 +32,7 @@ export function RoutePage() {
       <NavBarTop />
     </div>
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route index element={<HomePage />} />
       <Route path="account/*" element={<AccountPage />} />
       <Route path="signin" element={<SignInPage />} />
       <Route path="signup" element={<SignUpPage />} />

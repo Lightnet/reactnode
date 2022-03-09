@@ -7,6 +7,7 @@
 
 import express from 'express';
 import { verifyToken } from '../middleware/VerifyToken.mjs';
+import CryptoJS from 'crypto-js';
 const router = express.Router();
 
 //Middle ware that is specific to this router
@@ -88,6 +89,36 @@ router.get('/agent', function (req, res) {
 router.get('/refreshtest', verifyToken, function (req, res) {
   //console.log(req.get('authorization'))
   //console.log(req.test)
+  //console.log(req.test1)
+  res.json({test:"test"})
+})
+// https://code-boxx.com/simple-javascript-password-encryption-decryption/
+router.post('/refreshtest', verifyToken, function (req, res) {
+  console.log(req.get('authorization'))
+  console.log(req.body)
+
+  if(req.body.password){
+    let auth = req.get('authorization')
+    auth = auth.split(' ')[1]
+    var bytes = CryptoJS.AES.decrypt(req.body.password, auth);
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(originalText); // 'my message'
+  }
+  //console.log(req.test1)
+  res.json({test:"test"})
+})
+
+router.post('/testlogin', verifyToken, function (req, res) {
+  console.log(req.get('authorization'))
+  console.log(req.body)
+
+  if(req.body.password){
+    let auth = req.get('authorization')
+    auth = auth.split(' ')[1]
+    var bytes = CryptoJS.AES.decrypt(req.body.password, auth);
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(originalText); // 'my message'
+  }
   //console.log(req.test1)
   res.json({test:"test"})
 })

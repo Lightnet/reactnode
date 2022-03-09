@@ -48,11 +48,14 @@ export default async function clientDB(){
   //console.log("init DB")
   mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
   mongoose.model('User', UserSchema)
+
+  // Game
   mongoose.model('BaseOutPost', BaseOutPostSchema)
   mongoose.model('Resource', ResourceSchema)
   mongoose.model('Building', BuildingSchema)
   mongoose.model('Character', CharacterSchema)
 
+  // Basic
   mongoose.model('Contact', ContactSchema)
   mongoose.model('Message', MessageSchema)
   mongoose.model('Script', ScriptSchema)

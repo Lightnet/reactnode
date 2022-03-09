@@ -16,6 +16,7 @@ router.use(route_contact);
 router.use(route_message);
 router.use(route_post);
 router.use(route_script);
+
 router.use(route_game);
 
 export default router;

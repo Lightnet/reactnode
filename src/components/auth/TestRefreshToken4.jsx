@@ -7,18 +7,34 @@ import axios from "axios";
 import React from "react";
 import { parseJwt } from "../../lib/helper.mjs";
 import { useAuth } from "./AuthProvider";
+import CryptoJS from "crypto-js";
 
-export default function TestRefreshToken(){
+export default function TestRefreshToken4(){
   const {
-      token
+      API_URL
+    , token
     , setToken
     , expire
     , setExpire
   } = useAuth();
-
-  const axiosJWT = axios.create();
+  // https://stackoverflow.com/questions/48819885/axios-transformrequest-how-to-alter-json-payload
+  const axiosJWT = axios.create({
+    baseURL: API_URL
+    , headers: {
+      "Content-Type": "application/json"
+    },
+    transformRequest: [(data, headers)=> {
+      // Do whatever you want to transform the data
+      console.log("headers",headers)
+      console.log("transformRequest")
+      console.log(data)
+      data.password = CryptoJS.AES.encrypt(data.password, headers.Authorization.split(' ')[1]).toString();
+      return data;
+    }, ...axios.defaults.transformRequest]
+  });
 
   axiosJWT.interceptors.request.use(async (config) => {
+    //console.log("config:",config)
     const currentDate = new Date();
     if (expire * 1000 < currentDate.getTime()) {
       const response = await axios.get('/token');
@@ -35,9 +51,11 @@ export default function TestRefreshToken(){
       return Promise.reject(error);
   });
 
-  async function clickRefreshTest(){
-    await axiosJWT.get('/refreshtest')
-    .then(function (response) {
+  function clickRefreshTest(){
+    axiosJWT.post('/testlogin', {
+        username:"test"
+      , password:"passwordtest"
+    }).then(function (response) {
       console.log(response);
     })
     .catch(function (error) {
@@ -46,6 +64,6 @@ export default function TestRefreshToken(){
   }
 
   return  <>
-    <button onClick={clickRefreshTest}> Test Refresh Token </button>
+    <button onClick={clickRefreshTest}> Test Refresh Token 4 </button>
   </>
 }
