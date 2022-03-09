@@ -19,6 +19,7 @@ import Characters from './character/Characters.jsx';
 import Units from './unit/units.jsx';
 import GameNavMenu from './ui/GameNavMenu.jsx';
 import { Route, Routes } from 'react-router-dom';
+import BattlePage from './battle/BattlePage.jsx';
 
 export default function Base() {
   const {
@@ -32,6 +33,7 @@ export default function Base() {
       <Routes>
         <Route index element={<BaseOutPost />}/>
         <Route path="map" element={<Map />}/>
+        <Route path="battle" element={<BattlePage />}/>
         <Route path="baseoutpost" element={<BaseOutPost />}/>
         <Route path="Buildings" element={<Buildings />}/>
         <Route path="construction" element={<Construction />}/>

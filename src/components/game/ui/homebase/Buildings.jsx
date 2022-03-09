@@ -16,8 +16,7 @@ export default function Buildings() {
   const [axiosJWT, isLoading] = useAxiosTokenAPI();
 
   useEffect(()=>{
-    console.log("axiosJWT init...");
-    console.log("isLoading: ", isLoading)
+    //console.log("isLoading: ", isLoading)
     if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
       console.log("GETTING...: ")
       getHomeBaseObjects();
@@ -25,7 +24,7 @@ export default function Buildings() {
   },[axiosJWT,isLoading])
 
   async function getHomeBaseObjects(){
-    console.log("get buildings...")
+    //console.log("get buildings...")
     axiosJWT.instance.get("/api/building")
     .then(function (response) {
       //console.log(response);

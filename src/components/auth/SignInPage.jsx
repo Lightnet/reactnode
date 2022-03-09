@@ -3,7 +3,7 @@
   Created by: Lightnet
 */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import useFetch from "../hook/useFetch.mjs";
 
 import {
@@ -23,12 +23,19 @@ export function SignInPage() {
       setUser
     , setToken
     , setExpire
+    , status
     , setStatus
     , baseToken
     , setBaseToken
     , baseExpire
     , setBaseExpire
   } = useAuth();
+
+  useEffect(()=>{
+    if(status=="auth"){
+      navigate(-1)
+    }
+  },[status])
 
   const axiosJWT = axios.create();
   axiosJWT.interceptors.request.use(async (config) => {

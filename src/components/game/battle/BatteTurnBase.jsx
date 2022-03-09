@@ -4,6 +4,7 @@
 */
 
 import { useEffect, useState } from 'react';
+import useAxiosTokenAPI from "../../hook/useAxiosTokenAPI"
 
 export default function BatteTurnBase() {
 
@@ -11,92 +12,132 @@ export default function BatteTurnBase() {
   const [entities, setEntities] = useState([]);
   const [isFinishBattle, setIsFinishBattle ] = useState(false);
 
+
+  const [axiosJWT, isLoading] = useAxiosTokenAPI();
+
   useEffect(()=>{
-    queryCheckBattle();
-  },[]);
+    //console.log("isLoading: ", isLoading)
+    if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
+      console.log("GETTING...: ")
+      queryCheckBattle();
+    }
+  },[axiosJWT,isLoading])
 
   async function queryCheckBattle(){
-    let response = await fetch('api/battle/battleturn',{
-      method:'GET' // *GET, POST, PUT, DELETE, etc.
-    })
-    let data = await response.json();
-    console.log(data);
-    if((data.action=="UPDATE") || (data.action=="CREATED")){
-      //let battlefield = JSON.parse(data.battlefield);
-      let battlefield = data.battlefield;
-      console.log(battlefield);
 
-      //battlefield.ally[0]
-      let objs = [];
-      objs.push(battlefield.foe[0]);
-      objs.push(battlefield.ally[0]);
-      
-      setEntities(objs);
-      setIsBattle(true);
-    }
+    axiosJWT.instance.get('/api/battle/battleturn')
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch Error GET battle');
+          return;
+        }
+        if((data.action=="UPDATE") || (data.action=="CREATED")){
+          //let battlefield = JSON.parse(data.battlefield);
+          let battlefield = data.battlefield;
+          console.log(battlefield);
+    
+          //battlefield.ally[0]
+          let objs = [];
+          objs.push(battlefield.foe[0]);
+          objs.push(battlefield.ally[0]);
+          
+          setEntities(objs);
+          setIsBattle(true);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   //need to fixed this later
   async function randomBattle(){
-    console.log("querry battle...");
-    let response = await fetch('api/battle/battleturn',{
-      method:'POST' // *GET, POST, PUT, DELETE, etc.
-      , body:JSON.stringify({
+    console.log("random Battle...");
+
+    axiosJWT.instance.post('/api/battle/battleturn',{
         action:'RANDOMBATTLE'
-        , type:'normal' //weapon attack
-      })
+      , type:'normal' //weapon attack
     })
-    let data = await response.json();
-    console.log(data);
-    if((data.action=="FOUND") || (data.action=="CREATED")){
-      let battlefield = data.battlefield;
-      console.log("battlefield>>>>>>>>>>>>>");
-      console.log(battlefield);
-      let objs = [];
-      objs.push(battlefield.foe[0]);
-      objs.push(battlefield.ally[0]);
-      setEntities(objs);
-      setIsBattle(true);
-      setIsFinishBattle(false);
-    }
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch Error post battle');
+          return;
+        }
+        if((data.action=="FOUND") || (data.action=="CREATED")){
+          let battlefield = data.battlefield;
+          console.log("battlefield>>>>>>>>>>>>>");
+          console.log(battlefield);
+          let objs = [];
+          objs.push(battlefield.foe[0]);
+          objs.push(battlefield.ally[0]);
+          setEntities(objs);
+          setIsBattle(true);
+          setIsFinishBattle(false);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   async function playerAttack(){
-    let response = await fetch('api/battle/battleturn',{
-      method:'POST' // *GET, POST, PUT, DELETE, etc.
-      , body:JSON.stringify({
+
+    axiosJWT.instance.post('/api/battle/battleturn',{
         action:'BATTLE'
-        , type:'normal' //weapon attack
-      })
+      , type:'normal' //weapon attack
+    })
+    .then(function (response) {
+      //console.log(response);
+      if((response.status==200)&&(response.statusText=="OK")){
+        //console.log(response.data)
+        let data = response.data;
+        console.log(data);
+        if(data.error){
+          console.log('Fetch Error post battle');
+          return;
+        }
+        //server cal battle
+        if(data.action=="UPDATE"){
+          let battlefield = data.battlefield;
+          console.log(battlefield);
+          battlefield.ally[0]
+          let objs = [];
+          objs.push(battlefield.foe[0]);
+          objs.push(battlefield.ally[0]);
+          setEntities(objs);
+        }
+
+        if(data.action=="NOBATTLE"){
+          //clear battle data
+          setEntities([]);
+          setIsBattle(false)
+        }
+
+        if(data.action=="BATTLEFINISH"){
+          //clear battle data
+          setEntities([]);
+          setIsBattle(false);
+
+          setIsFinishBattle(true);
+        }
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    
-    let data = await response.json();
-    console.log(data);
 
-    //server cal battle
-    if(data.action=="UPDATE"){
-      let battlefield = data.battlefield;
-      console.log(battlefield);
-      battlefield.ally[0]
-      let objs = [];
-      objs.push(battlefield.foe[0]);
-      objs.push(battlefield.ally[0]);
-      setEntities(objs);
-    }
-
-    if(data.action=="NOBATTLE"){
-      //clear battle data
-      setEntities([]);
-      setIsBattle(false)
-    }
-
-    if(data.action=="BATTLEFINISH"){
-      //clear battle data
-      setEntities([]);
-      setIsBattle(false);
-
-      setIsFinishBattle(true);
-    }
   }
 
   return (<>

@@ -45,14 +45,19 @@ export function log(...args){
         //console.log(stack)
         const cwdOSRoot = path.parse(process.cwd()).root;
         //check and remove ")" line if exist
-        let space = callerParts[4].replace(")" , " ")
-        console.log(chalk.yellow('Console log:'), path.join(cwdOSRoot,callerParts[2])+":"+ callerParts[3]+":"+space );
+        //console.log(callerParts)
+        if(callerParts[4]){
+          let space = callerParts[4].replace(")" , " ")
+          console.log(chalk.green('Console log:'), path.join(cwdOSRoot,callerParts[2])+":"+ callerParts[3]+":"+space );
+        }else{
+          console.log(chalk.green('Console log:'), callerParts);
+        }
         console.log.apply(console, args); // ok
       }else{ //browser
         //console.log(fullTrace);
         //console.log("TRACE:");
         let stack = String(e.stack)
-        console.log(chalk.yellow('Console log:'))
+        console.log(chalk.green('Console log:'))
 
         // fail, go to bundle.js url
         //console.log(chalk.yellow('Console log:')+stack.slice(0,stack.indexOf("at invoke")).trim())

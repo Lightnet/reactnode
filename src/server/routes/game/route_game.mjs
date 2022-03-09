@@ -6,10 +6,12 @@
 import express from 'express';
 import { API } from '../../../lib/API.mjs';
 import clientDB from "../../../lib/database.mjs";
-import { isEmpty } from "../../../lib/helper.mjs";
+import Creature from '../../../lib/game/creature.js';
+import { isEmpty, nanoid32 } from "../../../lib/helper.mjs";
 import { log } from '../../../lib/log.mjs';
 
 import route_building from './route_building.mjs';
+//import route_battle from './route_battle.mjs';
 
 const router = express.Router();
 
@@ -79,10 +81,24 @@ router.post('/baseoutpost',async function (req, res) {
   if(api==API.GAME.CREATEMAINBASE){
     try{
       //need to check if base is create
+      let characterid = nanoid32();
+
+      let playercharacter = new Creature({
+        id:characterid
+        , name: data.charactername
+        , gender: "male"
+        , jobs: "Special Agent"
+        , races: "Human"
+        , attackpoint: 5
+      });
+
       let newCharacter = new Character({
-        userid:userid,
-        name:data.charactername
+          id: characterid
+        , userid:userid
+        , name:data.charactername
+        , data: playercharacter
       })
+
       let saveCharacter = await newCharacter.save();
       log(saveCharacter);
       let newBaseOutPost = new BaseOutPost({
@@ -94,12 +110,15 @@ router.post('/baseoutpost',async function (req, res) {
       log(saveBaseOutPost);    
       return res.send({api:'CREATE',base:saveBaseOutPost,character:saveCharacter});
     }catch(e){
+      console.log(e)
       return res.send({error:'fail'});
     }
   }
   res.send({error:'fail'});
 });
 
+
 router.use(route_building);
+//router.use("/battle",route_battle);
 
 export default router;

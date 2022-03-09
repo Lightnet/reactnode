@@ -16,10 +16,13 @@
 //Import the mongoose module
 import mongoose from 'mongoose';
 import UserSchema from "./mongoose/user.mjs";
+
 import BaseOutPostSchema from "./mongoose/game/baseoutpost.mjs";
 import ResourceSchema from "./mongoose/game/resource.mjs";
 import BuildingSchema from "./mongoose/game/building.mjs";
 import CharacterSchema from "./mongoose/game/character.mjs";
+import BattlefieldSchema from "./mongoose/game/battlefield.mjs";
+
 import MessageSchema from "./mongoose/message.mjs";
 import ContactSchema from "./mongoose/contact.mjs";
 import ScriptSchema from "./mongoose/script.mjs";
@@ -55,6 +58,7 @@ export default async function clientDB(){
   mongoose.model('Resource', ResourceSchema)
   mongoose.model('Building', BuildingSchema)
   mongoose.model('Character', CharacterSchema)
+  mongoose.model('BattleField', BattlefieldSchema)
 
   // Basic
   mongoose.model('Contact', ContactSchema)

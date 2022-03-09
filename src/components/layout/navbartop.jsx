@@ -7,12 +7,12 @@ import {
 } from "react-router-dom";
 import Sign from '../auth/Sign.jsx';
 import ThemeLink from '../theme/themelink.jsx';
-import { log } from '../../lib/log.mjs';
+//import { log } from '../../lib/log.mjs';
 
 export default function NavBarTop(){
 
   const { status } = useAuth();
-  log(status);
+  //log(status);
 
   function renderAccess(){
     if(status == 'unauth'){

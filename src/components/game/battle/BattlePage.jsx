@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react';
 import BatteTurnBase from './BatteTurnBase';
 
-export default function BattleSection() {
+export default function BattlePage() {
 
 
   return (<>

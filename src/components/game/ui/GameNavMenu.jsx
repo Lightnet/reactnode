@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 export default function GameNavMenu(){
   return <div>
     <Link to="map"> Map </Link><span> | </span>
+    <Link to="battle"> Battle </Link><span> | </span>
     <Link to="baseoutpost"> Home Base </Link><span> | </span>
     <Link to="buildings"> Buildings </Link><span> | </span>
     <Link to="construction"> Construction </Link><span> | </span>
