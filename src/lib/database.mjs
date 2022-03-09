@@ -16,10 +16,10 @@
 //Import the mongoose module
 import mongoose from 'mongoose';
 import UserSchema from "./mongoose/user.mjs";
-import BaseOutPostSchema from "./mongoose/baseoutpost.mjs";
-import ResourceSchema from "./mongoose/resource.mjs";
-import BuildingSchema from "./mongoose/building.mjs";
-import CharacterSchema from "./mongoose/character.mjs";
+import BaseOutPostSchema from "./mongoose/game/baseoutpost.mjs";
+import ResourceSchema from "./mongoose/game/resource.mjs";
+import BuildingSchema from "./mongoose/game/building.mjs";
+import CharacterSchema from "./mongoose/game/character.mjs";
 import MessageSchema from "./mongoose/message.mjs";
 import ContactSchema from "./mongoose/contact.mjs";
 import ScriptSchema from "./mongoose/script.mjs";
@@ -118,24 +118,24 @@ export async function sessionTokenCheck(session){
 //check for session or cookies that is set for the token
 export async function checkTokenUser(req){
   return new Promise( async (resolve, reject) => {
-    let isSession = false;
+    //let isSession = false;
     let isCookie = false;
     let isToken = false;
     let token = null;
-    if(req.session){
-      isSession=true;
-      if(!req.session.user.name){
-        resolve({error:"FAIL",userid:null,username:null});
-      }
-      if(!req.session.token){
-        resolve({error:"FAIL",userid:null,username:null});
-      }else{
-        isToken=true;
-        token=req.session.token;
-      }
-    }else{
+    //if(req.session){
+      //isSession=true;
+      //if(!req.session.user.name){
+        //resolve({error:"FAIL",userid:null,username:null});
+      //}
+      //if(!req.session.token){
+        //resolve({error:"FAIL",userid:null,username:null});
+      //}else{
+        //isToken=true;
+        //token=req.session.token;
+      //}
+    //}else{
       //resolve({error:"FAIL SESSION",userid:null,username:null});
-    }
+    //}
 
     if(req.cookies){
       isCookie=true;

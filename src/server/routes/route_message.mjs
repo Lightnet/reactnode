@@ -14,11 +14,9 @@ router.get('/message', async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -30,13 +28,12 @@ router.get('/message', async function (req, res) {
   try{
     const Message = db.model('Message');
     //console.log(username);
-    console.log(userid);
+    //console.log(userid);
     const data = req.body;
-    console.log(data)
+    //console.log(data)
     let messages = await Message.find({recipientid:userid})
       .select('id from recipient subject message')
       .exec();
-
     return res.json({api:API.TYPES.MESSAGES,messages:messages});
   }catch(e){
     console.log(e)
@@ -49,7 +46,7 @@ router.get('/message', async function (req, res) {
 router.post('/message',async function (req, res) {
   
   const {api} = req.body;
-  console.log(api);
+  //console.log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
@@ -57,11 +54,9 @@ router.post('/message',async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -72,14 +67,13 @@ router.post('/message',async function (req, res) {
   if(api == API.TYPES.MESSAGE){
     try{
       const Message = db.model('Message');
-      console.log(username);
-      console.log(userid);
-
+      //console.log(username);
+      //console.log(userid);
       const data = req.body;
-      console.log(data)
+      //console.log(data)
       const User = db.model('User');
       let user = await User.findOne({username:data.userName}).exec();
-      console.log(user)
+      //console.log(user)
       if(!user){
         return res.send({error:'Not found!'});
       }
@@ -92,9 +86,9 @@ router.post('/message',async function (req, res) {
         , subject:data.subject
         , message:data.content
       });
-      console.log(newMessage)
+      //console.log(newMessage)
       let msg = await newMessage.save();
-      console.log(msg);
+      //console.log(msg);
       return res.send({api:'SENT'});
 
     }catch(e){
@@ -107,7 +101,7 @@ router.post('/message',async function (req, res) {
 
 router.delete('/message',async function (req, res) {
   const {api} = req.body;
-  console.log(api);
+  //console.log(api);
   if(isEmpty(api)){
     return res.send({error:'empty'});
   }
@@ -115,11 +109,9 @@ router.delete('/message',async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -148,7 +140,6 @@ router.delete('/message',async function (req, res) {
       return res.send({error:'faildb'});
     }
   }
-
   res.json({message:'message page'})
 })
 

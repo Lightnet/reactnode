@@ -14,8 +14,8 @@ import compression from 'compression';
 import serveStatic from "serve-static";
 import { createServer } from "vite";
 import express from 'express';
-import session  from 'express-session';
-import MongoStore from 'connect-mongo';
+//import session  from 'express-session';
+//import MongoStore from 'connect-mongo';
 import routes from "./src/server/routes.mjs";
 import cookieParser from 'cookie-parser';
 
@@ -25,8 +25,8 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop';
 
-const DATABASE_URL = process.env.DATABASE_URL;
-console.log(DATABASE_URL);
+//const DATABASE_URL = process.env.DATABASE_URL;
+//console.log(DATABASE_URL);
 
 console.log("env.PORT:", process.env.PORT)
 console.log("env.HOST:", process.env.HOST)
@@ -50,13 +50,13 @@ async function vitecreateServer(
   app.set('trust proxy', true)
 
   app.use(cookieParser())
-  app.use(session({
-    secret: 'keyboard cat',
-    store: MongoStore.create({ mongoUrl: DATABASE_URL }),
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  }))
+  //app.use(session({
+    //secret: 'keyboard cat',
+    //store: MongoStore.create({ mongoUrl: DATABASE_URL }),
+    //resave: true,
+    //saveUninitialized: true,
+    //cookie: { secure: false }
+  //}))
   app.use(express.json())
 
   app.use(routes);

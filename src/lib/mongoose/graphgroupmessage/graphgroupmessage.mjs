@@ -4,10 +4,10 @@
 */
 
 import mongoose from 'mongoose';
-import { nanoid32, unixTime } from "../helper.mjs";
+import { nanoid32, unixTime } from '../helper.mjs';
 
 const Schema = mongoose.Schema;
-var ResourceSchema = new mongoose.Schema({
+var GraphGroupMessageSchema = new mongoose.Schema({
   id: {
     type:String,
     unique:true,
@@ -15,11 +15,14 @@ var ResourceSchema = new mongoose.Schema({
   },
   userid: String,
   username: String,
-  baseid:String,
-  name:String,
-  material:{
-    type:Number
-    ,default:0
+  name: String,
+  description: {
+    type:String,
+    default: "Group Message"
+  },
+  public: {
+    type:Boolean,
+    default: false
   },
   date:{
     type: Number,
@@ -28,5 +31,5 @@ var ResourceSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 // Compile model from schema
-//mongoose.model('Resource', ResourceSchema );
-export default ResourceSchema;
+//mongoose.model('Blank', BlankSchema );
+export default GraphGroupMessageSchema;

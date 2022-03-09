@@ -19,7 +19,7 @@ import { verifyToken } from '../middleware/VerifyToken.mjs';
 const router = express.Router();
 
 var secret = process.env.SECRET;
-var enableSession = process.env.ISSESSION || true;
+//var enableSession = process.env.ISSESSION || true;
 var enableCookie = process.env.ISCOOKIE || true;
 
 console.log("SECRET:", secret)
@@ -100,11 +100,11 @@ router.post('/signin', verifyBaseToken ,async function (req, res) {
       //console.log("[login] password pass!");
       //let datasub = user.toAuthJSON()
       let token = user.generateToken(req)
-      if(enableSession){
+      //if(enableSession){
         //console.log(token);
-        req.session.user = user.username;
-        req.session.token = token;
-      }
+        //req.session.user = user.username;
+        //req.session.token = token;
+      //}
 
       if(enableCookie){
         //res.cookie("user", user.name)
@@ -164,9 +164,9 @@ router.post('/signup', verifyBaseToken, async function (req, res) {
 router.post('/signout', verifyToken,async function (req, res) {
   //console.log(req.session)
   let token =null;
-  if(req.session?.token){
-    token=req.session.token;
-  }
+  //if(req.session?.token){
+    //token=req.session.token;
+  //}
   if(req.cookies?.token){
     token=req.cookies.token;
   }
@@ -195,12 +195,12 @@ router.post('/signout', verifyToken,async function (req, res) {
           if(req.cookies?.token){
             res.clearCookie('token')
           }
-          if(req.session){//delete session
-            req.session.destroy(function(err) {
+          //if(req.session){//delete session
+            //req.session.destroy(function(err) {
               //console.log(err);
               //console.log(req.session);
-            })
-          }
+            //})
+          //}
         }
       }else{
         //check for fake or outdate token
@@ -222,12 +222,12 @@ router.post('/signout', verifyToken,async function (req, res) {
           res.clearCookie('token')
         }
         // clear out session
-        if(req.session){//delete session
-          req.session.destroy(function(err) {
+        //if(req.session){//delete session
+          //req.session.destroy(function(err) {
             //console.log(err);
             //console.log(req.session);
-          })
-        }
+          //})
+        //}
       }
     }
     return res.send({api:'LOGOUT'});

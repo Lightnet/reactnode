@@ -14,11 +14,9 @@ router.get('/script', async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -56,11 +54,9 @@ router.post('/script', async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -113,11 +109,9 @@ router.delete('/script', async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -143,11 +137,7 @@ router.delete('/script', async function (req, res) {
     return res.json({error:'FAILSCRIPTDELETE'});
   }
 
-  res.json({error:'script page'})
+  //res.json({error:'script page'})
 })
-
-
-
-
 
 export default router;

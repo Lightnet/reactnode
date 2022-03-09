@@ -13,14 +13,13 @@ router.get('/base',async function (req, res) {
 
   const db = await clientDB();
   let userid =null;
-
-  //console.log(req.session);
-  if(req.session.token){
+  let username =null;
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user});
+    let user = await User.findOne({token:req.cookies.token})
+      .exec();
     //console.log(user);
+    username = user.username;
     userid = user.id;
   }else{
     return res.send({error:'failtoken'});
@@ -41,9 +40,6 @@ router.get('/base',async function (req, res) {
   }catch(e){
     return res.send({error:'faildb'});
   }
-
-  //return res.send({action:'EXIST'});
-  res.send({error:'fail'});
 });
 
 router.post('/baseoutpost',async function (req, res) {
@@ -55,13 +51,13 @@ router.post('/baseoutpost',async function (req, res) {
 
   let db = await clientDB();
   let userid =null;
-
-  if(req.session.token){
+  let username =null;
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user});
+    let user = await User.findOne({token:req.cookies.token})
+      .exec();
     //console.log(user);
+    username = user.username;
     userid = user.id;
   }else{
     return res.send({error:'failtoken'});

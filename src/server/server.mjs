@@ -11,7 +11,7 @@ import http from 'http';
 import express from "express";
 import dotEnv from 'dotenv';
 import bodyParser from 'body-parser';
-import session  from 'express-session';
+//import session  from 'express-session';
 import routes from './routes.mjs';
 import cors from "cors";
 import { networkInterfaces } from 'os';
@@ -74,12 +74,12 @@ async function main(){
   app.set('PORT', PORT)
   app.set('HOST', HOST)
 
-  app.use(session({
-    secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  }))
+  //app.use(session({
+    //secret: 'keyboard cat',
+    //resave: true,
+    //saveUninitialized: true,
+    //cookie: { secure: false }
+  //}))
 
   // parse application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded({ extended: false }))

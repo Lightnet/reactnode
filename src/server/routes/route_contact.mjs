@@ -12,17 +12,11 @@ const router = express.Router();
 router.get('/contact', async function (req, res) {
   
   const db = await clientDB();
-  //let userid =null;
-  //let username =null;
-  console.log(req.session)
-
-  let {error, userid, username} = await checkTokenUser(req);
-
-  if(req.session.token){
+  let userid =null;
+  let username =null;
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -40,8 +34,6 @@ router.get('/contact', async function (req, res) {
   }catch(e){
     return res.json({error:'query fail'})
   }
-
-  res.json({message:'contact page'})
 })
 
 router.post('/contact', async function (req, res) {
@@ -53,11 +45,9 @@ router.post('/contact', async function (req, res) {
   const db = await clientDB();
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user})
+    let user = await User.findOne({token:req.cookies.token})
       .exec();
     //console.log(user);
     username = user.username;
@@ -79,9 +69,7 @@ router.post('/contact', async function (req, res) {
           userid:userid
         , friend: data.userName
       })
-
       await newContact.save();
-
       return res.json({api:'ADDED',friend:newContact.friend,id:newContact.id})
     }else{
       return res.json({api:'EXIST'})
@@ -100,11 +88,10 @@ router.delete('/contact', async function (req, res) {
 
   let userid =null;
   let username =null;
-  if(req.session.token){
+  if(req.cookies.token){
     const User = db.model('User');
-    //req.session.token
-    //let user = await User.findOne({token:req.session.token});
-    let user = await User.findOne({username:req.session.user}).exec();
+    let user = await User.findOne({token:req.cookies.token})
+      .exec();
     //console.log(user);
     username = user.username;
     userid = user.id;
