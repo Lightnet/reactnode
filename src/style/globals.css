@@ -116,7 +116,11 @@ html[data-theme='dark'] {
   --switch-default:gray;
 }
 
+html {
+  height:100%;
+}
 body {
+  height:100%;
   margin: 0%;
   background: var(--backgroundColor);
   color: var(--textColor);

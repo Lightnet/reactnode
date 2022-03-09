@@ -22,7 +22,7 @@ export function AccountPage() {
 
       </div>
       <Routes>
-        <Route path="/" element={<AccountHomePage />}/>
+        <Route index element={<AccountHomePage />}/>
         <Route path="changepassphrase" element={<AccountPassphrasePage />}/>
         <Route path="hints" element={<AccountHintPage />}/>
       </Routes>

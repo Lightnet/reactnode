@@ -20,13 +20,14 @@ export default function MessagePage() {
   return <div>
     <div>
       <label> Message: </label>
-        <Link to={"/message"}>In Box</Link><span> | </span>
+        <Link to={"inbox"}>In Box</Link><span> | </span>
         <Link to={"compose"}>Compose</Link><span> | </span>
         <Link to={"contacts"}>Contacts</Link><span> | </span>
         <Link to={"settings"}>Settings</Link><span> | </span>
     </div>
     <Routes>
-        <Route path="/" element={<Inbox />}/>
+        <Route index element={<Inbox />}/>
+        <Route path="inbox" element={<Inbox />}/>
         <Route path="compose" element={<Compose />}/>
         <Route path="contacts" element={<Contacts />}/>
         <Route path="settings" element={<Settings />}/>

@@ -4,14 +4,14 @@
 */
 
 import React from 'react';
-import { GameProvider } from './GameProvider.jsx';
-import GameWorld from './GameWorld.jsx';
+import { GameProvider } from './context/GameProvider.jsx';
+import EntryPointGame from './EntryPointGame.jsx';
 
 export function GamePage() {
 
   return (<>
     <GameProvider>
-      <GameWorld></GameWorld>
+      <EntryPointGame/>
     </GameProvider>
   </>);
 }

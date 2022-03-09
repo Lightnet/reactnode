@@ -17,6 +17,7 @@ export default function PostPage(){
     <Link to={"createpost"}>Create Post</Link><span> | </span>
   </div>
   <Routes>
+      <Route index element={<PostsPage />}/>
       <Route path="posts" element={<PostsPage />}/>
       <Route path="createpost" element={<CreatePost />}/>
   </Routes>

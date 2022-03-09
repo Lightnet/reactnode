@@ -1,17 +1,20 @@
 /*
   LICENSE: MIT
   Created by: Lightnet
+
+  Information:
+    Check for user has base or not.
 */
 
 import React, { useEffect, useState } from 'react';
-import { useGame } from './GameProvider.jsx';
+import { useGame } from './context/GameProvider.jsx';
 import BaseCreate from './outpost/BaseCreate.jsx';
-import Base from './outpost/Base.jsx';
+import HomeBaseGame from './HomeBaseGame.jsx';
 
 import { useNavigate } from "react-router-dom";
 import useAxiosTokenAPI from '../hook/useAxiosTokenAPI.jsx';
 
-export default function GameWorld() {
+export default function EntryPointGame() {
 
   const {
     setBaseName,
@@ -83,7 +86,7 @@ export default function GameWorld() {
 
   function renderCheckBase(){
     if(isBase){
-      return <Base />
+      return <HomeBaseGame />
     }else{
       return <BaseCreate ops={callBackOPS} />
     }
@@ -94,7 +97,7 @@ export default function GameWorld() {
   }
 
   return (<>
-    <div>
+    <div style={{height:"calc(100% - 18px)"}}>
       {renderCheckBase()}
     </div>
   </>);
