@@ -18,7 +18,7 @@ export default function Buildings() {
   useEffect(()=>{
     //console.log("isLoading: ", isLoading)
     if((typeof axiosJWT?.instance=="function")&&(isLoading == false)){
-      console.log("GETTING...: ")
+      //console.log("GETTING...: ")
       getHomeBaseObjects();
     }
   },[axiosJWT,isLoading])
@@ -36,9 +36,12 @@ export default function Buildings() {
           console.log('Fetch Error GET Buildings');
           return;
         }
-        if(data.api='BUILDINGS'){
+        if(data.api=='BUILDINGS'){
           console.log(data.buildings);
           setBuildings(data.buildings);
+        }
+        if(data.api=='EMPTY'){
+          console.log("NO BUILDINGS YET!");
         }
       }
     })

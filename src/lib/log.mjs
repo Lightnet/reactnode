@@ -41,16 +41,18 @@ export function log(...args){
     if( callerParts.length >= 1 ){
 
       if(typeof process !== "undefined"){// node js
-        //let stack = String(e.stack)
-        //console.log(stack)
+        
         const cwdOSRoot = path.parse(process.cwd()).root;
         //check and remove ")" line if exist
         //console.log(callerParts)
         if(callerParts[4]){
+          //let stack = String(e.stack)
+          //console.log(stack)
           let space = callerParts[4].replace(")" , " ")
           console.log(chalk.green('Console log:'), path.join(cwdOSRoot,callerParts[2])+":"+ callerParts[3]+":"+space );
-        }else{
-          console.log(chalk.green('Console log:'), callerParts);
+        }else{// array object?
+          let stack = String(e.stack)
+          console.log(chalk.green('Console log:'), stack.slice(stack.indexOf(" file:///"),stack.indexOf("at process")).trim())
         }
         console.log.apply(console, args); // ok
       }else{ //browser

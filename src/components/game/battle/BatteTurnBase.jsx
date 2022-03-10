@@ -12,8 +12,7 @@ export default function BatteTurnBase() {
   const [isBattle, setIsBattle] = useState(false);
   const [entities, setEntities] = useState([]);
   const [isFinishBattle, setIsFinishBattle ] = useState(false);
-
-
+  
   const [axiosJWT, isLoading] = useAxiosTokenAPI();
 
   useEffect(()=>{

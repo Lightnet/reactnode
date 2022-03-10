@@ -32,7 +32,7 @@ router.get('/building',async function (req, res) {
     log("Building:", buildings.length);
 
     if(buildings.length == 0){
-      return res.json({api:"NOTFOUND"});
+      return res.json({api:"EMPTY"});
     }
     if(buildings.length >= 1){
       let builds = [];
